@@ -1,4 +1,6 @@
-
+kAdvancedBeaconCoolDown = 30
+kAdvancedBeaconCost = 20
+kObsAdvBeaconPowerOff = 16
 
 
 

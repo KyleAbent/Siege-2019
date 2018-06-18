@@ -1,4 +1,4 @@
-//Script.Load("lua/Additions/Convars.lua")
+Script.Load("lua/Convars19.lua")
 //Script.Load("lua/Additions/EggBeacon.lua")
 //Script.Load("lua/Additions/StructureBeacon.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
@@ -204,6 +204,14 @@ local kSiege_TechData =
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] =  "Sometimes a commander may not want a specific entity, eh."},
 
+          { [kTechDataId] = kTechId.WhipStealFT,   
+            [kTechDataDisplayName] = "Steal Flamethrower",
+ [kTechDataCostKey] = 20,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] =  "A random 10-30% chance on every slap to steal a marine flamethrower and fling it around the map forcing them to re pick it up if it didn't fall through the floor."},
+
   
                   --Thanks dragon ns2c
        { [kTechDataId] = kTechId.PrimalScream,  
@@ -214,6 +222,24 @@ local kSiege_TechData =
        -- [kTechDataResearchTimeKey] = kPrimalScreamTimeKey, 
  [kTechDataTooltipInfo] = "+Energy to teammates, enzyme cloud"},
  
+ 
+    { [kTechDataId] = kTechId.AdvancedBeacon,   
+   [kTechDataBuildTime] = 0.1,   
+   [kTechDataCooldown] = kAdvancedBeaconCoolDown,
+    [kTechDataDisplayName] = "Advanced Beacon",   
+   [kTechDataHotkey] = Move.B, 
+    [kTechDataCostKey] = kAdvancedBeaconCost, 
+[kTechDataTooltipInfo] = "Revives Dead Players as well. Powers off Observatory for a short duration after beaconing."},
+
+       { [kTechDataId] = kTechId.SiegeBeacon,  
+        [kTechDataBuildTime] = 0.1,   
+        [kTechDataDisplayName] = "SiegeBeacon", 
+      [kTechDataHotkey] = Move.B, 
+      [kTechDataCostKey] = kAdvancedBeaconCost, 
+    [kTechDataTooltipInfo] =  "Once per game, advanced beacon located inside Siege Room rather than closest CC. Choose your timing wisely."},
+    
+    
+
     /*
         { [kTechDataId] = kTechId.MacSpawnOn,    
           [kTechDataCooldown] = 5,    
@@ -246,6 +272,14 @@ local kSiege_TechData =
            [kTechDataDisplayName] = "Exxtractor Armor 1",  
            [kTechDataTooltipInfo] = ""},
            
+          { [kTechDataId] = kTechId.CragHeals1,   
+          [kTechDataCostKey] = 20,  
+          [kTechDataResearchTimeKey] = 30,   
+           [kTechDataDisplayName] = "CragHeals1",  
+           [kTechDataTooltipInfo] = "Increase: HealPercent, Min Heal, Max Heal by 10%."},   
+           
+           
+           /*
          { [kTechDataId] = kTechId.LerkHealth,   
           [kTechDataCostKey] = kExtractorArmor1Cost,  
           [kTechDataResearchTimeKey] = kExtractorArmor1ResearchTime,   
@@ -263,13 +297,13 @@ local kSiege_TechData =
           [kTechDataResearchTimeKey] = kExtractorArmor1ResearchTime,   
            [kTechDataDisplayName] = "OnosHealth  1",  
            [kTechDataTooltipInfo] = ""},
-           
+          
         { [kTechDataId] = kTechId.PlaceTechPoint,   
           [kTechDataCostKey] = 80,  
        --   [kTechDataResearchTimeKey] = kExtractorArmor1ResearchTime,   
            [kTechDataDisplayName] = "PlaceTechPoint",  
            [kTechDataTooltipInfo] = "WIP"},
-      
+       */
   
 }   
 

@@ -1,3 +1,17 @@
+Script.Load("lua/ResearchMixin.lua")
+Script.Load("lua/RecycleMixin.lua")
+
+local networkVars = {}
+AddMixinNetworkVars(ResearchMixin, networkVars)
+AddMixinNetworkVars(RecycleMixin, networkVars)
+local origcreate = MAC.OnCreate
+function MAC:OnCreate()
+    origcreate(self)
+    InitMixin(self, ResearchMixin)
+    InitMixin(self, RecycleMixin)
+end
+
+
 --Weld other macs and stack macs and dont have delay for not welding while damaged
 
 function MAC:GetCanBeWeldedOverride()

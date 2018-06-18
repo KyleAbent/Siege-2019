@@ -1,3 +1,16 @@
+function GetSiegeLocation(where)
+--local locations = {}
+
+
+ local siegeloc = nil
+
+  siegeloc = GetNearest(where, "Location", nil, function(ent) return string.find(ent.name, "siege") or string.find(ent.name, "Siege") end)
+
+ 
+if siegeloc then return siegeloc end
+ return nil
+end
+
 function GetIsOriginInHiveRoom(point)  
  local location = GetLocationForPoint(point)
  local hivelocation = nil

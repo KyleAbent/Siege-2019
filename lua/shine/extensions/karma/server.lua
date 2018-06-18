@@ -309,7 +309,7 @@ function Plugin:DestroyAllKarmaStructFor(Client)
 //Intention: Kill Karma Structures if client f4s, otherwise 'limit' becomes nil and infinite 
 local Player = Client:GetControllingPlayer()
         for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", Player:GetTeamNumber())) do
-        if not entity:isa("Commander") and not entity:isa("AdvancedArmory") and entity:GetOwner() == Player then entity:Kill() end 
+        if not entity:isa("Commander") and entity:GetOwner() == Player then entity:Kill() end 
       end
     
 end
@@ -690,14 +690,14 @@ techid = kTechId.InfantryPortal
 KarmaCost = gKarmaStructureInfantryPortalCost
 limit = gKarmaStructureInfantryPortalLimit
 elseif  String == "RoboticsFactory" then
-mapnameof = RoboSiege.kMapName
+mapnameof = RoboticsFactory.kMapName
 techid = kTechId.RoboticsFactory
 KarmaCost = gKarmaStructureRoboticsFactoryCost
 limit = gKarmaStructureRoboticsFactoryLimit
 elseif String == "Mac" then
 techid = kTechId.MAC
 KarmaCost = gKarmaStructureMacCost
-mapnameof = MACCredit.kMapName
+mapnameof = MAC.kMapName
 limit = gKarmaStructureMacLimit
 elseif String == "Arc" then 
 techid = kTechId.ARC
@@ -894,10 +894,10 @@ local cost = 1
 if not Player then return end
 
  if String == "JetPack" and not Player:isa("Exo") and not Player:isa("JetPack") then cost = gKarmaClassCostJetPack
-  elseif String == "RailGun" and not Player:isa("Exo") then cost = 29 delayafter = gKarmaClassCostRailGunExo   
-  elseif String == "MiniGun" and not Player:isa("Exo") then  cost = 30  delayafter =gKarmaClassCostRailGunExo 
-  elseif String == "Welder" and not Player:isa("Exo") then  cost = 25  delayafter = 15 
-   elseif String == "Flamer" and not Player:isa("Exo") then  cost = 27  delayafter = 15 
+  elseif String == "RailGun" and not Player:isa("Exo") then cost = gKarmaClassCostRailGunExo delayafter =   9 
+  elseif String == "MiniGun" and not Player:isa("Exo") then  cost = gKarmaClassCostRailGunExo  delayafter = 9
+  --elseif String == "Welder" and not Player:isa("Exo") then  cost = 25  delayafter = 15 
+  -- elseif String == "Flamer" and not Player:isa("Exo") then  cost = 27  delayafter = 15 
   elseif String == "Gorge" then cost = gKarmaClassCostGorge
   elseif String == "Lerk" then  cost = gKarmaClassCostLerk
   elseif String == "Fade" then cost = gKarmaClassCostFade 

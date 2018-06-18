@@ -26,6 +26,7 @@ local table = {}
 table = origbuttons(self, techId)
 
  --table[4] = kTechId.WhipExplode
+  table[3] = kTechId.WhipStealFT
  table[8] = kTechId.DigestComm
  return table
 
