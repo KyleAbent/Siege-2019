@@ -280,6 +280,7 @@ end
 function SandCastle:PerformDisco()
 self.powerlighth = nil
 local powerpoints = {}
+
       for index, powerpoint in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
         --handler.powerPoint
         if powerpoint:GetIsBuilt() and powerpoint.lightHandler then
@@ -287,7 +288,7 @@ local powerpoints = {}
         end
     end
     
-    if #powerpoints == 0 then return end
+    if #powerpoints == 0 then Print("PP == 0 ") return end
     
     local power = table.random(powerpoints)
         if not power then return end

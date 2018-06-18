@@ -5,7 +5,7 @@ function Onos:GetMaxSpeed(possible)
 local speed = origspeed(self, possible)
 
      // if GetSiegeDoorOpen() then 
-       speed = speed * 1.3 //kDuringSiegeOnosSpdBuff 
+       speed = speed * 1.15 //kDuringSiegeOnosSpdBuff 
     // end
      
     -- if self:GetIsPoopGrowing() then

@@ -206,23 +206,20 @@ end
 
 function Timer:PerformDisco()
 self.powerlighth = nil
-local powerpoints = {}
-      for index, powerpoint in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
-        --handler.powerPoint
-        if powerpoint:GetIsBuilt() and powerpoint.lightHandler then
-        table.insert(powerpoints, powerpoint.lightHandler)
-        end
-    end
-    
-    if #powerpoints == 0 then return end
-    
-    local power = table.random(powerpoints)
-        if not power then return end
-        self.powerlighth = power
-        self.powerlighth:DiscoLights()
-       -- Print("DiscoLights 2")
-         self:AddTimedCallback( Timer.ResetLight, math.random(8, 16) )
-         --Reset lights isn't set correctly... why call it every time colors change? /shrug
+//local powerpoints = {}
+Print("Que?")
+
+            local powerPoints = Shared.GetEntitiesWithClassname("PowerPoint")
+            for _, powerPoint in ientitylist(powerPoints) do
+
+                if powerPoint.lightHandler then
+                     // table.insert(powerpoints, powerpoint.lightHandler)
+                     powerPoint.lightHandler:DiscoLights()
+                     // self:AddTimedCallback( Timer.ResetLight, math.random(8, 16) )
+                end
+
+            end
+
     
 end
 
