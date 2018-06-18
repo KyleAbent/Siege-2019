@@ -1,3 +1,4 @@
+/*
 local origspeed = Onos.GetMaxSpeed
 
 function Onos:GetMaxSpeed(possible)
@@ -5,7 +6,7 @@ function Onos:GetMaxSpeed(possible)
 local speed = origspeed(self, possible)
 
      // if GetSiegeDoorOpen() then 
-       speed = speed * 1.3 //kDuringSiegeOnosSpdBuff 
+       speed = speed * 1.15 //kDuringSiegeOnosSpdBuff 
     // end
      
     -- if self:GetIsPoopGrowing() then
@@ -16,6 +17,7 @@ local speed = origspeed(self, possible)
     
     
 end
+*/
 
 function Onos:PreUpdateMove(input, runningPrediction)
     //Nerp overwrite messy who cares its messy anyway

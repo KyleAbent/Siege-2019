@@ -1,3 +1,100 @@
+function GetIsOriginInHiveRoom(point)  
+ local location = GetLocationForPoint(point)
+ local hivelocation = nil
+     local hives = GetEntitiesWithinRange("Hive", point, 999)
+     if not hives then return false end
+     
+     for i = 1, #hives do  --better way to do this i know
+     local hive = hives[i]
+     hivelocation = GetLocationForPoint(hive:GetOrigin())
+     break
+     end
+     
+     if location == hivelocation then return true end
+     
+     return false
+     
+end
+function GetCheckSentryLimit(techId, origin, normal, commander)
+    local location = GetLocationForPoint(origin)
+    local locationName = location and location:GetName() or nil
+    local numInRoom = 0
+    local validRoom = false
+    
+    if locationName then
+    
+        validRoom = true
+        
+        for index, sentry in ientitylist(Shared.GetEntitiesWithClassname("Sentry")) do
+        
+            if sentry:GetLocationName() == locationName  and not sentry.isacreditstructure then
+                numInRoom = numInRoom + 1
+            end
+            
+        end
+        
+    end
+    
+    return validRoom and numInRoom < 4
+    
+end
+
+
+local function UnlockAbility(forAlien, techId)
+
+    local mapName = LookupTechData(techId, kTechDataMapName)
+    if mapName and forAlien:GetIsAlive() then
+    
+        local activeWeapon = forAlien:GetActiveWeapon()
+
+        local tierWeapon = forAlien:GetWeapon(mapName)
+        if not tierWeapon then
+        
+            forAlien:GiveItem(mapName)
+            
+            if activeWeapon then
+                forAlien:SetActiveWeapon(activeWeapon:GetMapName())
+            end
+            
+        end
+    
+    end
+
+end
+function UpdateSiegeAbility(forAlien, tierThreeTechId, tierFourTechId, tierFiveTechId)
+        
+
+        local team = forAlien:GetTeam()
+        if team and team.GetTechTree then
+
+   local t3 = false
+   local t4 = false
+   local t5 = false
+     
+            t3 = GetGamerules():GetAllTech() or (tierThreeTechId ~= nil and tierThreeTechId ~= kTechId.None and GetHasTech(forAlien, tierThreeTechId))
+            t4 = GetGamerules():GetAllTech() or (tierFourTechId ~= nil and tierFourTechId ~= kTechId.None and t3)
+             t5 = GetGamerules():GetAllTech() or (tierFiveTechId ~= nil and tierFiveTechId ~= kTechId.None and t3)
+
+            
+            
+               if t4 then
+               UnlockAbility(forAlien,  tierFourTechId)
+            end
+            
+            if t5 then
+               UnlockAbility(forAlien, tierFiveTechId)
+            end
+            
+            
+    --Print("t1 is %s", t1)
+    --Print("t2 is %s", t2)
+    --Print("t3 is %s", t3)
+  --  Print("t4 is %s", t4)
+            
+    end
+          return false
+end
+
 function GetIsTimeUp(timeof, timelimitof)
  local time = Shared.GetTime()
  local boolean = (timeof + timelimitof) < time
