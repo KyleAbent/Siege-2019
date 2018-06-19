@@ -230,11 +230,11 @@ end
 function Plugin:OnScore( Player, Points, Res, WasKill )
 if Points ~= nil and Points ~= 0 and Player and not Shared.GetCheatsEnabled() then
    if not self.GameStarted then Points = 1  AddOneScore(Player,Points,Res, WasKill) end
-  if WasKill and Player:isa("Alien") and Player:GetHasPrimalScream() then self:PrimalScreamPointBonus(Player, Points) end
+  if WasKill and Player:isa("Alien") then self:PrimalScreamPointBonus(Player, Points) end
  local client = Player:GetClient()
  if not client then return end
          
-    local addamount = Points/10--Points/(10/self.Config.kKarmaMultiplier)      
+    local addamount = Points/(10/self.Config.kKarmaMultiplier)      
  local controlling = client:GetControllingPlayer()
  
          if Player:GetTeamNumber() == 1 then

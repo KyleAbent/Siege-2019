@@ -6,6 +6,6 @@ kFadeHealth = 262    kFadeArmor = 84
 kOnosHealth = 945    kOnosArmor = 472
 */
 
-kCystHealth = 36
+kCystHealth = 100
 kMatureCystHealth = 540
 kMinMatureCystHealth = 240    

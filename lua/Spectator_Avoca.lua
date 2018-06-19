@@ -9,39 +9,32 @@ nextangle = "private integer (0 to 8)",
 
 lockedId = "entityid"
 } 
-class 'AvocaSpectator' (Spectator)
-AvocaSpectator.kMapName = "Spectator"
+--class 'Spectator' (Spectator)
+--Spectator.kMapName = "Spectator"
 
---AvocaSpectator.kModelName = PrecacheAsset("models/alien/fade/fade.model")
+--Spectator.kModelName = PrecacheAsset("models/alien/fade/fade.model")
 
-function AvocaSpectator:OnInitialized()
-
-    Spectator.OnInitialized(self)
-
-end
-function AvocaSpectator:GetControllerPhysicsGroup()
-    return PhysicsGroup.BigPlayerControllersGroup  
-end
-function AvocaSpectator:OnCreate()
- Spectator.OnCreate(self)
+local ogcreate = Spectator.OnCreate
+function Spectator:OnCreate()
+ ogcreate (self)
   self.lastswitch = Shared.GetTime()
        if Server then
-         self:AddTimedCallback( AvocaSpectator.UpdateCamera, 1 )
+         self:AddTimedCallback( Spectator.UpdateCamera, 1 )
         end
         self.nextangle = math.random(4,8)
          self.lockedId = Entity.invalidI 
 end
-function AvocaSpectator:doTimer()
+function Spectator:doTimer()
 
-  self:AddTimedCallback( AvocaSpectator.UpdateCamera, 1 )
+  self:AddTimedCallback( Spectator.UpdateCamera, 1 )
 end
-function AvocaSpectator:SetLockOnTarget(userid)
+function Spectator:SetLockOnTarget(userid)
    self.lockedId = userid
 end
-function AvocaSpectator:BreakChains()
+function Spectator:BreakChains()
   self.lockedId = Entity.invalidI 
 end
-function AvocaSpectator:LockAngles()//if cam then look for lock
+function Spectator:LockAngles()//if cam then look for lock
   local playerOfLock = Shared.GetEntity( self.lockedId ) 
     if playerOfLock ~= nil then
             if (playerOfLock.GetIsAlive and playerOfLock:GetIsAlive())  then
@@ -51,16 +44,16 @@ function AvocaSpectator:LockAngles()//if cam then look for lock
             end
   end
 end
-function AvocaSpectator:ChangeView(self, untilNext, betweenLast)
+function Spectator:ChangeView(self, untilNext, betweenLast)
 --Shine
 end
-function AvocaSpectator:LockAnglesTarget(who)
+function Spectator:LockAnglesTarget(who)
 
 end
-function AvocaSpectator:UnlockAngles()
+function Spectator:UnlockAngles()
 
 end
-function AvocaSpectator:OnEntityChange(oldId)
+function Spectator:OnEntityChange(oldId)
 
     if self.lockedId == oldId then
         self.lockedId = Entity.invalidId
@@ -87,7 +80,7 @@ local dist = 5
   return dist
   
 end
-function AvocaSpectator:OverrideInput(input)
+function Spectator:OverrideInput(input)
 
     ClampInputPitch(input)
      //Attempts of Zooming in when outside radius
@@ -122,15 +115,15 @@ function AvocaSpectator:OverrideInput(input)
     return input
     
 end
-function AvocaSpectator:UpdateCamera()
+function Spectator:UpdateCamera()
          self:LockAngles()
         //  Print(self.lastswitch,  " ", self.nextangle )
          if GetIsTimeUp(self.lastswitch, self.nextangle ) then
-             Print("AvocaSpectator ChangeView")
+             Print("Spectator ChangeView")
               self.nextangle = math.random(4,8)
               self.lastswitch = Shared.GetTime()
               self:ChangeView(self, self.nextangle, self.lastswitch )
           end
           return true
 end
-Shared.LinkClassToMap("AvocaSpectator", AvocaSpectator.kMapName, networkVars)
+Shared.LinkClassToMap("Spectator", Spectator.kMapName, networkVars)

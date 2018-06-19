@@ -13,6 +13,8 @@ ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) 
 
 ModLoader.SetupFileHook( "lua/Lerk.lua", "lua/Lerk_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/CommAbilities/Alien/Contamination.lua", "lua/CommAbilities/Alien/Contamination_Siege19.lua", "post" )
+
 ModLoader.SetupFileHook( "lua/Drifter.lua", "lua/Drifter_Stack.lua", "post" )
 ModLoader.SetupFileHook( "lua/MAC.lua", "lua/MAC_Stack.lua", "post" )
 
