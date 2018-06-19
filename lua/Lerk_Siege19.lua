@@ -1,15 +1,16 @@
-
+/*
 local orig_Alien_OnInit = Lerk.OnInitialized
 
 function Lerk:OnInitialized()
    orig_Alien_OnInit(self)
-   if  GetHasTech(self, kTechId.LerkHealth)then
-        self:AddTimedCallback(Lerk.UpdateHealthAmountManual, .5) 
-end
+ --  if  GetHasTech(self, kTechId.LerkHealth)then
+  --      self:AddTimedCallback(Lerk.UpdateHealthAmountManual, .5) 
+--end
 
     
-   return false
+  -- return false
 end
+*/
 
 function Lerk:UpdateHealthAmountManual()
        if newMaxHealth ~= self.maxHealth  then

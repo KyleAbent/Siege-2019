@@ -13,6 +13,7 @@ Script.Load("lua/Convars19.lua")
 Script.Load("lua/2019/LayStructures.lua")
 Script.Load("lua/2019/ARC_Credits.lua")
 Script.Load("lua/2019/BackupPowerBattery.lua")
+--Script.Load("lua/2019/Siege_super_resource_point.lua")
 
 
 
