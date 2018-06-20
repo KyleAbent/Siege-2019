@@ -13,6 +13,11 @@ Script.Load("lua/Convars19.lua")
 Script.Load("lua/2019/LayStructures.lua")
 Script.Load("lua/2019/ARC_Credits.lua")
 Script.Load("lua/2019/BackupPowerBattery.lua")
+
+Script.Load("lua/2019/ExtraEntitiesMod/LogicBreakable.lua")
+Script.Load("lua/2019/ExtraEntitiesMod/LogicMixin.lua")
+Script.Load("lua/2019/ExtraEntitiesMod/PushTrigger.lua")
+Script.Load("lua/2019/ExtraEntitiesMod/ScaledModelMixin.lua")
 --Script.Load("lua/2019/Siege_super_resource_point.lua")
 
 

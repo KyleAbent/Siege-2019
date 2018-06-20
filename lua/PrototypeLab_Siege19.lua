@@ -17,8 +17,25 @@ local table = {}
 
 table = origbuttons(self, techId)
 
- table[2] = kTechId.DropExosuit
- 
+ table[2] = kTechId.JetpackFuel1
+ table[3] = kTechId.DropExosuit
  return table
+
+end
+
+if Server then
+
+function PrototypeLab:OnResearchComplete(researchId)
+  
+  if researchId == kTechId.JetpackFuel1 then
+  
+       for _, ent in ientitylist(Shared.GetEntitiesWithClassname("JetpackMarine")) do 
+         ent:applyBuffAlive()
+       --  break
+      end
+
+   end
+
+end
 
 end

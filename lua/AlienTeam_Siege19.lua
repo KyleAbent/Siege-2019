@@ -16,6 +16,7 @@ self.techTree:AddPassive(kTechId.PrimalScream,              kTechId.None, kTechI
  self.techTree:AddResearchNode(kTechId.CragHeals1, kTechId.Shell, kTechId.None)
     self.techTree:AddResearchNode(kTechId.WhipStealFT, kTechId.Whip, kTechId.None)
     self.techTree:AddUpgradeNode(kTechId.DigestComm, kTechId.None, kTechId.None)
+    self.techTree:AddResearchNode(kTechId.AlienHealth1,     kTechId.Shell, kTechId.None)
 --self.techTree:AddResearchNode(kTechId.LerkHealth,     kTechId.Shell, kTechId.None)
 --self.techTree:AddResearchNode(kTechId.FadeHealth,     kTechId.Shell, kTechId.None)
 --self.techTree:AddResearchNode(kTechId.OnosHealth,     kTechId.Shell, kTechId.None)

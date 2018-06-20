@@ -34,7 +34,7 @@ local networkVars =
    siegeBeaconed = "boolean",
    //isDisco = "boolean",
    //doSD = "boolean",
-   MSCPPC = "integer",
+   --MSCPPC = "integer",
 }
 local function GetFrontTime()
 //Specific timing for each door? IE all configurable? For now one setting for all.
@@ -68,7 +68,7 @@ function Timer:TimerValues()
    self.siegeBeaconed = false
    self.powerlighth = nil
 
-   self.MSCPPC = 0
+   --self.MSCPPC = 0
    
 end
 
@@ -130,12 +130,14 @@ end
 
 end
 function Timer:OpenSiegeDoors()
+
      self.SiegeTimer = 0
                for index, siegedoor in ientitylist(Shared.GetEntitiesWithClassname("SiegeDoor")) do
                  if not siegedoor:isa("FrontDoor") then OpenEightTimes(siegedoor) end
               end 
               
               if GetGameStarted() then
+                  GetGamerules():DisplaySiege()
               /*
                 for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
               StartSoundEffectForPlayer(Timer.kSiegeDoorSound, player)
@@ -157,10 +159,11 @@ local function CloseAllBreakableDoors()
 end
 
 function Timer:OpenFrontDoors()
-           self.timelastPPCount = Shared.GetTime() + 60
-        for index, powerpoint in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
-             if powerpoint:GetIsBuilt() and not powerpoint:GetIsDisabled() then self.MSCPPC = self.MSCPPC + 1 end
-        end 
+         self.frontOpened = true
+          -- self.timelastPPCount = Shared.GetTime() + 60
+       -- for index, powerpoint in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
+      --       if powerpoint:GetIsBuilt() and not powerpoint:GetIsDisabled() then self.MSCPPC = self.MSCPPC + 1 end
+      --  end 
      
            GetGamerules():SetDamageMultiplier(1) 
            CloseAllBreakableDoors()
@@ -169,17 +172,19 @@ function Timer:OpenFrontDoors()
                for index, frontdoor in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do
                       OpenEightTimes(frontdoor)
               end 
-              /*
-               if GetGameStarted() then 
               
+               if GetGameStarted() then 
+                GetGamerules():DisplayFront()
+              /*
               for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
               StartSoundEffectForPlayer(Timer.kFrontDoorSound, player)
               end
+              */
 
                end
-               */
                
-               self.frontOpened = true
+               
+               
 end
 function Timer:GetIsSiegeOpen()
            local gamestarttime = GetGameInfoEntity():GetStartTime()

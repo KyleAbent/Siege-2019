@@ -277,15 +277,22 @@ local kSiege_TechData =
           [kTechDataResearchTimeKey] = 30,   
            [kTechDataDisplayName] = "CragHeals1",  
            [kTechDataTooltipInfo] = "Increase: HealPercent, Min Heal, Max Heal by 10%."},   
+
+          { [kTechDataId] = kTechId.JetpackFuel1,   
+          [kTechDataCostKey] = 20,  
+          [kTechDataResearchTimeKey] = 30,   
+           [kTechDataDisplayName] = "JetpackFuel1",  
+           [kTechDataTooltipInfo] = "Decrease jetpack fuel replenish delay by 10%."},    
            
            
-           /*
-         { [kTechDataId] = kTechId.LerkHealth,   
+           
+        
+         { [kTechDataId] = kTechId.AlienHealth1,   
           [kTechDataCostKey] = kExtractorArmor1Cost,  
           [kTechDataResearchTimeKey] = kExtractorArmor1ResearchTime,   
-           [kTechDataDisplayName] = "LerkHealth  1",  
+           [kTechDataDisplayName] = "Increase Skulk,Lerk,Fade,Onos max health by 10%. Be careful, this goes away if all shells die!",  
            [kTechDataTooltipInfo] = ""},
-           
+              /*
         { [kTechDataId] = kTechId.FadeHealth,   
           [kTechDataCostKey] = kExtractorArmor1Cost,  
           [kTechDataResearchTimeKey] = kExtractorArmor1ResearchTime,   

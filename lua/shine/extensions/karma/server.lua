@@ -321,7 +321,7 @@ function Plugin:DestroyAllKarmaStructFor(Client)
 //Intention: Kill Karma Structures if client f4s, otherwise 'limit' becomes nil and infinite 
 local Player = Client:GetControllingPlayer()
         for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", Player:GetTeamNumber())) do
-        if not entity:isa("Commander") and entity:GetOwner() == Player then entity:Kill() end 
+        if not entity:isa("Commander") and entity:GetOwner() == Player  then entity:Kill() end 
       end
     
 end
@@ -587,7 +587,7 @@ local entity = nil
            entity =  CreateEntity( mapname, whoagain:GetOrigin(), whoagain:GetTeamNumber()) 
            if entity.SetOwner then entity:SetOwner(whoagain) end
           if entity.SetConstructionComplete then  entity:SetConstructionComplete() end
-              if entity:isa("PoopEgg") or entity:isa("Whip") then ent:SetKarmay() end
+              --if entity:isa("PoopEgg") or entity:isa("Whip") then ent:SetKarmay() end
         end
 
 

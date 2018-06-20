@@ -10,7 +10,9 @@ Plugin.Version = "1.0"
 function Plugin:OnFirstThink() 
     Shine.Timer.Create( "AutoSpectate", 8, -1, function() 
                    for index, player in ientitylist(Shared.GetEntitiesWithClassname("Spectator")) do
+                              if player:GetTeamNumber() ~= 1 and player:GetTeamNumber() ~= 2 then
                               self:OnChangeView(player)
+                              end
               end 
     end )
 end

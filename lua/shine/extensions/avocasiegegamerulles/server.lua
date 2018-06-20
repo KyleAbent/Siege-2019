@@ -1,29 +1,8 @@
 --Kyle 'Avoca' Abent
-Script.Load("lua/doors/Timer.lua") -- to load timer hook opensiege onopensiege otherwise wont hook
+Script.Load("lua/doors/timer.lua") -- to load timer hook opensiege onopensiege otherwise wont hook
 //Script.Load("lua/Additions/Imaginator.lua")
 local Shine = Shine
 local Plugin = Plugin
-
-
-
-  function Plugin:OnOpenSiegeDoors() 
-  if not GetGamerules():GetGameStarted()  then return end
-   if GetImaginator():GetAlienEnabled() and GetImaginator():GetMarineEnabled() then GetTimer():ToggleSDAllowed(true) end
-   if not GetTimer():GetSDAllowed() then return end
-         Print("Shine open siege doors 1")
-                local Players = Shine.GetAllPlayers()
-              for i = 1, #Players do
-              local Player = Players[ i ]
-                  if Player then
-                  Print("Shine open siege doors 2")
-                  AddSuddenDeathTimer(Player)
-                  end
-               end
-  end
- 
-  
-  
-Shine.Hook.SetupClassHook( "Timer", "OpenSiegeDoors", "OnOpenSiegeDoors", "PassivePost" )
 
 
 local function GetHasSentryBatteryInRadius(self)
@@ -66,6 +45,22 @@ function Plugin:MapPostLoad()
       Server.CreateEntity(Timer.kMapName)
 
 end
+
+
+
+  function Plugin:OnSiege() 
+    Shared.ConsoleCommand("sh_csay Siege Door(s) now open!!!!") 
+    self:NotifyTimer( nil, "Siege Door(s) now open!!!!", true)
+  end
+  
+   function Plugin:OnFront() 
+    Shared.ConsoleCommand("sh_csay Front Door(s) now open!!!!") 
+    self:NotifyTimer( nil, "Front Door(s) now open!!!!", true)
+  end
+  
+Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) --NS2GameRules b.c im assuming timer isnt created
+  
+Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" )  --Timmer calling gamerules for this hook -.-
 
 local function AddFrontTimer(who)
     local Client = who

@@ -41,6 +41,8 @@ local kSiege_TechIds =
     'WhipHealthArmor1',
     'AdvancedBeacon',
     'SiegeBeacon',
+    'JetpackFuel1',
+    'AlienHealth1',
    // 'BackupLight',
   //  'AdvancedBeacon',
   //  'EggBeacon',

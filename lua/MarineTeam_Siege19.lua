@@ -11,6 +11,7 @@ function MarineTeam:InitTechTree()
     --self.techTree:AddBuildNode(kTechId.DropMAC,     kTechId.None, kTechId.None)
     self.techTree:AddTargetedActivation(kTechId.DropExosuit,     kTechId.ExosuitTech, kTechId.None)
     self.techTree:AddResearchNode(kTechId.ExtractorArmor1,     kTechId.Armor3, kTechId.None)
+    self.techTree:AddResearchNode(kTechId.JetpackFuel1,     kTechId.JetpackTech, kTechId.None)
     self.techTree:AddActivation(kTechId.SiegeBeacon,           kTechId.Observatory)  
     self.techTree:AddActivation(kTechId.AdvancedBeacon, kTechId.None) 
        

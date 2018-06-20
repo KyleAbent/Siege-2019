@@ -1,23 +1,9 @@
-/*
-local orig_Alien_OnInit = Lerk.OnInitialized
-
-function Lerk:OnInitialized()
-   orig_Alien_OnInit(self)
- --  if  GetHasTech(self, kTechId.LerkHealth)then
-  --      self:AddTimedCallback(Lerk.UpdateHealthAmountManual, .5) 
---end
-
-    
-  -- return false
+Lerk.kHealth = kLerkHealth
+function Lerk:GetBaseHealth()
+    return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Lerk.kHealth * 1.10, Lerk.kHealth)  --Lerk.kHealth
 end
-*/
 
-function Lerk:UpdateHealthAmountManual()
-       if newMaxHealth ~= self.maxHealth  then
-        self:AdjustMaxHealth(kLerkHealth * 4)
-        self:SetMaxHealth(kLerkHealth * 4)
-        end
-end
+
 
 function Lerk:OnAdjustModelCoords(modelCoords)
     local scale = .8
