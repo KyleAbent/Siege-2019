@@ -298,8 +298,8 @@ local kSiege_TechData =
          { [kTechDataId] = kTechId.RunSpeed1,   
           [kTechDataCostKey] = 50,  
           [kTechDataResearchTimeKey] = 60,   
-           [kTechDataDisplayName] = " Marine walk/run speed 105% ",  
-           [kTechDataTooltipInfo] = "Walking and running speed increase by 5%"}, 
+           [kTechDataDisplayName] = "Marine walk/run speed",  
+           [kTechDataTooltipInfo] = "Walking and running speed increase by 4%. 10 too fast, 5 too noticeable. Try 4!"}, 
             
             
          { [kTechDataId] = kTechId.MacDefenseBuff,   
@@ -336,6 +336,13 @@ local kSiege_TechData =
       [kTechDataResearchTimeKey] = 30,   
     [kTechDataTooltipInfo] =  "10% radius increase for bile bomb"},
     
+    
+    
+               { [kTechDataId] = kTechId.HydraBuff1,  
+         [kTechDataCostKey] = 30,  
+        [kTechDataDisplayName] = "Hydra Buff1", 
+      [kTechDataResearchTimeKey] = 30,   
+    [kTechDataTooltipInfo] =  "5% increase in dmg(does it need range too?)"},
     
     
   

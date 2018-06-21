@@ -18,7 +18,9 @@ self.techTree:AddPassive(kTechId.PrimalScream,              kTechId.None, kTechI
     self.techTree:AddUpgradeNode(kTechId.DigestComm, kTechId.None, kTechId.None)
     self.techTree:AddResearchNode(kTechId.AlienHealth1,     kTechId.Shell, kTechId.BioMassNine) --Requirements WIP
     self.techTree:AddResearchNode(kTechId.SkulkRage,     kTechId.Spur, kTechId.BioMassSix) -- Six?? IDK!
-    self.techTree:AddResearchNode(kTechId.GorgeBombBuff,     kTechId.Spur, kTechId.BioMassThree) -- Six?? IDK!
+    self.techTree:AddResearchNode(kTechId.GorgeBombBuff,     kTechId.Spur, kTechId.BioMassThree) 
+    self.techTree:AddResearchNode(kTechId.HydraBuff1,     kTechId.Spur, kTechId.BioMassFour) --idk req.
+    
     
     
    -- self.techTree:AddResearchNode(kTechId.StructureHealth1,     kTechId.Shell, kTechId.BioMassNine)

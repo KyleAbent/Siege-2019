@@ -49,6 +49,7 @@ local kSiege_TechIds =
     'ArmoryBuff1',
     'SkulkRage',
     'GorgeBombBuff',
+    'HydraBuff1',
    // 'BackupLight',
   //  'AdvancedBeacon',
   //  'EggBeacon',

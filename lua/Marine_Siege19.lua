@@ -9,9 +9,9 @@ originit(self)
      --Then again, who knows the perf onspawn adjusting networkvar. 
        -- if global then why call all the time and not when necessary? ill figure it out for later
    -- if Marine.kWalkMaxSpeed == 5 then
-    Marine.kWalkMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5 * 1.05, 5)  
-    Marine.kRunMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5.75 * 1.05, 5.75) 
-    Marine.kRunInfestationMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5 * 1.05, 5) 
+    Marine.kWalkMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5 * 1.04, 5)  
+    Marine.kRunMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5.75 * 1.04, 5.75) 
+    Marine.kRunInfestationMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5 * 1.04, 5) 
   --  end
     --Better if no respawn required such as alien
   --Print("%s %s %s", Marine.kWalkMaxSpeed, Marine.kRunMaxSpeed, Marine.kRunInfestationMaxSpeed)
