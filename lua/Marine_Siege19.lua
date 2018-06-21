@@ -1,3 +1,22 @@
+local originit = Marine.OnInitialized
+function Marine:OnInitialized()
+
+originit(self)
+
+
+
+     --Brilliant formula here. I'd like to copyright it. Well, as for modders. :P i'll capitalize on it. winning formula here!
+     --Then again, who knows the perf onspawn adjusting networkvar. 
+       -- if global then why call all the time and not when necessary? ill figure it out for later
+   -- if Marine.kWalkMaxSpeed == 5 then
+    Marine.kWalkMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5 * 1.05, 5)  
+    Marine.kRunMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5.75 * 1.05, 5.75) 
+    Marine.kRunInfestationMaxSpeed = ConditionalValue( GetHasTech(self, kTechId.RunSpeed1), 5 * 1.05, 5) 
+  --  end
+    --Better if no respawn required such as alien
+  --Print("%s %s %s", Marine.kWalkMaxSpeed, Marine.kRunMaxSpeed, Marine.kRunInfestationMaxSpeed)
+
+end
 
 local orig = Marine.InitWeapons
 function Marine:InitWeapons()
@@ -8,6 +27,7 @@ function Marine:InitWeapons()
    
        self:GiveItem(Welder.kMapName)
         self:SetActiveWeapon(Rifle.kMapName)
+
     //end
 
 end

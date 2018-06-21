@@ -204,13 +204,13 @@ local kSiege_TechData =
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] =  "Sometimes a commander may not want a specific entity, eh."},
 
-          { [kTechDataId] = kTechId.WhipStealFT,   
-            [kTechDataDisplayName] = "Steal Flamethrower",
- [kTechDataCostKey] = 20,   
+          { [kTechDataId] = kTechId.WhipBuff1,   
+            [kTechDataDisplayName] = "WhipBuff1",
+ [kTechDataCostKey] = 30,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
-[kTechDataTooltipInfo] =  "A random 10-30% chance on every slap to steal a marine flamethrower and fling it around the map forcing them to re pick it up if it didn't fall through the floor."},
+[kTechDataTooltipInfo] = "5% increase of movespeed, max speed, range, bombard range, bomb speed"},
 
   
                   --Thanks dragon ns2c
@@ -239,6 +239,8 @@ local kSiege_TechData =
     [kTechDataTooltipInfo] =  "Once per game, advanced beacon located inside Siege Room rather than closest CC. Choose your timing wisely."},
     
     
+    
+
 
     /*
         { [kTechDataId] = kTechId.MacSpawnOn,    
@@ -273,14 +275,14 @@ local kSiege_TechData =
            [kTechDataTooltipInfo] = ""},
            
           { [kTechDataId] = kTechId.CragHeals1,   
-          [kTechDataCostKey] = 20,  
-          [kTechDataResearchTimeKey] = 30,   
+          [kTechDataCostKey] = 50,  
+          [kTechDataResearchTimeKey] = 60,   
            [kTechDataDisplayName] = "CragHeals1",  
            [kTechDataTooltipInfo] = "Increase: HealPercent, Min Heal, Max Heal by 10%."},   
 
           { [kTechDataId] = kTechId.JetpackFuel1,   
-          [kTechDataCostKey] = 20,  
-          [kTechDataResearchTimeKey] = 30,   
+          [kTechDataCostKey] = 50,  
+          [kTechDataResearchTimeKey] = 60,   
            [kTechDataDisplayName] = "JetpackFuel1",  
            [kTechDataTooltipInfo] = "Decrease jetpack fuel replenish delay by 10%."},    
            
@@ -288,10 +290,56 @@ local kSiege_TechData =
            
         
          { [kTechDataId] = kTechId.AlienHealth1,   
-          [kTechDataCostKey] = kExtractorArmor1Cost,  
-          [kTechDataResearchTimeKey] = kExtractorArmor1ResearchTime,   
-           [kTechDataDisplayName] = "Increase Skulk,Lerk,Fade,Onos max health by 10%. Be careful, this goes away if all shells die!",  
-           [kTechDataTooltipInfo] = ""},
+          [kTechDataCostKey] = 50,  
+          [kTechDataResearchTimeKey] = 60,   
+           [kTechDataDisplayName] = "Increase Alien max hp 10%. ",  
+           [kTechDataTooltipInfo] = "Be careful, this goes away if all shells die!"},
+          
+         { [kTechDataId] = kTechId.RunSpeed1,   
+          [kTechDataCostKey] = 50,  
+          [kTechDataResearchTimeKey] = 60,   
+           [kTechDataDisplayName] = " Marine walk/run speed 105% ",  
+           [kTechDataTooltipInfo] = "Walking and running speed increase by 5%"}, 
+            
+            
+         { [kTechDataId] = kTechId.MacDefenseBuff,   
+          [kTechDataCostKey] = 30,  
+          [kTechDataResearchTimeKey] = 25, --Hogging a robotics factory is not good
+           [kTechDataDisplayName] = "Mac Buff 1 ",  
+           [kTechDataTooltipInfo] = "15% increase of weld rate, construct rate"}, 
+           
+           
+         { [kTechDataId] = kTechId.ClipSize1,   
+          [kTechDataCostKey] = 50,  
+          [kTechDataResearchTimeKey] = 60,   
+           [kTechDataDisplayName] = "Increase Rifle Clipsize  10%. ",  
+           [kTechDataTooltipInfo] = "Notice the requirements!"}, 
+
+         { [kTechDataId] = kTechId.ArmoryBuff1,   
+          [kTechDataCostKey] = 50,  
+          [kTechDataResearchTimeKey] = 60,   
+           [kTechDataDisplayName] = "Armory Buff 1. ",  
+           [kTechDataTooltipInfo] = "Increase HealAmount, Interval, Range by 10%. (Global)"}, 
+           
+         
+          --Convars WIP
+    
+       { [kTechDataId] = kTechId.SkulkRage,  
+         [kTechDataCostKey] = 30,  
+        [kTechDataDisplayName] = "SkulkRage", 
+      [kTechDataResearchTimeKey] = 30,   
+    [kTechDataTooltipInfo] =  "10% faster skulk primary attack animation"},
+    
+           { [kTechDataId] = kTechId.GorgeBombBuff,  
+         [kTechDataCostKey] = 30,  
+        [kTechDataDisplayName] = "Gorge Bomb Buff", 
+      [kTechDataResearchTimeKey] = 30,   
+    [kTechDataTooltipInfo] =  "10% radius increase for bile bomb"},
+    
+    
+    
+  
+   
               /*
         { [kTechDataId] = kTechId.FadeHealth,   
           [kTechDataCostKey] = kExtractorArmor1Cost,  

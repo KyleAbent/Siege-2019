@@ -4,9 +4,9 @@ function JetpackMarine:OnInitialized()
 
 originit(self)
 
-   if GetHasTech(self, kTechId.JetpackFuel1) then
-    JetpackMarine.kJetpackFuelReplenishDelay = .36
-   end
+     //Brilliant formula here. I'd like to copyright it. Well, as for modders. :P i'll capitalize on it. winning formula here!
+    JetpackMarine.kJetpackFuelReplenishDelay = ConditionalValue( GetHasTech(self, kTechId.JetpackFuel1), 0.36, 4)  
+
 
 end
 

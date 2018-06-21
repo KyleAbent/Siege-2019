@@ -11,7 +11,7 @@ local function GetHasSentryBatteryInRadius(self)
 end
 
 function PowerConsumerMixin:GetIsPowered() 
-    return self.powered or self.powerSurge or GetHasSentryBatteryInRadius(self)
+    return self.powered or self.powerSurge or ( not self:isa("SentryBattery") and GetHasSentryBatteryInRadius(self) )
 end
 
 function LoadPathing(mapName, groupName, values)

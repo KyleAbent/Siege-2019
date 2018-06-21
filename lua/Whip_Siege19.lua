@@ -12,6 +12,26 @@ AddMixinNetworkVars(InfestationMixin, networkVars)
 AddMixinNetworkVars(DigestCommMixin, networkVars)
 
 
+local originit = Whip.OnInitialized
+function Whip:OnInitialized()
+
+originit(self)
+     --Brilliant formula here. I'd like to copyright it. Well, as for modders. :P i'll capitalize on it. winning formula here!
+     --Then again, who knows the perf onspawn adjusting networkvar. 
+       -- if global then why call all the time and not when necessary? ill figure it out for later
+   -- if Marine.kWalkMaxSpeed == 5 then
+
+    Whip.kMoveSpeed = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 3.5 * 1.05, 3.5)  
+    Whip.kMaxMoveSpeedParam = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 10 * 1.05, 10)
+    Whip.kRange = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 7 * 1.05, 7) 
+    Whip.kBombardRange = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 20 * 1.05, 20) 
+    Whip.kBombSpeed = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 20 * 1.05, 20) 
+  --  end
+    --Better if no respawn required such as alien
+  --Print("%s %s %s", Marine.kWalkMaxSpeed, Marine.kRunMaxSpeed, Marine.kRunInfestationMaxSpeed)
+
+end
+
 local origcreate = Whip.OnCreate
 function Whip:OnCreate()
    origcreate(self)
@@ -25,8 +45,7 @@ local table = {}
 
 table = origbuttons(self, techId)
 
- --table[4] = kTechId.WhipExplode
-  table[3] = kTechId.WhipStealFT
+  table[3] = kTechId.WhipBuff1
  table[8] = kTechId.DigestComm
  return table
 
@@ -58,44 +77,6 @@ function Whip:SetSalty()
  --nope
 end
 
-if Server then
-
-function Whip:CreateFTAtAttachPointandFlickIt()
-
-    local bombStart = self:GetAttachPointOrigin("Whip_Ball")
-    local flamethrower = CreateEntity(Flamethrower.kMapName, bombStart + Vector(0,1,0), 1)
-end             
-                    
-local slap = Whip.SlapTarget
-function Whip:SlapTarget(target)
-
-    if GetHasTech(self, kTechId.WhipStealFT ) and target and self.slapping then //
-        if not self:GetIsOnFire() and self.slapTargetSelector:ValidateTarget(target) then //
-         if target:isa("Marine") or target:isa("JetpackMarine") then //
-          local client = target:GetClient()
-          if not client then return end
-          local controlling = client:GetControllingPlayer()
-            if controlling:GetWeaponInHUDSlot(1) ~= nil and controlling:GetWeaponInHUDSlot(1):isa("Flamethrower") then //
-                local roll = math.random(1,100)
-                if roll <= math.random(10,30) then //
-                  DestroyEntity(controlling:GetWeaponInHUDSlot(1))
-                     if controlling:GetWeaponInHUDSlot(2) ~= nil then //
-                      controlling:SwitchWeapon(2)
-                      else
-                          controlling:SwitchWeapon(3)
-                      end     //
-                       self:CreateFTAtAttachPointandFlickIt()
-                end //
-             end //
-         end    //                    
-        end //
-    end //
-    
-    slap(self, target)
-    
-end
-
-end
 
 
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)

@@ -321,7 +321,7 @@ function Plugin:DestroyAllKarmaStructFor(Client)
 //Intention: Kill Karma Structures if client f4s, otherwise 'limit' becomes nil and infinite 
 local Player = Client:GetControllingPlayer()
         for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", Player:GetTeamNumber())) do
-        if not entity:isa("Commander") and entity:GetOwner() == Player  then entity:Kill() end 
+        if not Shared.GetCheatsEnabled() and not entity:isa("Commander") and entity:GetOwner() == Player  then entity:Kill() end 
       end
     
 end
@@ -685,7 +685,7 @@ elseif String == "BackupBattery"  then
 mapnameof = SentryBattery.kMapName
 techid = kTechId.SentryBattery
 limit = gKarmaStructureBackUpBatteryLimit
-KarmaCost = 6
+KarmaCost = gKarmaStructureBackUpBatteryCost
 --elseif String == "BackupLight"  then
 --mapnameof = BackupLight.kMapName
 --techid = kTechId.BackupLight

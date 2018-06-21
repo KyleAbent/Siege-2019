@@ -1,3 +1,10 @@
+function GetIsRoomPowerUp(who)
+ local location = GetLocationForPoint(who:GetOrigin())
+  if not location then return false end
+ local powernode = GetPowerPointForLocation(location.name)
+ if powernode and powernode:GetIsBuilt() and not powernode:GetIsDisabled()  then return true end
+ return false
+end
 function GetSiegeLocation(where)
 --local locations = {}
 

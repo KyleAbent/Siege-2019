@@ -9,9 +9,17 @@ function MAC:OnCreate()
     origcreate(self)
     InitMixin(self, ResearchMixin)
     InitMixin(self, RecycleMixin)
+
 end
-
-
+local originit = MAC.OnInitialized
+function MAC:OnInitialized()
+    originit(self)
+    MAC.kConstructRate = ConditionalValue( GetHasTech(self, kTechId.MacDefenseBuff), 0.4* 1.15, 0.4)  
+    MAC.kWeldRate = ConditionalValue( GetHasTech(self, kTechId.MacDefenseBuff), 0.5 * 1.15, 0.5) 
+    MAC.kRepairHealthPerSecond = ConditionalValue( GetHasTech(self, kTechId.MacDefenseBuff), 50 * 1.15, 50) 
+   -- MAC.kArmor = ConditionalValue( GetHasTech(self, kTechId.MacDefenseBuff), kMACArmor * 1.15, kMACArmor) 
+    --Print("kConstructRate %s", MAC.kConstructRate)
+end
 --Weld other macs and stack macs and dont have delay for not welding while damaged
 
 function MAC:GetCanBeWeldedOverride()
@@ -352,3 +360,5 @@ function MAC:OnUpdate(deltaTime)
     end
     
 end
+
+Shared.LinkClassToMap("MAC", MAC.kMapName, networkVars)

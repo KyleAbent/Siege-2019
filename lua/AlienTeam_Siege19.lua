@@ -14,9 +14,16 @@ function AlienTeam:InitTechTree()
 //self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
 self.techTree:AddPassive(kTechId.PrimalScream,              kTechId.None, kTechId.None, kTechId.AllAliens)
  self.techTree:AddResearchNode(kTechId.CragHeals1, kTechId.Shell, kTechId.None)
-    self.techTree:AddResearchNode(kTechId.WhipStealFT, kTechId.Whip, kTechId.None)
+    self.techTree:AddResearchNode(kTechId.WhipBuff1, kTechId.Whip, kTechId.Spur)
     self.techTree:AddUpgradeNode(kTechId.DigestComm, kTechId.None, kTechId.None)
-    self.techTree:AddResearchNode(kTechId.AlienHealth1,     kTechId.Shell, kTechId.None)
+    self.techTree:AddResearchNode(kTechId.AlienHealth1,     kTechId.Shell, kTechId.BioMassNine) --Requirements WIP
+    self.techTree:AddResearchNode(kTechId.SkulkRage,     kTechId.Spur, kTechId.BioMassSix) -- Six?? IDK!
+    self.techTree:AddResearchNode(kTechId.GorgeBombBuff,     kTechId.Spur, kTechId.BioMassThree) -- Six?? IDK!
+    
+    
+   -- self.techTree:AddResearchNode(kTechId.StructureHealth1,     kTechId.Shell, kTechId.BioMassNine)
+
+    
 --self.techTree:AddResearchNode(kTechId.LerkHealth,     kTechId.Shell, kTechId.None)
 --self.techTree:AddResearchNode(kTechId.FadeHealth,     kTechId.Shell, kTechId.None)
 --self.techTree:AddResearchNode(kTechId.OnosHealth,     kTechId.Shell, kTechId.None)
