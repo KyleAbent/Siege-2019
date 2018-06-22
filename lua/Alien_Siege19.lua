@@ -39,7 +39,7 @@ end
 
 if Server then
 
-function Alien:CreditBuy(techId)
+function Alien:KarmaBuy(techId)
         local cost = LookupTechData(techId, kTechDataCostKey, 0)
          self:AddResources(cost)
         local upgradetable = {}

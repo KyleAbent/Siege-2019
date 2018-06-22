@@ -97,3 +97,16 @@ return
 end
 
 end -- client
+
+
+if Server then
+
+function Marine:GiveExo(spawnPoint)
+
+    local exo = self:Replace(Exo.kMapName, self:GetTeamNumber(), false, spawnPoint, { layout = "MinigunMinigun" })
+    return exo
+    
+end--function
+
+
+end --Server

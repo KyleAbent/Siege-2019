@@ -21,6 +21,8 @@ ModLoader.SetupFileHook( "lua/InfantryPortal.lua", "lua/InfantryPortal_Siege19.l
 
 ModLoader.SetupFileHook( "lua/Armory.lua", "lua/Armory_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/Exosuit.lua", "lua/Exosuit_Siege19.lua", "post" )
+
 ModLoader.SetupFileHook( "lua/Skulk.lua", "lua/Skulk_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Lerk.lua", "lua/Lerk_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Gorge.lua", "lua/Gorge_Siege19.lua", "post" )

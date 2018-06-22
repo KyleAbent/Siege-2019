@@ -3,20 +3,30 @@ local Shine = Shine
 local Plugin = Plugin
 
 
-Shine.Hook.SetupClassHook( "Spectator", "ChangeView", "OnChangeView", "Post" )
+Shine.Hook.SetupClassHook( "AvocaSpectator", "ChangeView", "OnChangeView", "Post" )
 
 Plugin.Version = "1.0"
 
-function Plugin:OnFirstThink() 
+local function AutoSpectate(self)
+ //local count = 0
+ //Yes yes i know 
+    //Print("ummmm")
+              
+   // Print("AutoSpectate 1")
     Shine.Timer.Create( "AutoSpectate", 8, -1, function() 
-                   for index, player in ientitylist(Shared.GetEntitiesWithClassname("Spectator")) do
-                              if player:GetTeamNumber() ~= 1 and player:GetTeamNumber() ~= 2 then
+                   for index, player in ientitylist(Shared.GetEntitiesWithClassname("AvocaSpectator")) do
                               self:OnChangeView(player)
-                              end
+                           
+                //     count = count + 1
               end 
+     // Print("AutoSpectate 2")
+   //   if count == 0 then 
+   ////  Shine.Timer.Destroy("AutoSpectate") 
+       // Print("AutoSpectate 3")
+    //  end 
     end )
+    
 end
-
 
 
 function Plugin:Initialise()
@@ -68,10 +78,10 @@ local choices = {}
 //local interesting = nil //GetLocationWithMostMixedPlayers()
 //if interesting ~= nil then table.insert(choices,interesting) end
            
-                for index, camera in ientitylist(Shared.GetEntitiesWithClassname("DirectorCamera")) do
+                     for index, camera in ientitylist(Shared.GetEntitiesWithClassname("DirectorCamera")) do
                    table.insert(choices, camera) //should be random not first. always will go to same first. argh. NM no break lol
               end    
-              
+              /*
               for index, shadeink in ientitylist(Shared.GetEntitiesWithClassname("ShadeInk")) do
                    table.insert(choices, shadeink)
               end     
@@ -105,7 +115,7 @@ local choices = {}
                      break 
                   end
               end 
-              
+              */
               local random = table.random(choices)
               return random
 end
@@ -119,7 +129,7 @@ local choices = {}
                    table.insert(choices, camera) //should be random not first. always will go to same first. argh. NM no break lol
               end    
               
- 
+ /*
              for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Observatory")) do
                   if obs:GetIsBeaconing()  then table.insert(choices, obs) break end --built and not disabled should be summed up by if in combat?
               end  
@@ -145,14 +155,14 @@ local choices = {}
                   end
               end       
               
-              
+              */
               local random = table.random(choices)
               return random
 
 end
 local function GetViewThree()
 local choices = {}    
-       
+       /*
                             for index, camera in ientitylist(Shared.GetEntitiesWithClassname("DirectorCamera")) do
                    table.insert(choices, camera) //should be random not first. always will go to same first. argh. NM no break lol
               end    
@@ -177,7 +187,7 @@ local choices = {}
                   if not cyst:GetIsBuilt() then table.insert(choices, cyst) break end 
               end
       */
-      
+      /*
                      for index, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
                   if player ~= self and not player:isa("Spectator")  and not player:isa("ReadyRoomPlayer") 
                     and not player:isa("Commander") and player:GetIsInCombat() then 
@@ -195,7 +205,7 @@ local choices = {}
                   break
                   end --built and not disabled should be summed up by if in combat?
               end    
-              
+              */
               local random = table.random(choices)
               return random
 
@@ -264,13 +274,14 @@ local function firstPersonScoreBased(self, client)
     self:NotifyGeneric( client, "(First person) VIP is %s, # rank in score is %s", true, topscorer:GetName(), entrant )
 end
  function Plugin:OnChangeView(client, untilNext, betweenLast)
+ -- Print("ChangeView")
+      -- client.SendNetworkMessage("SwitchFromFirstPersonSpectate", { mode = kSpectatorMode.Following })
         
         if not client then return end
        local vip = nil
        
 
-    //while (vip == null) do
-        local vip = null
+    while (vip == null) do
         local random = math.random(1,3)
         if random == 1 then
            vip = GetViewOne()
@@ -281,18 +292,18 @@ end
         //else 
         //    firstPersonScoreBased(self, client)
         end
-    //end
+    end
    
-        if vip ~= nil then 
-              local roll = math.random(1,2)
-             if roll == 1 then
+       // if vip ~= nil then 
+            //  local roll = math.random(1,2)
+            // if roll == 1 then
               overHeadandNear(self, client, vip)
-             elseif roll == 2 then
-              firstPersonScoreBased(self, client)
-              end
-        else
-       firstPersonScoreBased(self, client)
-        end
+            // elseif roll == 2 then
+            //  firstPersonScoreBased(self, client)
+            //  end
+      ////  else
+      //  firstPersonScoreBased(self, client)
+     //  end
   
          Shine.ScreenText.Add( 50, {X = 0.20, Y = 0.75,Text = "[Director] untilNext: %s",Duration = betweenLast or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, client )  
 
@@ -310,8 +321,8 @@ local function Direct( Client, Targets )
     for i = 1, #Targets do
     local Player = Targets[ i ]:GetControllingPlayer()
           //Shared.ConsoleCommand(string.format("sh_setteam %s %s", Player:GetUserId(), 3 )) 
-          //Player:ReplaceRespawnPlayer(Player, nil, nil, Spectator.kMapName)
-          Player:Replace(Spectator.kMapName, 3)
+          //Player:ReplaceRespawnPlayer(Player, nil, nil, AvocaSpectator.kMapName)
+          Player:Replace(AvocaSpectator.kMapName, 3)
      end
 end
 

@@ -228,20 +228,20 @@ function Plugin:PrimalScreamPointBonus(who, Points)
   end
 end
 function Plugin:OnScore( Player, Points, Res, WasKill )
-if Points ~= nil and Points ~= 0 and Player and not Shared.GetCheatsEnabled() then
-   if not self.GameStarted then Points = 1  AddOneScore(Player,Points,Res, WasKill) end
-  if WasKill and Player:isa("Alien") and Player:GetHasPrimalScream() then self:PrimalScreamPointBonus(Player, Points) end
+if Points ~= nil and Points ~= 0 and Player  then
+   --if not self.GameStarted then Points = 1  AddOneScore(Player,Points,Res, WasKill) end
+  --if WasKill and Player:isa("Alien") and Player:GetHasPrimalScream() then self:PrimalScreamPointBonus(Player, Points) end
  local client = Player:GetClient()
  if not client then return end
          
     local addamount = Points/10--Points/(10/self.Config.kKarmaMultiplier)      
  local controlling = client:GetControllingPlayer()
  
-         if Player:GetTeamNumber() == 1 then
-         self.marinecredits = self.marinecredits + addamount
-        elseif Player:GetTeamNumber() == 2 then
-         self.aliencredits = self.aliencredits + addamount
-         end
+      --   if Player:GetTeamNumber() == 1 then
+       --  self.marinecredits = self.marinecredits + addamount
+     --   elseif Player:GetTeamNumber() == 2 then
+       --  self.aliencredits = self.aliencredits + addamount
+       --  end
          
 self.KarmaUsers[ controlling:GetClient() ] = self:GetPlayerKarmaInfo(controlling:GetClient()) + addamount
 Shine.ScreenText.SetText("Karma", string.format( "%s Karma", self:GetPlayerKarmaInfo(controlling:GetClient()) ), controlling:GetClient()) 
