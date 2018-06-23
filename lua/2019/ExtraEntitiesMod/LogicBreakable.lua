@@ -223,7 +223,7 @@ function LogicBreakable:OnKill(damage, attacker, doer, point, direction)
     self:SetPhysicsGroup(PhysicsGroup.DroppedWeaponGroup)
     self:SetPhysicsGroupFilterMask(PhysicsMask.None)
     
-     self:HandoutPoints()
+    -- self:HandoutPoints()
      self.driving = true
 
 end
