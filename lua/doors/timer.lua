@@ -160,19 +160,13 @@ end
 
 function Timer:OpenFrontDoors()
          self.frontOpened = true
-          -- self.timelastPPCount = Shared.GetTime() + 60
-       -- for index, powerpoint in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
-      --       if powerpoint:GetIsBuilt() and not powerpoint:GetIsDisabled() then self.MSCPPC = self.MSCPPC + 1 end
-      --  end 
      
            GetGamerules():SetDamageMultiplier(1) 
            CloseAllBreakableDoors()
-//              if GetGameStarted() then GetImaginator():OnFrontOpen() end
-      self.FrontTimer = 0
+           self.FrontTimer = 0
                for index, frontdoor in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do
                       OpenEightTimes(frontdoor)
               end 
-              
                if GetGameStarted() then 
                 GetGamerules():DisplayFront()
               /*

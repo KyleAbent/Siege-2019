@@ -9,7 +9,12 @@ ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightH
 
 ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) --hmm?
 
+
+ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" ) --hmm?
+
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/Hydra_Siege19.lua", "post" ) --hmm?
+
+ModLoader.SetupFileHook( "lua/Player.lua", "lua/Player_Siege19.lua", "post" ) --hmm?
 
 
 ModLoader.SetupFileHook( "lua/RoboticsFactory.lua", "lua/RoboticsFactory_Siege19.lua", "post" ) --hmm?
@@ -28,6 +33,10 @@ ModLoader.SetupFileHook( "lua/Lerk.lua", "lua/Lerk_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Gorge.lua", "lua/Gorge_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/SentryBattery_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/Weapons/Marine/ExoWeaponHolder.lua", "lua/Weapons/Marine/ExoWeaponHolder_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/Weapons/Marine/Flamethrower.lua", "lua/Weapons/Marine/Flamethrower_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/CommAbilities/Alien/Contamination.lua", "lua/CommAbilities/Alien/Contamination_Siege19.lua", "post" )
 

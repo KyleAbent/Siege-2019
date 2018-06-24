@@ -1,4 +1,9 @@
 
+
+function Onos:GetTierFourTechId()
+    return kTechId.Onocide
+end
+
 function Onos:GetBaseHealth()
     return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Onos.kHealth * 1.10, Onos.kHealth)  --Lerk.kHealth
 end

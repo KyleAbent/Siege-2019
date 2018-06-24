@@ -81,7 +81,7 @@ local choices = {}
                      for index, camera in ientitylist(Shared.GetEntitiesWithClassname("DirectorCamera")) do
                    table.insert(choices, camera) //should be random not first. always will go to same first. argh. NM no break lol
               end    
-              /*
+           
               for index, shadeink in ientitylist(Shared.GetEntitiesWithClassname("ShadeInk")) do
                    table.insert(choices, shadeink)
               end     
@@ -115,7 +115,7 @@ local choices = {}
                      break 
                   end
               end 
-              */
+            
               local random = table.random(choices)
               return random
 end
@@ -129,7 +129,7 @@ local choices = {}
                    table.insert(choices, camera) //should be random not first. always will go to same first. argh. NM no break lol
               end    
               
- /*
+
              for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Observatory")) do
                   if obs:GetIsBeaconing()  then table.insert(choices, obs) break end --built and not disabled should be summed up by if in combat?
               end  
@@ -151,18 +151,18 @@ local choices = {}
                   if player ~= self and not player:isa("Spectator")  and not player:isa("ReadyRoomPlayer") 
                     and not player:isa("Commander") and player:GetIsInCombat() then 
                    table.insert(choices, player) 
-                     break 
+                    -- break 
                   end
               end       
               
-              */
+             
               local random = table.random(choices)
               return random
 
 end
 local function GetViewThree()
 local choices = {}    
-       /*
+      
                             for index, camera in ientitylist(Shared.GetEntitiesWithClassname("DirectorCamera")) do
                    table.insert(choices, camera) //should be random not first. always will go to same first. argh. NM no break lol
               end    
@@ -187,7 +187,7 @@ local choices = {}
                   if not cyst:GetIsBuilt() then table.insert(choices, cyst) break end 
               end
       */
-      /*
+    
                      for index, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
                   if player ~= self and not player:isa("Spectator")  and not player:isa("ReadyRoomPlayer") 
                     and not player:isa("Commander") and player:GetIsInCombat() then 
@@ -202,10 +202,10 @@ local choices = {}
                    for _, construct in ipairs(GetEntitiesWithMixin("Construct")) do //should be randomized and not index 0
                   if not construct:isa("PowerPoint") and not construct:GetIsBuilt() and construct:GetIsInCombat()
                  then table.insert(choices, construct) 
-                  break
+                 -- break
                   end --built and not disabled should be summed up by if in combat?
               end    
-              */
+              
               local random = table.random(choices)
               return random
 
@@ -244,10 +244,10 @@ local function overHeadandNear(self, client, vip)
              client:SetOrigin(viporigin)
              client:SetOffsetAngles(vip:GetAngles()) //if iscam
             
-           //  local dir = GetNormalizedVector(viporigin - client:GetOrigin())
-          //   local angles = Angles(GetPitchFromVector(dir), GetYawFromVector(dir), 0)
-           //  client:SetOffsetAngles(angles)
-            // client:SetLockOnTarget(vip:GetId())
+             local dir = GetNormalizedVector(viporigin - client:GetOrigin())
+             local angles = Angles(GetPitchFromVector(dir), GetYawFromVector(dir), 0)
+             client:SetOffsetAngles(angles)
+             client:SetLockOnTarget(vip:GetId())
              //Sixteenth notes within eigth notes which is the other untilNext
              
              self:NotifyGeneric( client, "VIP is %s, location is %s", true, vip:GetClassName(), GetLocationName(client) )
@@ -281,7 +281,6 @@ end
        local vip = nil
        
 
-    while (vip == null) do
         local random = math.random(1,3)
         if random == 1 then
            vip = GetViewOne()
@@ -289,21 +288,20 @@ end
            vip = GetViewTwo()
         elseif random == 3 then
            vip = GetViewThree()
-        //else 
-        //    firstPersonScoreBased(self, client)
+        else 
+            firstPersonScoreBased(self, client)
         end
-    end
    
-       // if vip ~= nil then 
-            //  local roll = math.random(1,2)
-            // if roll == 1 then
+        if vip ~= nil then 
+              local roll = math.random(1,2)
+             if roll == 1 then
               overHeadandNear(self, client, vip)
-            // elseif roll == 2 then
-            //  firstPersonScoreBased(self, client)
-            //  end
-      ////  else
-      //  firstPersonScoreBased(self, client)
-     //  end
+             elseif roll == 2 then
+              firstPersonScoreBased(self, client)
+              end
+      else
+        firstPersonScoreBased(self, client)
+       end
   
          Shine.ScreenText.Add( 50, {X = 0.20, Y = 0.75,Text = "[Director] untilNext: %s",Duration = betweenLast or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, client )  
 

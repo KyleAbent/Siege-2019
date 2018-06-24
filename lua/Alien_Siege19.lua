@@ -4,7 +4,7 @@ local networkVars =
 //canredeemorrebirth = "boolean",
  primaled = "boolean", 
 primaledID = "entityid",
-
+--modelsize = "private float (1 to 2 by 0.01)",
 } 
 
 local orig_Alien_OnInit = Alien.OnInitialized
@@ -16,6 +16,7 @@ function Alien:OnInitialized()
       // self:AddTimedCallback(function() UpdateSiegeAbility(self, nil, nil, self:GetTierThreeTechId(), self.GetTierFourTechId  and self:GetTierFourTechId() or kTechId.None ) end, 0.6) 
         UpdateSiegeAbility(self, self:GetTierThreeTechId(),  self:GetTierFourTechId() )
    end
+    --  self.modelsize = 1
 end
 
 local orig_Alien_OnCreate = Alien.OnCreate
@@ -30,6 +31,25 @@ function Alien:OnCreate()
 
 end
 
+/*
+function Alien:AdjustModelSize(size)
+  self.modelsize = size
+end
+--local orig_Onos_OnAdjustModelCoords = Onos.OnAdjustModelCoords
+function Alien:OnAdjustModelCoords(modelCoords) 
+--orig_Onos_OnAdjustModelCoords(self)
+          local scale = 1
+        if self.modelsize ~= 1 then
+          scale = self.modelsize
+        end
+    local coords = modelCoords
+        coords.xAxis = coords.xAxis * scale
+        coords.yAxis = coords.yAxis * scale
+        coords.zAxis = coords.zAxis * scale
+    return coords
+end
+
+*/
 
 
 local function CheckPrimalScream(self)

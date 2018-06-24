@@ -1,3 +1,28 @@
+kAcidRocketDamage = 25
+kAcidRocketDamageType = kDamageType.Normal --hm?
+kAcidRocketFireDelay = 0.5
+kAcidRocketEnergyCost = 10
+kAcidRocketRadius = 6
+
+
+
+kExoFlamerDamage = 25
+kExoWelderDamagePerSecond = 28
+kExoPlayerWeldRate = 15
+kExoStructureWeldRate = 65
+
+kOnoGrowEnergyCost = 20
+kOnocideEnergyCost = 20
+kOnocideMaxDuration = 4
+kOnocideDamage = 693
+kOnocideOnoGrowCoolDown = 12.5
+
+
+kExoWelderDamagePerSecond = 28
+kExoPlayerWeldRate = 15
+kExoStructureWeldRate = 65
+
+
 kAdvancedBeaconCoolDown = 30
 kAdvancedBeaconCost = 20
 kObsAdvBeaconPowerOff = 16

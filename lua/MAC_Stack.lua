@@ -22,6 +22,7 @@ function MAC:OnInitialized()
 end
 --Weld other macs and stack macs and dont have delay for not welding while damaged
 
+
 function MAC:GetCanBeWeldedOverride()
     return true --self.lastTakenDamageTime + 1 < Shared.GetTime()
 end

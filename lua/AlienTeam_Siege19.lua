@@ -13,6 +13,9 @@ function AlienTeam:InitTechTree()
 //self.techTree:AddBuildNode(kTechId.CommTunnel, kTechId.None)
 //self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
 self.techTree:AddPassive(kTechId.PrimalScream,              kTechId.None, kTechId.None, kTechId.AllAliens)
+self.techTree:AddPassive(kTechId.Onocide,              kTechId.None, kTechId.None, kTechId.AllAliens)
+self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId.AllAliens) -- though linking 
+
  self.techTree:AddResearchNode(kTechId.CragHeals1, kTechId.Shell, kTechId.None)
     self.techTree:AddResearchNode(kTechId.WhipBuff1, kTechId.Whip, kTechId.Spur)
     self.techTree:AddUpgradeNode(kTechId.DigestComm, kTechId.None, kTechId.None)

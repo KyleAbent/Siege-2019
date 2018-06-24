@@ -907,9 +907,10 @@ if not Player then return end
 
  if String == "JetPack" and not Player:isa("Exo") and not Player:isa("JetPack") then cost = gKarmaClassCostJetPack
   elseif String == "RailGun" and not Player:isa("Exo") then cost = gKarmaClassCostRailGunExo delayafter =   9 
-  elseif String == "MiniGun" and not Player:isa("Exo") then  cost = gKarmaClassCostRailGunExo  delayafter = 9
-  --elseif String == "Welder" and not Player:isa("Exo") then  cost = 25  delayafter = 15 
-  -- elseif String == "Flamer" and not Player:isa("Exo") then  cost = 27  delayafter = 15 
+  elseif String == "MiniGun" and not Player:isa("Exo") then  cost = gKarmaClassCostMiniGunExo  delayafter = 9
+  elseif String == "Welder" and not Player:isa("Exo") then  cost = 45  delayafter = 15 
+   elseif String == "Flamer" and not Player:isa("Exo") then  cost = 46  delayafter = 15 
+   elseif String == "WelderFlamer" and not Player:isa("Exo") then  cost = 44  delayafter = 15 
   elseif String == "Gorge" then cost = gKarmaClassCostGorge
   elseif String == "Lerk" then  cost = gKarmaClassCostLerk
   elseif String == "Fade" then cost = gKarmaClassCostFade 
@@ -921,10 +922,11 @@ if not Player then return end
             --Messy, could be re-written to only require activation once of string = X then call DeductBuy @ end
          if Player:GetTeamNumber() == 1 then
               if cost == gKarmaClassCostJetPack then DeductBuy(self, Player, cost, delayafter)   Player:GiveJetpack()
-             elseif cost == gKarmaClassCostRailGunExo then DeductBuy(self, Player, cost, delayafter)  Player:GiveDualExo(Player:GetOrigin())
-             elseif cost == gKarmaClassCostMiniGunExo then DeductBuy(self, Player, cost, delayafter) Player:GiveDualRailgunExo(Player:GetOrigin())
-           --  elseif cost == 25 then DeductBuy(self, Player, cost, delayafter) Player:GiveDualWelder(Player:GetOrigin())
-            -- elseif cost == 27 then DeductBuy(self, Player, cost, delayafter) Player:GiveDualFlamer(Player:GetOrigin())
+             elseif cost == gKarmaClassCostMiniGunExo then DeductBuy(self, Player, cost, delayafter)  Player:GiveDualExo(Player:GetOrigin())
+             elseif cost == gKarmaClassCostRailGunExo then DeductBuy(self, Player, cost, delayafter) Player:GiveDualRailgunExo(Player:GetOrigin())
+             elseif cost == 44 then DeductBuy(self, Player, cost, delayafter) Player:GiveWelderFlamer(Player:GetOrigin())
+             elseif cost == 45 then DeductBuy(self, Player, cost, delayafter) Player:GiveDualWelder(Player:GetOrigin())
+             elseif cost == 46 then DeductBuy(self, Player, cost, delayafter) Player:GiveDualFlamer(Player:GetOrigin())
              end
          elseif Player:GetTeamNumber() == 2 then
               if cost == gKarmaClassCostGorge then DeductBuy(self, Player, cost, delayafter) Player:KarmaBuy(kTechId.Gorge)  

@@ -122,6 +122,14 @@ function AvocaSpectator:OverrideInput(input)
     return input
     
 end
+local function GetIsTimeUp(timeof, timelimitof)
+ local time = Shared.GetTime()
+ local boolean = (timeof + timelimitof) < time
+ --Print("timeof is %s, timelimitof is %s, time is %s", timeof, timelimitof, time)
+ -- if boolean == true then Print("GetTimeIsUp boolean is %s, timelimitof is %s", boolean, timelimitof) end
+ return boolean
+end
+
 function AvocaSpectator:UpdateCamera()
          self:LockAngles()
         //  Print(self.lastswitch,  " ", self.nextangle )

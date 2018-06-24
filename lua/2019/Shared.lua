@@ -18,6 +18,9 @@ Script.Load("lua/2019/ExtraEntitiesMod/LogicBreakable.lua")
 Script.Load("lua/2019/ExtraEntitiesMod/LogicMixin.lua")
 Script.Load("lua/2019/ExtraEntitiesMod/PushTrigger.lua")
 Script.Load("lua/2019/ExtraEntitiesMod/ScaledModelMixin.lua")
+
+Script.Load("lua/2019/ExoFlamer.lua")
+Script.Load("lua/2019/ExoWelder.lua")
 --Script.Load("lua/2019/Siege_super_resource_point.lua")
 
 

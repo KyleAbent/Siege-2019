@@ -8,6 +8,11 @@ Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 //Script.Load("lua/Additions/OnoGrow.lua")
 
 Script.Load("lua/2019/DigestCommMixin.lua")
+Script.Load("lua/Weapons/Alien/Onocide.lua")
+
+Script.Load("lua/2019/ExoFlamer.lua")
+Script.Load("lua/2019/ExoWelder.lua")
+Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 
 if Server then
 
@@ -239,7 +244,47 @@ local kSiege_TechData =
     [kTechDataTooltipInfo] =  "Once per game, advanced beacon located inside Siege Room rather than closest CC. Choose your timing wisely."},
     
     
+       { [kTechDataId] = kTechId.Onocide,        
+  [kTechDataCategory] = kTechId.Onos,   
+     [kTechDataMapName] = Onocide.kMapName,  
+[kTechDataCostKey] = 10,
+ [kTechDataResearchTimeKey] = 10, 
+ --   [kTechDataDamageType] = kStabDamageType,  
+     [kTechDataDisplayName] = "Onicide",
+[kTechDataTooltipInfo] = "wip"},
     
+    
+
+         { [kTechDataId] = kTechId.DualWelderExosuit,    
+ [kTechIDShowEnables] = false,     
+  [kTechDataDisplayName] = "Dual Exo Welders", 
+[kTechDataMapName] = "exo",         
+      [kTechDataCostKey] = kDualExosuitCost - 10, 
+[kTechDataHotkey] = Move.E,
+ [kTechDataTooltipInfo] = "Dual Welders yo", 
+[kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
+
+
+         { [kTechDataId] = kTechId.DualFlamerExosuit,    
+ [kTechIDShowEnables] = false,     
+  [kTechDataDisplayName] = "Dual Exo Flamer", 
+[kTechDataMapName] = "exo",         
+      [kTechDataCostKey] = kDualExosuitCost - 5, 
+[kTechDataHotkey] = Move.E,
+ [kTechDataTooltipInfo] = "Dual Welders yo", 
+[kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
+
+         { [kTechDataId] = kTechId.WeldFlamerExosuit,    
+ [kTechIDShowEnables] = false,     
+  [kTechDataDisplayName] = "Welder Flamer Exo", 
+[kTechDataMapName] = "exo",         
+      [kTechDataCostKey] = kDualExosuitCost - 5, 
+[kTechDataHotkey] = Move.E,
+ [kTechDataTooltipInfo] = "Welder Flamer Exo Yo", 
+[kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
+
+
+
 
 
     /*
@@ -344,7 +389,16 @@ local kSiege_TechData =
       [kTechDataResearchTimeKey] = 30,   
     [kTechDataTooltipInfo] =  "5% increase in dmg(does it need range too?)"},
     
-    
+   
+ { [kTechDataId] = kTechId.AcidRocket,        
+  [kTechDataCategory] = kTechId.Fade,   
+     [kTechDataMapName] = AcidRocket.kMapName,  
+[kTechDataCostKey] = kStabResearchCost,
+ [kTechDataResearchTimeKey] = kStabResearchTime, 
+    [kTechDataDamageType] = kDamageType.Corrode,  
+     [kTechDataDisplayName] = "AcidRocket",
+ [kTechDataTooltipInfo] = "Ranged Projectile dealing damage only to armor and structures"},
+ 
   
    
               /*
