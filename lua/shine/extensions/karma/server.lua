@@ -311,7 +311,7 @@ end
 
 function Plugin:JoinTeam( Gamerules, Player, NewTeam, Force ) 
 
-    if not Player:isa("Commander") and NewTeam == 0 then
+    if not Player:isa("Commander") and NewTeam == 0 and Gamerules:GetGameStarted() then
      self:DestroyAllKarmaStructFor(Player:GetClient())
     end
 

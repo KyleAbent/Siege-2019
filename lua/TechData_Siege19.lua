@@ -228,6 +228,15 @@ local kSiege_TechData =
  [kTechDataTooltipInfo] = "+Energy to teammates, enzyme cloud"},
  
  
+           { [kTechDataId] = kTechId.UnlockAdvancedBeacon,   
+            [kTechDataDisplayName] = "UnlockAdvancedBeacon",
+ [kTechDataCostKey] = 30,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] = "This is so you don't accidentally trigger AdvancedBeacon thinking it's a research."},
+
+ 
     { [kTechDataId] = kTechId.AdvancedBeacon,   
    [kTechDataBuildTime] = 0.1,   
    [kTechDataCooldown] = kAdvancedBeaconCoolDown,

@@ -28,7 +28,14 @@ function Observatory:GetTechButtons(techId)
 
 --Right now pure overwrites because lazy
 local kObservatoryTechButtons = { kTechId.Scan, kTechId.DistressBeacon, kTechId.Detector, kTechId.None,
-kTechId.PhaseTech, kTechId.AdvancedBeacon, kTechId.None, kTechId.None }
+kTechId.PhaseTech, kTechId.None, kTechId.None, kTechId.None }
+
+
+if not GetHasTech(self, kTechId.UnlockAdvancedBeacon) then
+kObservatoryTechButtons[6] = kTechId.UnlockAdvancedBeacon
+else
+kObservatoryTechButtons[6] = kTechId.AdvancedBeacon
+end 
 
 
 if GetSiegeDoorOpen() and not GetTimer():GetHasSiegeBeaconed() then

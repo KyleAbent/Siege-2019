@@ -11,6 +11,16 @@ function MAC:OnCreate()
     InitMixin(self, RecycleMixin)
 
 end
+
+function MAC:OnUse(player, elapsedTime, useSuccessTable)
+        if Server then
+            self:GiveOrder(kTechId.FollowAndWeld, player:GetId(), player:GetOrigin(), nil, true, true)
+         end
+end
+function MAC:GetCanBeUsed(player, useSuccessTable)
+    useSuccessTable.useSuccess = player:GetTeamNumber() == 1    
+end
+
 local originit = MAC.OnInitialized
 function MAC:OnInitialized()
     originit(self)

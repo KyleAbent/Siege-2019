@@ -55,6 +55,7 @@ local kSiege_TechIds =
     'DualFlamerExosuit',
     'WeldFlamerExosuit',
     'AcidRocket',
+    'UnlockAdvancedBeacon',
    // 'BackupLight',
   //  'AdvancedBeacon',
   //  'EggBeacon',

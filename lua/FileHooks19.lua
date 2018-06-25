@@ -1,6 +1,6 @@
 ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/director/Spectator_Avoca.lua", "post" )
 ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege.lua", "post" )
-ModLoader.SetupFileHook( "lua/Hive.lua", "lua/Hive_Siege.lua", "post" )
+ModLoader.SetupFileHook( "lua/Hive.lua", "lua/Hive_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Marine.lua", "lua/Marine_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/JetpackMarine.lua", "lua/JetpackMarine_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Onos.lua", "lua/Onos_Siege19.lua", "post" )
@@ -9,8 +9,14 @@ ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightH
 
 ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) --hmm?
 
+ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" ) --hmm?
+
+
+--ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
+
+
 
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/Hydra_Siege19.lua", "post" ) --hmm?
 

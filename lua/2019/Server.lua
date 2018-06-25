@@ -25,6 +25,10 @@ function LoadPathing(mapName, groupName, values)
 end
 Event.Hook("MapLoadEntity", LoadPathing)
 
+
+
+
+
 /*
 
 function LoadPathing(mapName, groupName, values)

@@ -13,7 +13,8 @@ function MarineTeam:InitTechTree()
     self.techTree:AddResearchNode(kTechId.ExtractorArmor1,     kTechId.Armor3, kTechId.None)
     self.techTree:AddResearchNode(kTechId.JetpackFuel1,     kTechId.JetpackTech, kTechId.None)
     self.techTree:AddActivation(kTechId.SiegeBeacon,           kTechId.Observatory)  
-    self.techTree:AddActivation(kTechId.AdvancedBeacon, kTechId.None) 
+    self.techTree:AddActivation(kTechId.UnlockAdvancedBeacon, kTechId.Observatory) 
+    self.techTree:AddActivation(kTechId.AdvancedBeacon, kTechId.UnlockAdvancedBeacon) 
     self.techTree:AddResearchNode(kTechId.RunSpeed1,     kTechId.InfantryPortal, kTechId.Armor3) --I'm proud of this!
     self.techTree:AddResearchNode(kTechId.MacDefenseBuff,     kTechId.RoboticsFactory, kTechId.MAC) --I'm proud of this!
     self.techTree:AddResearchNode(kTechId.ClipSize1,     kTechId.InfantryPortal, kTechId.Weapons3) --I'm proud of this!
