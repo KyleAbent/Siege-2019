@@ -21,12 +21,16 @@ function Clog:GetInfestationRadius()
   local frontdoor = GetEntitiesWithinRange("FrontDoor", self:GetOrigin(), 7)
    if #frontdoor >=1 then return 0
    else
-    return 1.25
+    return 2
    end
 end
 
 function Clog:GetInfestationMaxRadius()
-    return 1.25
+  local frontdoor = GetEntitiesWithinRange("FrontDoor", self:GetOrigin(), 7)
+   if #frontdoor >=1 then return 0
+   else
+    return 2
+   end
 end
 
 function Clog:GetInfestationGrowthRate()
@@ -43,7 +47,7 @@ local origonkill = Clog.PreOnKill
 function Clog:PreOnKill(attacker, doer, point, direction)
     self:SetDesiredInfestationRadius(0)
     
-      for _, structure in ipairs(GetEntitiesWithMixinForTeamWithinRange("InfestationTracker", 1, self:GetOrigin(), 2)) do --I know, I know. BOO!. Well clog is not a scriptactor..
+      for _, structure in ipairs(GetEntitiesWithMixinForTeamWithinRange("InfestationTracker", 1, self:GetOrigin(), 3.25)) do --I know, I know. BOO!. Well clog is not a scriptactor..
       structure:AddTimedCallback(function() structure:SetGameEffectMask(kGameEffect.OnInfestation, false) end, 1)
       end
       

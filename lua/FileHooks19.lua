@@ -13,10 +13,11 @@ ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" ) --hmm?
 
+ModLoader.SetupFileHook( "lua/ResourceTower_Server.lua", "lua/ResourceTower_Server_Siege19.lua", "post" ) --hmm?
 
---ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
+ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
 
-
+ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/Hydra_Siege19.lua", "post" ) --hmm?
 
@@ -88,3 +89,4 @@ ModLoader.SetupFileHook( "lua/Fade.lua", "lua/Fade_Siege19.lua", "post" )
 
 
 ModLoader.SetupFileHook( "lua/Extractor.lua", "lua/Extractor_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/Harvester.lua", "lua/Harvester_Siege19.lua", "post" )

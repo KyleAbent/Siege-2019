@@ -19,7 +19,9 @@ function MarineTeam:InitTechTree()
     self.techTree:AddResearchNode(kTechId.MacDefenseBuff,     kTechId.RoboticsFactory, kTechId.MAC) --I'm proud of this!
     self.techTree:AddResearchNode(kTechId.ClipSize1,     kTechId.InfantryPortal, kTechId.Weapons3) --I'm proud of this!
     self.techTree:AddResearchNode(kTechId.ArmoryBuff1,     kTechId.Armory, kTechId.AdvancedArmory) --I'm proud of this!
-    
+    self.techTree:AddResearchNode(kTechId.MPresBuff1,     kTechId.Extractor, kTechId.None) --I'm proud of this!
+    self.techTree:AddResearchNode(kTechId.MTresBuff1,     kTechId.Extractor, kTechId.None) --I'm proud of this!
+
     self.techTree:AddBuyNode(kTechId.DualWelderExosuit, kTechId.ExosuitTech, kTechId.None)
     self.techTree:AddBuyNode(kTechId.DualFlamerExosuit, kTechId.ExosuitTech, kTechId.None)
     self.techTree:AddBuyNode(kTechId.WeldFlamerExosuit, kTechId.ExosuitTech, kTechId.None)

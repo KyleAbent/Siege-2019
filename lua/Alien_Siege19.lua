@@ -94,7 +94,20 @@ end
     
     end
 
+function Alien:AddResources(amount)
+
+    if  GetHasTech(self, kTechId.APresBuff1)   then
+        amount = amount * 1.05
+        resReward = math.min(amount, kMaxPersonalResources - self:GetResources()) --increase max pres
+        self:SetResources(self:GetResources() + resReward)
+     else 
+        Player.AddResources(self,amount)
+    end
+    
 end
+
+
+end --server
 
 function Alien:GetHasPrimalScream()
     return self.primaled

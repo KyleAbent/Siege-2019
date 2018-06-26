@@ -23,7 +23,8 @@ self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId
     self.techTree:AddResearchNode(kTechId.SkulkRage,     kTechId.Spur, kTechId.BioMassSix) -- Six?? IDK!
     self.techTree:AddResearchNode(kTechId.GorgeBombBuff,     kTechId.Spur, kTechId.BioMassThree) 
     self.techTree:AddResearchNode(kTechId.HydraBuff1,     kTechId.Spur, kTechId.BioMassFour) --idk req.
-    
+    self.techTree:AddResearchNode(kTechId.APresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
+    self.techTree:AddResearchNode(kTechId.ATresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
     
     
    -- self.techTree:AddResearchNode(kTechId.StructureHealth1,     kTechId.Shell, kTechId.BioMassNine)
@@ -41,6 +42,25 @@ self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId
     
     self.techTree:SetComplete()
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree
+end
+
+
+function AlienTeam:AddTeamResources(amount, isIncome)
+
+
+    
+    if GetHasTech(self,kTechId.ATresBuff1) and amount > 0 and isIncome then
+     Print("(1)amounts is %s",amount)
+     Print("(2)amounts is %s", amount * 1.05)
+
+        self.totalTeamResourcesCollected = self.totalTeamResourcesCollected + (amount * 1.05)
+        self:SetTeamResources(self.teamResources + amount)
+    else
+        PlayingTeam.AddTeamResources(self, amount, isIncome)
+    end
+    
+
+    
 end
 
 

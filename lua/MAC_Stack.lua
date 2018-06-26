@@ -11,16 +11,6 @@ function MAC:OnCreate()
     InitMixin(self, RecycleMixin)
 
 end
-
-function MAC:OnUse(player, elapsedTime, useSuccessTable)
-        if Server then
-            self:GiveOrder(kTechId.FollowAndWeld, player:GetId(), player:GetOrigin(), nil, true, true)
-         end
-end
-function MAC:GetCanBeUsed(player, useSuccessTable)
-    useSuccessTable.useSuccess = player:GetTeamNumber() == 1    
-end
-
 local originit = MAC.OnInitialized
 function MAC:OnInitialized()
     originit(self)
@@ -30,6 +20,16 @@ function MAC:OnInitialized()
    -- MAC.kArmor = ConditionalValue( GetHasTech(self, kTechId.MacDefenseBuff), kMACArmor * 1.15, kMACArmor) 
     --Print("kConstructRate %s", MAC.kConstructRate)
 end
+function MAC:OnUse(player, elapsedTime, useSuccessTable)
+        if Server then
+            self:GiveOrder(kTechId.FollowAndWeld, player:GetId(), player:GetOrigin(), nil, true, true)
+         end
+end
+function MAC:GetCanBeUsed(player, useSuccessTable)
+    useSuccessTable.useSuccess = player:GetTeamNumber() == 1    
+end
+
+
 --Weld other macs and stack macs and dont have delay for not welding while damaged
 
 

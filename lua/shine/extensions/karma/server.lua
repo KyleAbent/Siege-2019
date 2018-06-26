@@ -22,6 +22,15 @@ local URLPath = "config://shine/KarmasLink.json"
 --local BadgesPath = "config://shine/UserConfig.json"
 
 
+function Plugin:onConstInit(  )
+
+       self.isacreditstructure = false
+
+end
+
+Shine.Hook.SetupClassHook( "ConstructMixin", "__initmixin", "onConstInit", "PassivePost" )
+
+
 Shine.Hook.SetupClassHook( "ScoringMixin", "AddScore", "OnScore", "PassivePost" )
 
 Shine.Hook.SetupClassHook( "OnoGrow", "OnoEggFilled", "OnOnEggFilled", "PassivePost" )
@@ -320,8 +329,8 @@ end
 function Plugin:DestroyAllKarmaStructFor(Client)
 //Intention: Kill Karma Structures if client f4s, otherwise 'limit' becomes nil and infinite 
 local Player = Client:GetControllingPlayer()
-        for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", Player:GetTeamNumber())) do
-        if not Shared.GetCheatsEnabled() and not entity:isa("Commander") and entity:GetOwner() == Player  then entity:Kill() end 
+        for index, entity in ipairs(GetEntitiesWithMixinForTeam("Construct", Player:GetTeamNumber())) do --I know I know for loops like this are nasty
+        if entity:GetIsACreditStructure() and not Shared.GetCheatsEnabled() and not entity:isa("Commander") and entity:GetOwner() == Player  then entity:Kill() end 
       end
     
 end

@@ -295,6 +295,46 @@ local kSiege_TechData =
 
 
 
+          { [kTechDataId] = kTechId.APresBuff1,   
+            [kTechDataDisplayName] = "APresBuff1",
+ [kTechDataCostKey] = 30,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] = "5% increase of alien pres gain amount"},
+
+          { [kTechDataId] = kTechId.ATresBuff1,   
+            [kTechDataDisplayName] = "ATresBuff1",
+ [kTechDataCostKey] = 30,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] = "5% increase of alien tres gain amount"},
+
+          { [kTechDataId] = kTechId.APresBuff1,   
+            [kTechDataDisplayName] = "APresBuff1",
+ [kTechDataCostKey] = 30,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] = "5% increase of alien pres gain amount"},
+
+
+          { [kTechDataId] = kTechId.MTresBuff1,   
+            [kTechDataDisplayName] = "MTresBuff1",
+ [kTechDataCostKey] = 30,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] = "5% "},
+
+          { [kTechDataId] = kTechId.MPresBuff1,   
+            [kTechDataDisplayName] = "MPresBuff1",
+ [kTechDataCostKey] = 30,   
+ [kTechIDShowEnables] = false,     
+  [kTechDataResearchTimeKey] = 30,
+ [kTechDataHotkey] = Move.R, 
+[kTechDataTooltipInfo] = "5% increase of marine pres gain amount"},
 
     /*
         { [kTechDataId] = kTechId.MacSpawnOn,    

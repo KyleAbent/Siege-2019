@@ -12,3 +12,23 @@ function ConstructMixin:__initmixin() --Simple? -- Avoca -- Requires more in thi
     end --setup
 end
 */
+
+
+function ConstructMixin:SetIsACreditStructure(boolean)
+    
+self.isacreditstructure = boolean
+      --Print("AvocaMixin SetIsACreditStructure %s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
+end
+function ConstructMixin:GetCanStick()
+     local canstick = not GetSetupConcluded()
+     --Print("Canstick = %s", canstick)
+     return canstick and self:GetIsACreditStructure() 
+end
+
+function ConstructMixin:GetIsACreditStructure()
+    
+       -- Print("AvocaMixin GetIsACreditStructure %s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
+return self.isacreditstructure 
+ 
+
+end

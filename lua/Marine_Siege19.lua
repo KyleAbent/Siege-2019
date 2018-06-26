@@ -245,5 +245,19 @@ function Marine:AttemptToBuy(techIds)
 end
 
 
+function Marine:AddResources(amount)
+
+    if  GetHasTech(self, kTechId.MPresBuff1)   then
+       --  Print("(1)amounts is %s",amount)
+        amount = amount * 1.05
+       -- Print("(2)amounts is %s",amount)
+        resReward = math.min(amount, kMaxPersonalResources - self:GetResources()) --increase max pres
+        self:SetResources(self:GetResources() + resReward)
+    else 
+       Player.AddResources(self,amount)
+    end
+    
+end
+
 
 end --Server

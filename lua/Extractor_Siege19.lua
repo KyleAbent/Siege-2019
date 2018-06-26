@@ -1,3 +1,16 @@
+local origbuttons = Extractor.GetTechButtons
+function Extractor:GetTechButtons(techId)
+local table = {}
+
+table = origbuttons(self, techId)
+
+ table[2] = kTechId.MTresBuff1
+ table[3] = kTechId.MPresBuff1
+ 
+ return table
+
+end
+
 /*
 Script.Load("lua/ResearchMixin.lua")
 
