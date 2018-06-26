@@ -44,7 +44,7 @@ self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree
 end
 
-
+/*
 function AlienTeam:AddTeamResources(amount, isIncome)
 
 
@@ -62,5 +62,6 @@ function AlienTeam:AddTeamResources(amount, isIncome)
 
     
 end
+*/
 
 
