@@ -221,40 +221,16 @@ end
 
 function Timer:OnUpdate(deltatime)
 
-  if Server then
-  
- 
+  if Server then 
     local gamestarted = GetGamerules():GetGameStarted()
       if gamestarted then 
        if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
-       
             if self.FrontTimer ~= 0 then 
                 self:FrontDoorTimer()
-                /*
-                     What should go here? construct entities that are not built? ZzZzZZZzzZZzZ
-                     What would be nice on a timely basis for during setup? Player buffs? cat packs? enzyme? 
-                     
-                     Comm: Placing struct, researching
-                     Players:Running map, building
-                     
-                     Why not a fast forward button? 
-                */
-               // Print("Hmm ?? 1")
-                 /*
-                      if not self.timelastDisco or self.timelastDisco + math.random(16, 24) <= Shared.GetTime() then
-                         self:PerformDisco()
-                         Print("Hmm ?? 2")
-                         self.timelastDisco = Shared.GetTime()
-                      end
-                   */
-                   //Promote front
-                  //  if not self.timelastCystBuff or self.timelastCystBuff + math.random(16, 24) <= Shared.GetTime() then
-                    
-                   // end
              end
              if self.SiegeTimer ~= 0 then
-             self:CountSTimer() 
-               end 
+                self:CountSTimer() 
+             end 
         end
       end
   end

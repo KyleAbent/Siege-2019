@@ -2,6 +2,8 @@ Script.Load("lua/2019/AvocaMixin.lua")
 Script.Load("lua/InfestationMixin.lua")
 Script.Load("lua/2019/DigestCommMixin.lua")
 
+  local kKarmaMaterialAlien = PrecacheAsset("cinematics/vfx_materials/karma.material")
+
 local networkVars = { 
 
 

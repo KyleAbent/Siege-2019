@@ -41,3 +41,22 @@ function MarineTeam:InitTechTree()
     self.techTree:SetComplete()
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree
 end
+
+
+local origInitial = MarineTeam.SpawnInitialStructures
+function MarineTeam:SpawnInitialStructures(techPoint)   --Not convenient to copy local function from marineteam exactly as written just to place more than default IP amount.
+    local techPointOrigin = techPoint:GetOrigin() + Vector(0, 2, 0)
+	for i = 1, 3 do
+              local spawnPoint = GetRandomBuildPosition( kTechId.InfantryPortal, techPointOrigin, kInfantryPortalAttachRange )
+              spawnPoint = spawnPoint and spawnPoint - Vector( 0, 0.6, 0 )
+                  if spawnPoint then
+                  local ip = CreateEntity(InfantryPortal.kMapName, spawnPoint, self:GetTeamNumber())
+                  SetRandomOrientation(ip)
+                  ip:SetConstructionComplete()
+                  end
+	end
+
+return origInitial(self,techPoint)
+end
+
+

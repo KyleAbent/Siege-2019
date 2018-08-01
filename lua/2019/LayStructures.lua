@@ -74,9 +74,11 @@ function LayStructures:GetDropStructureId()
 end
 function LayStructures:SetTechId(techid)
      self.techId = techid
+	 	 --if techid == kTechId.PhaseGate then self.structuresLeft = 2 end // a pair
 end
 function LayStructures:SetMapName(mapname)
      self.mapname = mapname
+
 end
 function LayStructures:GetstructuresLeft()
     return self.structuresLeft
@@ -250,10 +252,11 @@ local function DropStructure(self, player)
                 end--teamnum 
                 end--structure
                 structure:SetOwner(player)
-                if HasMixin(structure, "Construct") then structure:SetIsACreditStructure(true) end
+                if HasMixin(structure, "Construct") then structure:SetIsACreditStructure(true) end --limit within range?
+			
               --  if structure:isa("ARC") then structure:DelayDeploy() end
              --    if structure:isa("Egg") then structure:SetOrigin( structure:GetOrigin() + Vector(0, 0.25, 0) ) end
-               -- if structure:isa("PhaseGate") then structure.channel = 2 end
+                if structure:isa("PhaseGate") then structure.channel = 2 end
               --  if HasMixin(structure, "Supply") then RemoveSupply(self, player, structure) end
              --    if structure:isa("PoopEgg") then structure:SetSandy() end
                 --  if structure:isa("Drifter") then structure.isPet = true  end

@@ -1,3 +1,4 @@
+kNumberofGlows = 3 
 kAcidRocketDamage = 25
 kAcidRocketDamageType = kDamageType.Normal --hm?
 kAcidRocketFireDelay = 0.5

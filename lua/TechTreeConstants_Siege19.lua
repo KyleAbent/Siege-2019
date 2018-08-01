@@ -66,6 +66,9 @@ local kSiege_TechIds =
   //  'StructureBeacon',
   //  'CommTunnel',
   //  'OnoGrow',
+      'CragHiveTwo',
+	  'Rebirth',
+	  'Redemption',
 }
 
 for i = 1, #kSiege_TechIds do

@@ -1,0 +1,1 @@
+kEggsPerHatch = 5

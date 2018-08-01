@@ -1,4 +1,4 @@
-/*Kyle 'Avoca' Abent Karmas Season 4
+ /*Kyle 'Avoca' Abent Karmas Season 4
 kyle@kyleabent.com
 */
 local Shine = Shine
@@ -31,7 +31,7 @@ end
 Shine.Hook.SetupClassHook( "ConstructMixin", "__initmixin", "onConstInit", "PassivePost" )
 
 
-Shine.Hook.SetupClassHook( "ScoringMixin", "AddScore", "OnScore", "PassivePost" )
+--Shine.Hook.SetupClassHook( "ScoringMixin", "AddScore", "OnScore", "PassivePost" ) Not right now, eh.
 
 Shine.Hook.SetupClassHook( "OnoGrow", "OnoEggFilled", "OnOnEggFilled", "PassivePost" )
 
@@ -40,7 +40,7 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "ResetGame", "OnReset", "PassivePost"
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "BecauseFuckSpammingCommanders", "Replace" )
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMed", "SeriouslyFuckIt", "Replace" )
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyAmmo", "InTheButt", "Replace" )
-
+Shine.Hook.SetupClassHook( "GlowMixin", "DelayGlow", "CmonNowGlow", "Replace" )
 
 Shine.Hook.SetupClassHook( "DoConcedeSequence", "OnConcede", "SaveAllKarmas", "pre" )
 
@@ -70,28 +70,39 @@ end
 
 
 function Plugin:BecauseFuckSpammingCommanders(player)
-if not GetGamerules():GetGameStarted() then return end
-local KarmaCost = 1
- local client = player:GetClient()
-local controlling = client:GetControllingPlayer()
-local Client = controlling:GetClient()
-if self:GetPlayerKarmaInfo(Client) < KarmaCost then
-self:NotifyKarma( Client, "%s costs %s karma, you have %s karma. Purchase invalid.", true, String, KarmaCost, self:GetPlayerKarmaInfo(Client))
-return
-end
-self.KarmaUsers[ Client ] = self:GetPlayerKarmaInfo(Client) - KarmaCost
-//self:NotifyKarma( nil, "%s purchased a %s with %s credit(s)", true, Player:GetName(), String, KarmaCost)
-player:GiveItem(NutrientMist.kMapName)
-   Shine.ScreenText.SetText("Karma", string.format( "%s Karma", self:GetPlayerKarmaInfo(Client) ), Client) 
-   self.BuyUsersTimer[Client] = Shared.GetTime() + 3 
+          if not GetGamerules():GetGameStarted() then return end
+          //local KarmaCost = 1
+         // local client = player:GetClient()
+          //local controlling = 
+          local Client =  player:GetClient():GetControllingPlayer():GetClient()
+		    
+              if self:GetPlayerKarmaInfo(Client) < KarmaCost then
+              self:NotifyKarma( Client, "%s costs %s karma, you have %s karma. Purchase invalid.", true, String, KarmaCost, self:GetPlayerKarmaInfo(Client))
+             return
+             else 
+             local mist = GetEntitiesWithinRange("NutrientMist", self:GetOrigin(), 4)
+               if #mist >=1 then 
+               self:NotifyKarma( Client, "You have mist too close by you.", true )
+               return
+			   end
+             end
+
+     self.KarmaUsers[ Client ] = self:GetPlayerKarmaInfo(Client) - 1
+     //self:NotifyKarma( nil, "%s purchased a %s with %s credit(s)", true, Player:GetName(), String, 1)
+     player:GiveItem(NutrientMist.kMapName)
+    Shine.ScreenText.SetText("Karma", string.format( "%s Karma", self:GetPlayerKarmaInfo(Client) ), Client) 
+    self.BuyUsersTimer[Client] = Shared.GetTime() + 3 
      self.PlayerSpentAmount[Client] = self.PlayerSpentAmount[Client]  + KarmaCost
-return
+    return
 end
+
+
 function Plugin:SeriouslyFuckIt(player)
 if not GetGamerules():GetGameStarted() then return end
  self:SimpleTimer(4, function() self:SpawnIt(player, MedPack.kMapName)  end)
 
 end
+
  function Plugin:SpawnIt(player, entity)
  if not player or not player:GetIsAlive() then return end
  local KarmaCost = 1
@@ -114,6 +125,10 @@ function Plugin:InTheButt(player)
 if not player or not player:GetIsAlive() then return end
 if not GetGamerules():GetGameStarted() then return end
  self:SimpleTimer(4, function() self:SpawnIt(player, AmmoPack.kMapName)    end)
+end
+
+function Plugin:CmonNowGlow(who, glowco, duration)
+ who:GlowColor(glowco, duration)  
 end
  
 
@@ -243,7 +258,7 @@ if Points ~= nil and Points ~= 0 and Player  then
  local client = Player:GetClient()
  if not client then return end
          
-    local addamount = Points/10--Points/(10/self.Config.kKarmaMultiplier)      
+    local addamount = Points/6--Points/(10/self.Config.kKarmaMultiplier)      
  local controlling = client:GetControllingPlayer()
  
       --   if Player:GetTeamNumber() == 1 then
@@ -328,14 +343,15 @@ end
 
 function Plugin:DestroyAllKarmaStructFor(Client)
 //Intention: Kill Karma Structures if client f4s, otherwise 'limit' becomes nil and infinite 
-local Player = Client:GetControllingPlayer()
+local Player = Client:GetControllingPlayer()                   --should be live or mac, ah well lol
+    if   Shared.GetCheatsEnabled() then return end
         for index, entity in ipairs(GetEntitiesWithMixinForTeam("Construct", Player:GetTeamNumber())) do --I know I know for loops like this are nasty
-        if entity:GetIsACreditStructure() and not Shared.GetCheatsEnabled() and not entity:isa("Commander") and entity:GetOwner() == Player  then entity:Kill() end 
+        if entity:GetIsACreditStructure() and entity:GetOwner() == Player  then entity:Kill() end 
       end
     
 end
 function Plugin:ClientDisconnect(Client)
-self:SaveKarmas(Client, true)
+--self:SaveKarmas(Client, true)
 self:DestroyAllKarmaStructFor(Client)
 end
 function Plugin:GetPlayerKarmaInfo(Client)
@@ -462,18 +478,27 @@ function Plugin:SetGameState( Gamerules, State, OldState )
               
      if State == kGameState.Team1Won or State == kGameState.Team2Won or State == kGameState.Draw then
      
+
+
       self.GameStarted = false
           
-                 self:SimpleTimer(4, function ()
-       
+                 self:SimpleTimer(6, function ()
+
+       	       self:NotifyKarma( nil, "Round Concluded! Converting Score into Karma! (1 score = 0.6 karma). Now Saving.", true )
+		       self:NotifyKarma( nil, "Individual client saving upon disconnect is currently disabled.", true )
+
               local Players = Shine.GetAllPlayers()
               for i = 1, #Players do
               local Player = Players[ i ]
                   if Player then
                  // self:SaveKarmas(Player:GetClient())
-                     if Player:GetTeamNumber() == 1 or Player:GetTeamNumber() == 2 then
-                    Shine.ScreenText.Add( 80, {X = 0.40, Y = 0.15,Text = "Total Karma Mined:".. math.round((Player:GetScore() / 10 + ConditionalValue(Player:GetTeamNumber() == 1, self.marinebonus, self.alienbonus)), 2), Duration = 120,R = math.random(0,255), G = math.random(0,255), B = math.random(0,255),Alignment = 0,Size = 4,FadeIn = 0,}, Player )
-                    Shine.ScreenText.Add( 81, {X = 0.40, Y = 0.20,Text = "Total Karma Spent:".. self.PlayerSpentAmount[Player:GetClient()], Duration = 120,R = math.random(0,255), G = math.random(0,255), B = math.random(0,255),Alignment = 0,Size = 4,FadeIn = 0,}, Player )
+                     --if Player:GetTeamNumber() == 1 or Player:GetTeamNumber() == 2 then
+					 if Player:GetScore() > 1 then
+					 local earned = Player:GetScore() / 6
+					 self.KarmaUsers[ Player:GetClient() ] = self:GetPlayerKarmaInfo(Player:GetClient()) + earned
+                     Shine.ScreenText.SetText("Karma", string.format( "%s Karma", self:GetPlayerKarmaInfo(Player:GetClient()) ), Player:GetClient()) 
+                    Shine.ScreenText.Add( 80, {X = 0.40, Y = 0.15,Text = "Karma Mined:".. math.round(earned, 2), Duration = 120,R = math.random(0,255), G = math.random(0,255), B = math.random(0,255),Alignment = 0,Size = 4,FadeIn = 0,}, Player )
+                    Shine.ScreenText.Add( 81, {X = 0.40, Y = 0.20,Text = "Karma Spent:".. self.PlayerSpentAmount[Player:GetClient()], Duration = 120,R = math.random(0,255), G = math.random(0,255), B = math.random(0,255),Alignment = 0,Size = 4,FadeIn = 0,}, Player )
                      end
                   end
              end
@@ -841,6 +866,43 @@ end
    self.ShadeInkCoolDown = Shared.GetTime() + delayafter
    
 end
+
+local function BuyGlow(Client, String)
+
+local Player = Client:GetControllingPlayer()
+local delayafter = 8 
+local cost = 5
+local color = 0
+if not Player then return end
+
+if Player:GetIsGlowing() then
+self:NotifyKarma( Client, "You're already glowing. Wait until you cease to glow.", true)
+ return
+end
+
+ if String == "purple" then color = 1 
+  elseif String == "weed" then color = 2
+  elseif String == "gold" then color = 3
+  elseif String == "red" then color = 4
+  end
+  
+ if FirstCheckRulesHere(self, Client, Player, String, cost, false ) == true then return end
+            if color == 0 then return end
+            
+            DeductBuy(self, Player, cost, delayafter)  
+            Player:GlowColor(color, 300)
+           -- self.GlowClientsTime[Player:GetClient()] = Shared.GetTime() + 300
+            --self.GlowClientsColor[Player:GetClient()] = color
+   
+end
+
+
+local BuyGlowCommand = self:BindCommand("sh_buyglow", "buyglow", BuyGlow, true)
+BuyGlowCommand:Help("sh_buyglow <color number> ")
+BuyGlowCommand:AddParam{ Type = "string" }
+BuyGlowCommand:AddParam{ Type = "string", Optional = true }
+
+
 
 local TBuyCommand = self:BindCommand("sh_tbuy", "tbuy", TBuy, true)
 TBuyCommand:Help("sh_buywp <weapon name>")

@@ -297,7 +297,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.APresBuff1,   
             [kTechDataDisplayName] = "APresBuff1",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 20,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -305,7 +305,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.ATresBuff1,   
             [kTechDataDisplayName] = "ATresBuff1",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 20,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -315,14 +315,14 @@ local kSiege_TechData =
             [kTechDataDisplayName] = "APresBuff1",
  [kTechDataCostKey] = 30,   
  [kTechIDShowEnables] = false,     
-  [kTechDataResearchTimeKey] = 30,
+  [kTechDataResearchTimeKey] = 20,
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] = "5% increase of alien pres gain amount"},
 
 
           { [kTechDataId] = kTechId.MTresBuff1,   
             [kTechDataDisplayName] = "MTresBuff1",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 20,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -330,7 +330,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.MPresBuff1,   
             [kTechDataDisplayName] = "MPresBuff1",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 20,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -469,6 +469,22 @@ local kSiege_TechData =
            [kTechDataDisplayName] = "PlaceTechPoint",  
            [kTechDataTooltipInfo] = "WIP"},
        */
+
+	               { [kTechDataId] = kTechId.Rebirth, 
+       [kTechDataCategory] = kTechId.CragHiveTwo,  
+        [kTechDataDisplayName] = "Rebirth", 
+      [kTechDataSponitorCode] = "A",  
+      [kTechDataCostKey] = kRebirthCost, 
+     [kTechDataTooltipInfo] = "Replaces death with gestation if cooldown is reached", },
+
+      // Lifeform purchases
+        { [kTechDataId] = kTechId.Redemption, 
+       [kTechDataCategory] = kTechId.CragHiveTwo,  
+        [kTechDataDisplayName] = "Redemption", 
+      [kTechDataSponitorCode] = "B",  
+      [kTechDataCostKey] = kRedemptionCost, 
+     [kTechDataTooltipInfo] = "a 3 second timer checks if your health is a random value less than or equal to 15-30% of your max hp. If so, then randomly tp to a egg spawn 1-4 seconds after.", },
+
   
 }   
 

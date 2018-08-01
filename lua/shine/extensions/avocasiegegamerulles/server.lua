@@ -32,6 +32,188 @@ end
 OldUpdateBatteryState = Shine.Hook.ReplaceLocalFunction( Sentry.OnUpdate, "UpdateBatteryState", NewUpdateBatteryState )
 
 
+local function NewGetDestinationGate(self)
+
+    // Find next phase gate to teleport to
+    local phaseGates = {}    
+    for index, phaseGate in ipairs( GetEntitiesForTeam("PhaseGate", self:GetTeamNumber()) ) do
+        if GetIsUnitActive(phaseGate) and phaseGate.channel == self.channel then
+            table.insert(phaseGates, phaseGate)
+        end
+    end    
+    
+    if table.count(phaseGates) < 2 then
+        return nil
+    end
+    
+    // Find our index and add 1
+    local index = table.find(phaseGates, self)
+    if (index ~= nil) then
+    
+        local nextIndex = ConditionalValue(index == table.count(phaseGates), 1, index + 1)
+        ASSERT(nextIndex >= 1)
+        ASSERT(nextIndex <= table.count(phaseGates))
+        return phaseGates[nextIndex]
+        
+    end
+    
+    return nil
+    
+end
+
+OldGetDestinationGate = Shine.Hook.ReplaceLocalFunction( PhaseGate.Update, "GetDestinationGate", NewGetDestinationGate )
+
+
+Shine.Hook.SetupClassHook( "Alien", "TriggerRedeemCountDown", "OnRedemedHook", "PassivePre" )
+Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "TriggerRebirthCountDown", "PassivePre" )
+
+  function Plugin:OnRedemedHook(player) 
+            local herp = player:GetClient()
+            local derp = herp:GetControllingPlayer()
+            Shine.ScreenText.Add( 50, {X = 0.20, Y = 0.90,Text = "Redemption Cooldown: %s",Duration = derp:GetRedemptionCoolDown() or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, player ) 
+ end
+
+ function Plugin:TriggerRebirthCountDown(player)
+            local herp = player:GetClient()
+            local derp = herp:GetControllingPlayer()
+            Shine.ScreenText.Add( 50, {X = 0.20, Y = 0.90,Text = "Rebirth Cooldown: %s",Duration = ( derp:GetRedemptionCoolDown() * 1.3 ) or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, player ) 
+end
+
+
+local OldUpdGestation
+
+local function NewHpdateGestation(self)
+    // Cannot spawn unless alive.
+    if self:GetIsAlive() and self.gestationClass ~= nil then
+    
+        if not self.gestateEffectsTriggered then
+        
+            self:TriggerEffects("player_start_gestate")
+            self.gestateEffectsTriggered = true
+            
+        end
+        
+        // Take into account catalyst effects
+        local kUpdateGestationTime = 0.1
+        local amount = GetAlienCatalystTimeAmount(kUpdateGestationTime, self)
+        self.evolveTime = self.evolveTime + kUpdateGestationTime + amount
+        
+        self.evolvePercentage = Clamp((self.evolveTime / self.gestationTime) * 100, 0, 100)
+        
+        if self.evolveTime >= self.gestationTime then
+        
+            // Replace player with new player
+            local newPlayer = self:Replace(self.gestationClass)
+            newPlayer:SetCameraDistance(0)
+
+            local capsuleHeight, capsuleRadius = self:GetTraceCapsule()
+            local newAlienExtents = LookupTechData(newPlayer:GetTechId(), kTechDataMaxExtents)
+
+            -- Add a bit to the extents when looking for a clear space to spawn.
+            local spawnBufferExtents = Vector(0.1, 0.1, 0.1)
+            
+            --validate the spawn point before using it
+            if self.validSpawnPoint and GetHasRoomForCapsule(newAlienExtents + spawnBufferExtents, self.validSpawnPoint + Vector(0, newAlienExtents.y + Embryo.kEvolveSpawnOffset, 0), CollisionRep.Default, PhysicsMask.AllButPCsAndRagdolls, nil, EntityFilterTwo(self, newPlayer)) then
+                newPlayer:SetOrigin(self.validSpawnPoint)
+            else
+                for index = 1, 100 do
+
+                    local spawnPoint = GetRandomSpawnForCapsule(newAlienExtents.y, capsuleRadius, self:GetModelOrigin(), 0.5, 5, EntityFilterOne(self))
+
+                    if spawnPoint then
+
+                        newPlayer:SetOrigin(spawnPoint)
+                        break
+
+                    end
+
+                end
+
+            end
+
+            newPlayer:DropToFloor()
+            
+            self:TriggerEffects("player_end_gestate")
+            
+            // Now give new player all the upgrades they purchased
+            local upgradesGiven = 0
+            
+            for index, upgradeId in ipairs(self.evolvingUpgrades) do
+
+                if newPlayer:GiveUpgrade(upgradeId) then
+                    upgradesGiven = upgradesGiven + 1
+                end
+                
+            end
+            
+            local healthScalar = self.storedHealthScalar or 1
+            local armorScalar = self.storedArmorScalar or 1
+
+            newPlayer:SetHealth(healthScalar * LookupTechData(self.gestationTypeTechId, kTechDataMaxHealth))
+            newPlayer:SetArmor(armorScalar * LookupTechData(self.gestationTypeTechId, kTechDataMaxArmor))
+           if  newPlayer.OnGestationComplete then newPlayer:OnGestationComplete() end
+            newPlayer:SetHatched()
+            newPlayer:TriggerEffects("egg_death")
+           
+            
+           if  GetHasRebirthUpgrade(newPlayer) then
+               if self.triggeredrebirth then
+                  newPlayer:SetHealth(newPlayer:GetHealth() * 0.7)
+                  newPlayer:SetArmor(newPlayer:GetArmor() * 0.7)
+               end
+          newPlayer:TriggerRebirthCountDown(newPlayer:GetClient():GetControllingPlayer())
+          newPlayer.lastredeemorrebirthtime = Shared.GetTime()
+           end
+          
+
+
+        if GetHasRedemptionUpgrade(newPlayer) then
+          newPlayer:TriggerRedeemCountDown(newPlayer:GetClient():GetControllingPlayer())
+          newPlayer.lastredeemorrebirthtime = Shared.GetTime()
+         end
+            
+            if self.resOnGestationComplete then
+                newPlayer:AddResources(self.resOnGestationComplete)
+            end
+            
+            local newUpgrades = newPlayer:GetUpgrades()
+            if #newUpgrades > 0 then            
+                newPlayer.lastUpgradeList = newPlayer:GetUpgrades()
+            end
+
+            // Notify team
+
+            local team = self:GetTeam()
+
+            if team and team.OnEvolved then
+
+                team:OnEvolved(newPlayer:GetTechId())
+
+                for _, upgradeId in ipairs(self.evolvingUpgrades) do
+
+                    if team.OnEvolved then
+                        team:OnEvolved(upgradeId)
+                    end
+                    
+                end
+
+            end
+            
+            // Return false so that we don't get called again if the server time step
+            // was larger than the callback interval
+            return false
+            
+        end
+        
+    end
+    
+    return true
+
+end
+
+OldUpdGestation = Shine.Hook.ReplaceLocalFunction( Embryo.OnInitialized, "UpdateGestation", NewHpdateGestation )
+
+
 Plugin.Version = "1.0"
 
 function Plugin:Initialise()
@@ -63,18 +245,16 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePo
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" )  --Timmer calling gamerules for this hook -.-
 
 local function AddFrontTimer(who)
-    local Client = who
     local NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
     local FrontLength =  math.ceil( Shared.GetTime() + NowToFront - Shared.GetTime() )
-    Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = FrontLength,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, Client )
+    Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = FrontLength,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 local function AddSiegeTimer(who)
-    local Client = who
     local NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
     local SiegeLength =  math.ceil( Shared.GetTime() + NowToSiege - Shared.GetTime() )
     local ycoord = ConditionalValue(who:isa("Spectator"), 0.85, 0.95)
-    Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = SiegeLength,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, Client )
+    Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = SiegeLength,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 
@@ -90,26 +270,23 @@ local function GiveTimersToAll()
 end
 
 
+//Add timer on join if game started
 function Plugin:ClientConfirmConnect(Client)
  
  if Client:GetIsVirtual() then return end
  
       
-if GetGamerules():GetGameStarted() then
+   if GetGamerules():GetGameStarted() then
 
-if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < kFrontTimer then
-     AddFrontTimer(Client)
-   end
+      if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < kFrontTimer then
+       AddFrontTimer(Client)
+      end
    
- if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < kSiegeTimer then
+      if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < kSiegeTimer then
          AddSiegeTimer(Client)
+      end
+
    end
-   
-
-   
-
-
-end
 
 end
 local function OpenAllBreakableDoors()
@@ -126,15 +303,11 @@ function Plugin:SetGameState( Gamerules, State, OldState )
    //  if string.find(Shared.GetMapName(), "pl_") then GivePayloadInfoToAll(self) end
      OpenAllBreakableDoors()
   else
- Shine.ScreenText.End(1) 
- Shine.ScreenText.End(2)
- Shine.ScreenText.End(3)
-
-
-                       
-  end 
-    if State ==  kGameState.Team1Won  or State ==  kGameState.Team2Won   then
-    self.Started = false
+      Shine.ScreenText.End(1) 
+      Shine.ScreenText.End(2)
+      Shine.ScreenText.End(3)
+	end
+     if State ==  kGameState.Team1Won  or State ==  kGameState.Team2Won   then
            elseif State == kGameState.Countdown then
               GetTimer():OnRoundStart()
            elseif State == kGameState.NotStarted then
@@ -295,40 +468,6 @@ PArmorCommand:AddParam{ Type = "number", Min = 1, Max = 2045, Error = "1 min 204
 PArmorCommand:Help( "sh_parmor <player> <number> sets player's armor to the number desired." )
 
 
-local function SHealth( Client, String, Number  )
-        local player = Client:GetControllingPlayer()
-        for _, entity in ipairs( GetEntitiesWithMixinWithinRange( "Live", player:GetOrigin(), 8 ) ) do
-            if string.find(entity:GetMapName(), String)  then
-                  local defaulthealth = LookupTechData(entity:GetTechId(), kTechDataMaxHealth, 1)
-                   if entity.SetMature then entity:SetMature() end
-                  if Number > defaulthealth then entity:AdjustMaxHealth(Number) end
-                  entity:SetHealth(Number)
-                  self:NotifyGeneric( nil, "set %s health to %s (%s)", true, entity:GetMapName(), Number,entity:GetLocationName())
-             end--
-         end--
-end--
-local SHealthCommand = self:BindCommand( "sh_shealth", "shealth", SHealth )
-SHealthCommand:AddParam{ Type = "string" }
-SHealthCommand:AddParam{ Type = "number", Min = 1, Max = 8191, Error = "1 min 8191 max" }
-SHealthCommand:Help( "shealth <string> <number> within 8 radius sets this classname's health to X" )
-
-local function Sarmor( Client, String, Number  )
-        local player = Client:GetControllingPlayer()
-        for _, entity in ipairs( GetEntitiesWithMixinWithinRange( "Live", player:GetOrigin(), 8 ) ) do
-            if string.find(entity:GetMapName(), String)  then
-                  local defaultarmor = LookupTechData(entity:GetTechId(), kTechDataMaxArmor, 1)
-                  if Number > defaultarmor then entity:AdjustMaxArmor(Number) end
-                  entity:SetArmor(Number)
-                  self:NotifyGeneric( nil, "set %s armor to %s (%s)", true, entity:GetMapName(), Number,entity:GetLocationName())
-             end--
-         end--
-end--
-local SarmorCommand = self:BindCommand( "sh_sarmor", "sarmor", Sarmor )
-SarmorCommand:AddParam{ Type = "string" }
-SarmorCommand:AddParam{ Type = "number", Min = 1, Max = 2045, Error = "1 min 2045 max" }
-SarmorCommand:Help( "sarmor <string> <number> within 8 radius sets this classname's armor to X" )
-
-
 local function Respawn( Client, Targets )
     for i = 1, #Targets do
     local Player = Targets[ i ]:GetControllingPlayer()
@@ -342,101 +481,20 @@ local RespawnCommand = self:BindCommand( "sh_respawn", "respawn", Respawn )
 RespawnCommand:AddParam{ Type = "clients" }
 RespawnCommand:Help( "<player> respawns said player" )
 
-
-local function RunCMD( Client, Targets, String )
-    for i = 1, #Targets do
-    local Player = Targets[ i ]:GetControllingPlayer()
-	        	Player:RunCommand(String)
-     end--
-end--
-local RunCMDCommand = self:BindCommand( "sh_runcmd", "runcmd", RunCMD )
-RunCMDCommand:AddParam{ Type = "clients" }
-RunCMDCommand:AddParam{ Type = "string" }
-RunCMDCommand:Help( "<player> <string> makes the client type something in console of which you choose." )
-
-
-
-
-local function ModelSize( Client, Targets, Number )
-  if Number > 10 then return end
-    self:NotifyGeneric( nil, "Adjusted %s players size to %s percent", true, #Targets, Number * 100)
-    for i = 1, #Targets do
-    local Player = Targets[ i ]:GetControllingPlayer()
-            if not Player:isa("Commander") and not Player:isa("Spectator") and Player.modelsize and Player:GetIsAlive() then
-                Player:AdjustModelSize(Number)
-             end
-     end
-end
-
-local ModelSizeCommand = self:BindCommand( "sh_modelsize", "modelsize", ModelSize )
-ModelSizeCommand:AddParam{ Type = "clients" }
-ModelSizeCommand:AddParam{ Type = "number" }
-ModelSizeCommand:Help( "sh_playergravity <player> <number> works differently than ns1. kinda glitchy. respawn to reset." )
-
-
-local function TeamSize( Client, Number, NumberTwo )
-  if NumberTwo > 10 or (Number ~= 1 and Number ~= 2) then return end
-   if Number == 1 then
-    self:NotifyGeneric( nil, "Adjusted Marines team size to %s", true, NumberTwo * 100)
-    elseif Number == 2 then
-        self:NotifyGeneric( nil, "Adjusted Aliens team size to %s", true, NumberTwo * 100)
-    end
-    
-    local Players = Shine.GetAllPlayers()
-              for i = 1, #Players do
-              local Player = Players[ i ]
-                  if Player and Player:GetTeamNumber() == Number and not Player:isa("Commander") and not Player:isa("Spectator") and Player.modelsize then
-                       Player:AdjustModelSize(NumberTwo)
-                  end
-              end
-end
-local TeamSizeCommand = self:BindCommand( "sh_teamsize", "teamsize", TeamSize )
-TeamSizeCommand:AddParam{ Type = "number" }
-TeamSizeCommand:AddParam{ Type = "number" }
-TeamSizeCommand:Help( "sh_teamsize." )
-
-local function Bury( Client, Targets, Number )
-//local Giver = Client:GetControllingPlayer()
-for i = 1, #Targets do
-local Player = Targets[ i ]:GetControllingPlayer()
-       if Player and Player:GetIsAlive() and not Player:isa("Commander") then
-           Player:SetOrigin(Player:GetOrigin() - Vector(0, .5, 0))
-         self:NotifyGeneric( nil, "Burying %s for %s seconds", true, Player:GetName(), Number)
-            self:CreateTimer( 14, Number, 1, 
-            function () 
-           if not Player:GetIsAlive()  and self:TimerExists(14) then self:DestroyTimer( 14 ) return end
-            Player:SetOrigin(Player:GetOrigin() + Vector(0, .5, 0))
-            end )
-end
-end
-end
-
-local BuryCommand = self:BindCommand( "sh_bury", "bury", Bury)
-BuryCommand:Help ("sh_bury <player> <time> Buries the player for the given time")
-BuryCommand:AddParam{ Type = "clients" }
-BuryCommand:AddParam{ Type = "number" }
-
-local function Destroy( Client, String  )
+local function Destroy( Client, String  ) 
         local player = Client:GetControllingPlayer()
         for _, entity in ipairs( GetEntitiesWithMixinWithinRange( "Live", player:GetOrigin(), 8 ) ) do
             if string.find(entity:GetMapName(), String)  then
                   self:NotifyGeneric( nil, "destroyed %s in %s", true, entity:GetMapName(), entity:GetLocationName())
                   DestroyEntity(entity)
+				  break
              end
          end
 end
+
 local DestroyCommand = self:BindCommand( "sh_destroy", "destroy", Destroy )
 DestroyCommand:AddParam{ Type = "string" }
-DestroyCommand:Help( "Destroy <string> Destroys all entities with this name within 8 radius" )
-
-local function ThirdPerson( Client )
-local Player = Client:GetControllingPlayer()
---if not Player or not HasMixin( Player, "CameraHolder" ) then return end
-Player:SetCameraDistance(3) //* ConditionalValue(not Player:isa("ReadyRoomPlayer") and Player.modelsize > 1, Player.modelsize * .5, 1))
-end
-
-local ThirdPersonCommand = self:BindCommand( "sh_thirdperson", { "thirdperson", "3rdperson" }, ThirdPerson, true)
-ThirdPersonCommand:Help( "Triggers third person view" )
+DestroyCommand:Help( "Destroy <string> Destroys entity with this name within 8 radius" )
 
 local function Disco( Client )
      if Shine:GetUserImmunity(Client) >= 50 then 
@@ -448,72 +506,6 @@ end
 
 local DiscoCommand = self:BindCommand( "sh_disco", "disco", Disco, true)
 --DiscoCommand:Help( "" )
-
-	
-local function FirstPerson( Client )
-local Player = Client:GetControllingPlayer()
-if not Player or not HasMixin( Player, "CameraHolder" ) then return end
-Player:SetCameraDistance(0)
-end
-
-local FirstPersonCommand = self:BindCommand( "sh_firstperson", { "firstperson", "1stperson" }, FirstPerson, true)
-FirstPersonCommand:Help( "Triggers first person view" )
-
-local function GiveRes( Client, TargetClient, Number )
-local Giver = Client:GetControllingPlayer()
-local Reciever = TargetClient:GetControllingPlayer()
-//local TargetName = TargetClient:GetName()
- //Only apply this formula to pres non commanders // If trying to give a number beyond the amount currently owned in pres, do not continue. Or If the reciever already has 100 resources then do not bother taking resources from the giver
-  if Giver:GetTeamNumber() ~= Reciever:GetTeamNumber() or Giver:isa("Commander") or Reciever:isa("Commander") or Number > Giver:GetResources() or Reciever:GetResources() == 100 then
-  self:NotifyGiveRes( Giver, "Unable to donate any amount of resources to %s", true, Reciever:GetName())
- return end 
-
- 
-            //If giving res to a person and that total amount exceeds 100. Only give what can fit before maxing to 100, and not waste the rest.
-            if Reciever:GetResources() + Number > 100 then // for example 80 + 30 = 110
-            local GiveBack = 0 //introduce x
-            GiveBack = Reciever:GetResources() + Number // x = 80 + 30 (110)
-            GiveBack = GiveBack - 100  // 110 = 110 - 100 (10)
-            Giver:SetResources(Giver:GetResources () - Number + GiveBack) // Sets resources to the value wanting to donate + the portion to give back that's above 100
-            local Show = Number - GiveBack
-            Reciever:SetResources(100) // Set res to 100 anyway because the check above says if getres + num > 100. Therefore it would be 100 anyway.
-              self:NotifyGiveRes( Giver, "%s has reached 100 res, therefore you've only donated %s resource(s)", true, Reciever:GetName(), Show)
-              self:NotifyGiveRes( Reciever, "%s donated %s resource(s) to you", true, Giver:GetName(), Show)
-            return //prevent from going through the process of handing out res again down below(?)
-            end
-            ////
- //Otherwise if the giver has the amount to give, and the reciever amount does not go beyond 100, complete the trade. (pres)     
- //Shine:Notify(Client, Number, TargetClient, "Successfully donated %s resource(s) to %s", nil)
-Giver:SetResources(Giver:GetResources() - Number)
-Reciever:SetResources(Reciever:GetResources() + Number)
-self:NotifyGiveRes( Giver, "Succesfully donated %s resource(s) to %s", true, Number, Reciever:GetName())
-self:NotifyGiveRes( Reciever, "%s donated %s resource(s) to you", true, Giver:GetName(), Number)
-//Notify(StringFormat("[GiveRes] Succesfully donated %s resource(s) to %s.",  Number, TargetName) )
-
-
-//Now for some fun and to expand on the potential of giveres within ns2 that ns1 did not reach?
-//In particular, team res and commanders. 
-
-//If the giver is a commander to a recieving teammate then take the resources out of team resources rather than personal.
-
-//if Giver:GetTeamNumber() == Reciever:GetTeamNumber() and Giver:isa(Commander) then
-end
-
-local GiveResCommand = self:BindCommand( "sh_giveres", "giveres", GiveRes, true)
-GiveResCommand:Help( "giveres <name> <amount> ~ (No commanders)" )
-GiveResCommand:AddParam{ Type = "client",  NotSelf = true, IgnoreCanTarget = true }
-GiveResCommand:AddParam{ Type = "number", Min = 1, Max = 100, Round = true }
-
-
-local function Gravity( Client, Number )
- for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do 
-    player:SetGravity(Number)
- end
-   self:NotifyGeneric( nil, "Set Gravity to %s (0=off)", true, Number)  
-end
-local GravityCommand = self:BindCommand( "sh_gravity", "gravity", Gravity )
-GravityCommand:AddParam{ Type = "number" }
-GravityCommand:Help( "sh_gravity <number> (0 = default) applies to all players and copies values on respawn, meaning new players may not be affected?" )
 
 local function Gbd( Client )
 local Player = Client:GetControllingPlayer()
@@ -544,53 +536,6 @@ GiveCommand:AddParam{ Type = "number", Optional = true }
 GiveCommand:Help( "<player> Give item to player(s)" )
 
 
-local function Chat( Client, String )
-           
-      self:SendMessageToMods(String)
-end
-local ChatCommand = self:BindCommand( "sh_chat", "chat", Chat )
-ChatCommand:AddParam{ Type = "string" }
-ChatCommand:Help( "for mods to talk in private. Only mods can see and use this chat." )
-
-
-
-local function Cyst( Client, Targets )
-     for i = 1, #Targets do
-     local Player = Targets[ i ]:GetControllingPlayer()
-         if Player and Player:GetIsAlive() and Player:isa("Alien") and not Player:isa("Commander") then
-             self:GiveCyst(Player)
-           self:NotifyGeneric( nil, "Gave %s an Cyst", true, Player:GetName())
-          end
-     end
-end
-local CystCommand = self:BindCommand( "sh_cyst", "cyst", Cyst )
-CystCommand:AddParam{ Type = "clients" }
-CystCommand:Help( "<player> Give cyst to player(s)" )
-
-local function TellHives()
-           for index, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do
-                hive:OnAutoCommTriggerOn() 
-                end
-                
-                
-end
-
-local function Imaginator( Client, Number, Boolean )
-GetImaginator():SetImagination(Boolean, Number)
-if Number == 1 then 
-GetImaginator().marineenabled = Boolean
-elseif Number == 2 then
-GetImaginator().alienenabled = Boolean
-TellHives()
-end
- self:NotifyGeneric( nil, "%s Imaginator set to %s (No Comm Required)", true, Number, Boolean)
-  
-end
-
-local ImaginatorCommand = self:BindCommand( "sh_imaginator", "imaginator", Imaginator )
-ImaginatorCommand:Help( "sh_Imaginator - 1/2 - true/false - Automated structure placement system (No Comm Required) " )
-ImaginatorCommand:AddParam{ Type = "team" }
-ImaginatorCommand:AddParam{ Type = "boolean" }
 
 
 local function OpenFrontDoors()
@@ -645,60 +590,11 @@ local TestFilmCommand = self:BindCommand( "sh_testfilm", "testfilm", TestFilm )
 TestFilmCommand:Help( "sh_testfilm adds bots forces round and enables imaginator  " )
 
 
-local function AutoComm( Client )
-
-  if Shine:GetUserImmunity(Client) >= 10 then 
-      
-     if not GetGamerules():GetGameStarted() then
-            Shared.ConsoleCommand("sh_forceroundstart")
-     end
-
-         local boolean = GetImaginator():GetAlienEnabled()
-            Shared.ConsoleCommand(string.format("sh_imaginator 2 %s", not boolean )  )
-            Shared.ConsoleCommand(string.format("sh_imaginator 1 %s", not boolean )  )
-            
-            self:NotifyAutoComm( nil, "AutoComm toggle offswitch set to %s", true, boolean)
-    end
-           
-end
-
-local AutoCommCommand = self:BindCommand( "sh_autocomm", "autocomm", AutoComm, true )
-AutoCommCommand:Help( "sh_testfilm forces autocomm (disables if human comm) and forces round to start  " )
-
-local function StopAutoComm( Client )
-      local Player = Client:GetControllingPlayer()
-      if Shine:GetUserImmunity(Client) < 10 then return end--isamod 
-      self.stopped = true
-      self:NotifyAutoComm( nil, "%s Stopped AutoComm pregame countdown forceroundstart (offswitch is off unless sh_autocomm is toggled during round)", true, Player:GetName() )
-end
-
-local StopAutoCommCommand = self:BindCommand( "sh_stop", "stop", StopAutoComm, true )
-StopAutoCommCommand:Help( "sh_stop stops auto comm  timer" )
-
-local function ExtendAutoComm( Client )
-   local Player = Client:GetControllingPlayer()
-   if not self.lastExtend or Shared.GetTime() > self.lastExtend + 90 then
-      self.autoCommTime = self.autoCommTime + 60
-      self:NotifyAutoComm( nil, "%s Extended AutoComm by 60s. Now at %s seconds left", true, Player:GetName(), self.autoCommTime )
-      self.lastExtend = Shared.GetTime()
-     self.nextUse = Shared.GetTime() + 90
-      else
-      self:NotifyAutoComm( Player, "%s seconds until extension allowed", true, string.TimeToString( self.nextUse - Shared.GetTime() ) )
-   end
-  
- 
-  
-end
-
-local ExtendAutoCommCommand = self:BindCommand( "sh_extend", "extend", ExtendAutoComm, true )
-ExtendAutoCommCommand:Help( "sh_extend forces autocomm (disables if human comm) and forces round to start  " )
-
-
 
 local function BringAll( Client )
     self:NotifyGeneric( nil, "Brought everyone to one locaiton/area", true)
     
-        local Players = Shine.GetAllPlayers()
+        local Players = Shine.GetAllPlayers() //change to player for bots lol
               for i = 1, #Players do
               local Player = Players[ i ]
                   if Player and not Player:isa("Commander") and not Player:isa("Spectator") then

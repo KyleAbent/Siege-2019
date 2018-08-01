@@ -13,9 +13,18 @@ ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" ) --hmm?
 
+ModLoader.SetupFileHook( "lua/Egg.lua", "lua/Egg_Siege19.lua", "post" ) 
+
+ModLoader.SetupFileHook( "lua/Alien_Upgrade.lua", "lua/Alien_Upgrade_Siege19.lua", "post" ) 
+
 ModLoader.SetupFileHook( "lua/ResourceTower_Server.lua", "lua/ResourceTower_Server_Siege19.lua", "post" ) --hmm?
 
+ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?
+ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
+
 ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
+
+ModLoader.SetupFileHook( "lua/LiveMixin.lua", "lua/LiveMixin_Siege19.lua", "post" ) 
 
 ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 
@@ -25,6 +34,8 @@ ModLoader.SetupFileHook( "lua/Player.lua", "lua/Player_Siege19.lua", "post" ) --
 
 
 ModLoader.SetupFileHook( "lua/RoboticsFactory.lua", "lua/RoboticsFactory_Siege19.lua", "post" ) --hmm?
+
+ModLoader.SetupFileHook( "lua/PhaseGate.lua", "lua/PhaseGate_Siege19.lua", "post" ) 
 
 --ModLoader.SetupFileHook( "lua/TeleportTrigger.lua", "lua/TeleportTrigger_Siege_Randmoizer.lua", "post" )
 --ModLoader.SetupFileHook( "lua/TeleportDestination.lua", "lua/TeleportDestination_Siege_Randmoizer.lua", "post" )
@@ -67,6 +78,7 @@ ModLoader.SetupFileHook( "lua/ARC.lua", "lua/ARC_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/AlienTeam.lua", "lua/AlienTeam_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/MarineTeam_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechData.lua", "lua/TechData_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/AlienTeam.lua", "lua/AlienTeam_Siege19.lua", "post" )

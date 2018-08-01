@@ -40,7 +40,12 @@ function Gorge:OnInitialized()
 end
 
 
-
+function Gorge:GetRebirthLength()
+return 3
+end
+function Gorge:GetRedemptionCoolDown()
+return 15
+end
 
 
 Gorge.kHealth = kGorgeHealth

@@ -23,6 +23,12 @@ function Fade:GetBaseHealth()
     return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Fade.kHealth * 1.10, Fade.kHealth) 
 end
 
+function Fade:GetRebirthLength()
+return 4
+end
+function Fade:GetRedemptionCoolDown()
+return 20
+end
 
 if Server then
 

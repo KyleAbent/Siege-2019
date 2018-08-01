@@ -238,7 +238,7 @@ function Drifter:ProcessGrowOrder(moveSpeed, deltaTime)
             --    if  target:isa("Hive") then
               --         speed = speed / 4 
               -- end
-                if IsBeingGrown(self, target) then target:Construct(0.0093) end
+                if IsBeingGrown(self, target) then target:Construct(0.009765) end
                 target:RefreshDrifterConstruct()
                 self.constructing = true
             end

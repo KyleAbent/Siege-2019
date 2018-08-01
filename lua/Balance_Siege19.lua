@@ -36,6 +36,10 @@ kEggMaturationTime  = 30
 kTunnelEntranceMaturationTime = 45
 
 
+kAlienEggsPerHive = 5
+kEggGenerationRate = 9
+
+
 
 
 
@@ -88,3 +92,10 @@ kJetpackTechResearchTime = 70
 kExosuitTechResearchTime = 70
 
 //Alternative: Global research bonus speed during setup? 
+
+kRedemptionCost = 2
+kRebirthCost = 2
+kRedemptionCooldown = 45
+kRedemptionCooldown = 45
+kRedemptionEHPThresholdMin = 15
+kRedemptionEHPThresholdMax = 30

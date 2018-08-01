@@ -49,6 +49,14 @@ Shine.VoteMenu:AddPage ("SpendExpenive", function( self )
         self:AddBottomButton( "Back", function()self:SetPage("SpendCredits")end) 
 end)
 
+Shine.VoteMenu:AddPage ("SpendGlow", function( self )
+        self:AddSideButton( "Purple(5)", function() Shared.ConsoleCommand ("sh_buyglow purple")  end)
+        self:AddSideButton( "Weed(5)", function() Shared.ConsoleCommand ("sh_buyglow weed")  end)
+        self:AddSideButton( "Gold(5)", function() Shared.ConsoleCommand ("sh_buyglow gold")  end)
+      --  self:AddSideButton( "Red(5)", function() Shared.ConsoleCommand ("sh_buyglow Red")  end)
+        self:AddBottomButton( "Back", function()self:SetPage("SpendCredits")end) 
+end)
+
 
 Shine.VoteMenu:AddPage ("SpendWeapons", function( self )
 
@@ -120,6 +128,8 @@ Shine.VoteMenu:AddPage ("SpendCredits", function( self )
      self:AddSideButton( "Structures", function() self:SetPage( "SpendStructures" ) end)
              --  self:AddSideButton( "Fun", function() self:SetPage( "SpendFun" ) end)
                self:AddSideButton( "Expensive", function() self:SetPage( "SpendExpenive" ) end)
+			   self:AddSideButton( "Glow", function() self:SetPage( "SpendGlow" ) end)
+			   
      self:AddBottomButton( "Back", function()self:SetPage("Main")end)
 end)
 
