@@ -31,4 +31,11 @@ function Skulk:OnUpdateAnimationInput(modelMixin)
     
 end
 
+function Skulk:GetRedemptionCoolDown()
+return 20
+end
+function Skulk:GetRebirthLength()
+return 2
+end
+
 Shared.LinkClassToMap("Skulk", Skulk.kMapName, networkVars, true)

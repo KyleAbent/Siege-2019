@@ -400,6 +400,7 @@ function LayStructures:GetPositionForStructure(player)
 
     
     // If it hits something, position on this surface (must be the world or another structure)
+	local isOnEntity = fale
     if trace.fraction < 1 then
         
         foundPositionInRange = true
@@ -409,9 +410,12 @@ function LayStructures:GetPositionForStructure(player)
        -- elseif HasMixin(trace.entity, "Avoca") and trace.entity:GetTeamNumber() == 1  then
        --     isonstructure = false --( trace.entity.GetCanStick and trace.entity:GetCanStick() )
        --     isPositionValid = isonstructure
+	   else --lol lets see what players design.
+	           isPositionValid = true -- 2019 bad idea lol
+			   isOnEntity= true
         end
   
-             if not IsPathable(displayOrigin) then
+             if not isOnEntity and not IsPathable(displayOrigin) then --so if players build a base then its ok else pathing on ground eh
                     isPositionValid = false
                 end
                 

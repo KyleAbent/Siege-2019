@@ -152,52 +152,9 @@ local function GetPathingRequirementsMet(position, extents)
     
 end
 
-function Plugin:HasLimitOfCragInHive(Player, mapname, teamnumbber, limit, Client)
---3 crag outside of hive and 5 inside hive
-local entitycount = 0
-local entities = {}
-if limitMod == true then limit = 8 end
-        for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", teamnumbber)) do
-        if entity:GetMapName() == mapname and entity:GetOwner() == Player and GetIsOriginInHiveRoom( entity:GetOrigin() ) then entitycount = entitycount + 1 table.insert(entities, entity) end 
-    end
+function Plugin:HasLimitOf(Client)
     
-     //             <
-    if entitycount ~= limit then return false end
-     return true
-end
-function Plugin:HasLimitOfCragOutHive(Player, mapname, teamnumbber, limit, Client)
-local entitycount = 0
-local entities = {}
-if limitMod == true then limit = 8 end
-        for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", teamnumbber)) do
-        if entity:GetMapName() == mapname and entity:GetOwner() == Player and not GetIsOriginInHiveRoom( entity:GetOrigin() )  then entitycount = entitycount + 1 table.insert(entities, entity) end 
-    end
-    
-     //             <
-    if entitycount ~= limit then return false end
-     return true
-end
-
-function Plugin:HasLimitOf(Player, mapname, teamnumbber, limit, Client)
-local entitycount = 0
-local entities = {}
-        for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", teamnumbber)) do
-        if entity:GetMapName() == mapname and entity:GetOwner() == Player then entitycount = entitycount + 1 table.insert(entities, entity) end 
-    end
-    
-     //             <
-    if entitycount ~= limit then return false end
-   local delete = GetSetupConcluded()
-      if delete then
-            if #entities > 0 then
-            local entity = table.random(entities)
-             if entity:GetMapName() == Sentry.kMapName or entity:GetMapName() == Observatory.kMapName or entity:GetMapName() == ARCCredit.kMapName  then return true end
-                DestroyEntity(entity)
-                 self:NotifyKarma( Client, "(Logic Fallacy):Deleted your old %s so you can spawn a new one.", true, mapname)
-                 return false  
-            end
-      end
-     return true
+    return  self.PlayerSpentAmount[Client] >= 200
 end
 function Plugin:PregameLimit(teamnum)
 local entitycount = 0
@@ -333,26 +290,9 @@ function Plugin:SaveKarmas(Client, disconnected)
      if disconnected == true then Shine.SaveJSONFile( self.KarmaData, KarmasPath  ) end
 end
 
-function Plugin:JoinTeam( Gamerules, Player, NewTeam, Force ) 
 
-    if not Player:isa("Commander") and NewTeam == 0 and Gamerules:GetGameStarted() then
-     self:DestroyAllKarmaStructFor(Player:GetClient())
-    end
-
-end
-
-function Plugin:DestroyAllKarmaStructFor(Client)
-//Intention: Kill Karma Structures if client f4s, otherwise 'limit' becomes nil and infinite 
-local Player = Client:GetControllingPlayer()                   --should be live or mac, ah well lol
-    if   Shared.GetCheatsEnabled() then return end
-        for index, entity in ipairs(GetEntitiesWithMixinForTeam("Construct", Player:GetTeamNumber())) do --I know I know for loops like this are nasty
-        if entity:GetIsACreditStructure() and entity:GetOwner() == Player  then entity:Kill() end 
-      end
-    
-end
 function Plugin:ClientDisconnect(Client)
---self:SaveKarmas(Client, true)
-self:DestroyAllKarmaStructFor(Client)
+       self:SaveKarmas(Client, true)
 end
 function Plugin:GetPlayerKarmaInfo(Client)
    local Karmas = 0
@@ -485,7 +425,7 @@ function Plugin:SetGameState( Gamerules, State, OldState )
                  self:SimpleTimer(6, function ()
 
        	       self:NotifyKarma( nil, "Round Concluded! Converting Score into Karma! (1 score = 0.6 karma). Now Saving.", true )
-		       self:NotifyKarma( nil, "Individual client saving upon disconnect is currently disabled.", true )
+		       --self:NotifyKarma( nil, "Individual client saving upon disconnect is currently disabled.", true )
 
               local Players = Shine.GetAllPlayers()
               for i = 1, #Players do
@@ -555,7 +495,7 @@ local function GetIsAlienInSiege(Player)
     end
     return false
  end
-local function PerformBuy(self, who, String, whoagain, cost, reqlimit, reqground,reqpathing, setowner, delayafter, mapname,limitof, techid)
+local function PerformBuy(self, who, String, whoagain, cost, reqlimit, reqground,reqpathing, setowner, delayafter, mapname, techid)
    local autobuild = false 
    local success = false
 
@@ -565,31 +505,12 @@ return
 end
 
  
-if whoagain:isa("Alien") and mapname == Crag.kMapName then 
 
-
-   if  GetIsOriginInHiveRoom( whoagain:GetOrigin() ) then
-     limitof = 5 
-if self:HasLimitOfCragInHive(whoagain, mapname, whoagain:GetTeamNumber(), limitof, who) then 
-self:NotifyKarma(who, "Limit of %s %s inside hive room.", true, limitof, mapname)
-return
-end
-    end
-limitof = 8
-
-if self:HasLimitOfCragOutHive(whoagain, mapname, whoagain:GetTeamNumber(), limitof, who) then 
-self:NotifyKarma(who, "Limit of %s %s outside hive room.", true, limitof, mapname)
+if self:HasLimitOf(who) then 
+self:NotifyKarma(who, "Limit of 200 karma per round")
 return
 end
 
-else
-
-if self:HasLimitOf(whoagain, mapname, whoagain:GetTeamNumber(), limitof, who) then 
-self:NotifyKarma(who, "Limit of %s per %s per player ya noob", true, limitof, mapname)
-return
-end
-
-end
 
 if reqground then
 
@@ -684,7 +605,6 @@ local delay = 12
 local reqpathing = false
 local KarmaCost = 1
 local reqground = false
-local limit = 3
 local techid = nil
 
 if String == "Scan" then
@@ -699,26 +619,21 @@ elseif String == "Observatory"  then
 mapnameof = Observatory.kMapName
 techid = kTechId.Observatory
 KarmaCost = gKarmaStructureObservatoryCost
-limit = gObsLimit
 elseif String == "Armory"  then
 KarmaCost = gKarmaStructureArmoryCost
 mapnameof = Armory.kMapName
 techid = kTechId.Armory
-limit = gArmoryLimit
 elseif String == "AdvancedArmory"  then
 KarmaCost = gKarmaStructureAdvancedArmoryCost
 mapnameof = AdvancedArmory.kMapName
 techid = kTechId.AdvancedArmory
-limit = gAdvancedArmoryLimit 
 elseif String == "Sentry"  then
 mapnameof = Sentry.kMapName
 techid = kTechId.Sentry
-limit = gKarmaStructureSentryLimit
 KarmaCost = gKarmaStructureSentryCost
 elseif String == "BackupBattery"  then
 mapnameof = SentryBattery.kMapName
 techid = kTechId.SentryBattery
-limit = gKarmaStructureBackUpBatteryLimit
 KarmaCost = gKarmaStructureBackUpBatteryCost
 --elseif String == "BackupLight"  then
 --mapnameof = BackupLight.kMapName
@@ -727,38 +642,32 @@ KarmaCost = gKarmaStructureBackUpBatteryCost
 --KarmaCost = 6
 elseif String == "PhaseGate" then
 KarmaCost = gKarmaStructurePhaseGateCost
-limit = gKarmaStructurePhaseGateLimit
 mapnameof = PhaseGate.kMapName
 techid = kTechId.PhaseGate
 elseif String == "InfantryPortal" then
 mapnameof = InfantryPortal.kMapName
 techid = kTechId.InfantryPortal
 KarmaCost = gKarmaStructureInfantryPortalCost
-limit = gKarmaStructureInfantryPortalLimit
 elseif  String == "RoboticsFactory" then
 mapnameof = RoboticsFactory.kMapName
 techid = kTechId.RoboticsFactory
 KarmaCost = gKarmaStructureRoboticsFactoryCost
-limit = gKarmaStructureRoboticsFactoryLimit
 elseif String == "Mac" then
 techid = kTechId.MAC
 KarmaCost = gKarmaStructureMacCost
 mapnameof = MAC.kMapName
-limit = gKarmaStructureMacLimit
 elseif String == "Arc" then 
 techid = kTechId.ARC
 KarmaCost = gKarmaStructureArcCost
 mapnameof = ARCCredit.kMapName
-limit = gKarmaStructureArcLimit
 elseif String == "Extractor" then 
 techid = kTechId.Extractor
 KarmaCost = gKarmaStructureCostHarvesterExtractor
 mapnameof = Extractor.kMapName
-limit = gKarmaStructureLimitHarvesterExtractor
 elseif string == nil then
 end
 
-return mapnameof, delay, reqground, reqpathing, KarmaCost, limit, techid
+return mapnameof, delay, reqground, reqpathing, KarmaCost, techid
 
 end
 
@@ -769,7 +678,6 @@ local delay = 12
 local reqpathing = false
 local reqground = false
 local KarmaCost = 2
-local limit = 3
 local techid = nil
 
 
@@ -793,22 +701,18 @@ elseif String == "Shade" then
 KarmaCost = gKarmaStructureCostShade
 mapnameof = Shade.kMapName
 techid = kTechId.Shade
-limit = gShadeLimit
 elseif String == "Crag" then
 KarmaCost = gKarmaStructureCostCrag
 mapnameof = Crag.kMapName
 techid = kTechId.Crag
-limit = gCragLimit
 elseif String == "Whip" then
 KarmaCost = gKarmaStructureCostWhip
 mapnameof = Whip.kMapName
 techid = kTechId.Whip
-limit = gWhipLimit
 elseif String == "Shift" then
 KarmaCost = gKarmaStructureCostShift
 mapnameof = Shift.kMapName
 techid = kTechId.Shift
-limit = gShiftLimit
 //elseif String == "Hydra" then
 //KarmaCost = 1
 //mapnameof = HydraSiege.kMapName
@@ -817,15 +721,13 @@ limit = gShiftLimit
 //KarmaCost = 15
 //mapnameof = PoopEgg.kMapName
 //techid = kTechId.Egg
-//limit = 5
 elseif String == "Harvester" then
 KarmaCost = gKarmaStructureCostHarvesterExtractor
 mapnameof = Harvester.kMapName
 techid = kTechId.Harvester
-limit = gKarmaStructureLimitHarvesterExtractor
 end
        
-return mapnameof, delay, reqground, reqpathing, KarmaCost, limit, techid
+return mapnameof, delay, reqground, reqpathing, KarmaCost, techid
 
 end
 local function DeductBuy(self, who, cost, delayafter)
@@ -1031,14 +933,14 @@ local KarmaCost = 1
 local techid = nil
 
 if Player:GetTeamNumber() == 1 then 
-  mapnameof, delay, reqground, reqpathing, KarmaCost, limit, techid = TeamOneBuyRules(self, Client, Player, String)
+  mapnameof, delay, reqground, reqpathing, KarmaCost, techid = TeamOneBuyRules(self, Client, Player, String)
 elseif Player:GetTeamNumber() == 2 then
 reqground = false
-  mapnameof, delay, reqground, reqpathing, KarmaCost, limit, techid  = TeamTwoBuyRules(self, Client, Player, String)
+  mapnameof, delay, reqground, reqpathing, KarmaCost, techid  = TeamTwoBuyRules(self, Client, Player, String)
 end // end of team numbers
 
 if mapnameof and ( not FirstCheckRulesHere(self, Client, Player, String, KarmaCost, true ) == true ) then
- PerformBuy(self, Client, String, Player, KarmaCost, true, reqground,reqpathing, true, delay, mapnameof, limit, techid, String) 
+ PerformBuy(self, Client, String, Player, KarmaCost, true, reqground,reqpathing, true, delay, mapnameof, techid, String) 
 end
 
 end
