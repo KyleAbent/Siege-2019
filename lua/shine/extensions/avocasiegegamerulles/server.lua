@@ -199,8 +199,8 @@ local function NewHpdateGestation(self)
 
             end
             
-            // Return false so that we don't get called again if the server time step
-            // was larger than the callback interval
+            -- Return false so that we don't get called again if the server time step
+            -- was larger than the callback interval
             return false
             
         end
@@ -244,27 +244,37 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePo
   
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" )  --Timmer calling gamerules for this hook -.-
 
-local function AddFrontTimer(who)
-    local NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
-    local FrontLength =  math.ceil( Shared.GetTime() + NowToFront - Shared.GetTime() )
-    Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = FrontLength,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
+local function AddFrontTimer(who,NowToFront)
+      if not NowToFront then 
+     NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+	 end
+	--Print("%s",NowToFront)
+   -- local FrontLength =  math.ceil( Shared.GetTime() + NowToFront - Shared.GetTime() )
+	 --Print("%s",FrontLength)
+    Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = NowToFront,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
-local function AddSiegeTimer(who)
-    local NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
-    local SiegeLength =  math.ceil( Shared.GetTime() + NowToSiege - Shared.GetTime() )
+local function AddSiegeTimer(who, NowToSiege)
+    if not NowToSiege then 
+     NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+	 end
+	--Print("%s",NowToSiege)
+   -- local SiegeLength =  math.ceil( Shared.GetTime() + NowToSiege - Shared.GetTime() )
     local ycoord = ConditionalValue(who:isa("Spectator"), 0.85, 0.95)
-    Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = SiegeLength,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
+	--Print("%s",SiegeLength	)
+    Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 
 local function GiveTimersToAll()
               local Players = Shine.GetAllPlayers()
+			  local NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+			  local NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
               for i = 1, #Players do
               local Player = Players[ i ]
                   if Player then
-                  AddFrontTimer(Player)
-                  AddSiegeTimer(Player) 
+                  AddFrontTimer(Player, NowToFront)
+                  AddSiegeTimer(Player, NowToSiege) 
                   end
               end
 end
@@ -278,11 +288,11 @@ function Plugin:ClientConfirmConnect(Client)
       
    if GetGamerules():GetGameStarted() then
 
-      if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < kFrontTimer then
+      if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < GetTimer():GetFrontLength() then
        AddFrontTimer(Client)
       end
    
-      if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < kSiegeTimer then
+      if ( Shared.GetTime() - GetGamerules():GetGameStartTime() ) < GetTimer():GetSiegeLength() then
          AddSiegeTimer(Client)
       end
 
@@ -300,7 +310,7 @@ function Plugin:SetGameState( Gamerules, State, OldState )
 
  if State == kGameState.Started then 
     GiveTimersToAll()
-   //  if string.find(Shared.GetMapName(), "pl_") then GivePayloadInfoToAll(self) end
+   --  if string.find(Shared.GetMapName(), "pl_") then GivePayloadInfoToAll(self) end
      OpenAllBreakableDoors()
   else
       Shine.ScreenText.End(1) 
@@ -427,45 +437,6 @@ local SlapCommand = self:BindCommand( "sh_slap", "slap", Slap)
 SlapCommand:Help ("sh_slap <player> <time> Slaps the player once per second random strength")
 SlapCommand:AddParam{ Type = "clients" }
 SlapCommand:AddParam{ Type = "number" }
-
-
-
-
-local function PHealth( Client, Targets, Number )
-    for i = 1, #Targets do
-    local Player = Targets[ i ]:GetControllingPlayer()
-            if not Player:isa("ReadyRoomTeam")  and Player:isa("Alien") or Player:isa("Marine") then
-            local defaulthealth = LookupTechData(Player:GetTechId(), kTechDataMaxHealth, 1)
-            if Number > defaulthealth then Player:AdjustMaxHealth(Number) end
-              Player:SetHealth(Number)
-              
-           	 Shine:CommandNotify( Client, "set %s's health to %s", true,
-			 Player:GetName() or "<unknown>", Number )  
-             end --
-     end--
-end--
-local PHealthCommand = self:BindCommand( "sh_phealth", "phealth", PHealth)
-PHealthCommand:AddParam{ Type = "clients" }
-PHealthCommand:AddParam{ Type = "number", Min = 1, Max = 8191, Error = "1 min 8191 max" }
-PHealthCommand:Help( "sh_phealth <player> <number> sets player's health to the number desired." )
-
-local function PArmor( Client, Targets, Number )
-    for i = 1, #Targets do
-    local Player = Targets[ i ]:GetControllingPlayer()
-            if not Player:isa("ReadyRoomTeam")  and Player:isa("Alien") or Player:isa("Marine") then
-            local defaultarmor = LookupTechData(Player:GetTechId(), kTechDataMaxArmor, 1)
-            if Number > defaultarmor then Player:AdjustMaxArmor(Number) end
-              Player:SetArmor(Number)
-              
-           	 Shine:CommandNotify( Client, "set %s's armor to %s", true,
-			 Player:GetName() or "<unknown>", Number )  
-             end--
-     end--
-end--
-local PArmorCommand = self:BindCommand( "sh_parmor", "parmor", PArmor)
-PArmorCommand:AddParam{ Type = "clients" }
-PArmorCommand:AddParam{ Type = "number", Min = 1, Max = 2045, Error = "1 min 2045 max" }
-PArmorCommand:Help( "sh_parmor <player> <number> sets player's armor to the number desired." )
 
 
 local function Respawn( Client, Targets )

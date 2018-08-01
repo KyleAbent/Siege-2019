@@ -58,10 +58,10 @@ end
 function Timer:TimerValues()
    //if kSiegeTimer == nil then kSiegeTimer = GetFrontTime() end//960 end
   // if kFrontTimer == nil then kFrontTimer = GetSiegeTime() end//330 end
-  kSiegeTimer = GetSiegeTime() 
-  kFrontTimer = GetFrontTime()
-   self.SiegeTimer = kSiegeTimer
-   self.FrontTimer = kFrontTimer
+  --kSiegeTimer = GetSiegeTime() 
+  --kFrontTimer = GetFrontTime()
+   self.SiegeTimer = GetSiegeTime() 
+   self.FrontTimer = GetFrontTime()
    self.siegeOpened = false
    self.frontOpened = false
 
