@@ -71,16 +71,17 @@ end
 
 function Plugin:BecauseFuckSpammingCommanders(player)
           if not GetGamerules():GetGameStarted() then return end
-          //local KarmaCost = 1
-         // local client = player:GetClient()
-          //local controlling = 
-          local Client =  player:GetClient():GetControllingPlayer():GetClient()
+		   if not player or not player:GetIsAlive() then return end
+          local KarmaCost = 1
+ local client = player:GetClient()
+local controlling = client:GetControllingPlayer()
+local Client = controlling:GetClient()
 		    
               if self:GetPlayerKarmaInfo(Client) < KarmaCost then
-              self:NotifyKarma( Client, "%s costs %s karma, you have %s karma. Purchase invalid.", true, String, KarmaCost, self:GetPlayerKarmaInfo(Client))
+              self:NotifyKarma( Client, "NutrientMist costs %s karma, you have %s karma. Purchase invalid.", true, String, KarmaCost, self:GetPlayerKarmaInfo(Client))
              return
              else 
-             local mist = GetEntitiesWithinRange("NutrientMist", self:GetOrigin(), 4)
+             local mist = GetEntitiesWithinRange("NutrientMist", player:GetOrigin(), 4)
                if #mist >=1 then 
                self:NotifyKarma( Client, "You have mist too close by you.", true )
                return
@@ -292,7 +293,7 @@ end
 
 
 function Plugin:ClientDisconnect(Client)
-       self:SaveKarmas(Client, true)
+
 end
 function Plugin:GetPlayerKarmaInfo(Client)
    local Karmas = 0
@@ -425,7 +426,7 @@ function Plugin:SetGameState( Gamerules, State, OldState )
                  self:SimpleTimer(6, function ()
 
        	       self:NotifyKarma( nil, "Round Concluded! Converting Score into Karma! (1 score = 0.6 karma). Now Saving.", true )
-		       --self:NotifyKarma( nil, "Individual client saving upon disconnect is currently disabled.", true )
+		       self:NotifyKarma( nil, "Individual client saving upon disconnect is currently disabled.", true )
 
               local Players = Shine.GetAllPlayers()
               for i = 1, #Players do

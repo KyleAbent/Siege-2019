@@ -15,6 +15,8 @@ ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Egg.lua", "lua/Egg_Siege19.lua", "post" ) 
 
+ModLoader.SetupFileHook( "lua/Embryo.lua", "lua/Embryo_Siege19.lua", "post" )
+
 ModLoader.SetupFileHook( "lua/Alien_Upgrade.lua", "lua/Alien_Upgrade_Siege19.lua", "post" ) 
 
 ModLoader.SetupFileHook( "lua/ResourceTower_Server.lua", "lua/ResourceTower_Server_Siege19.lua", "post" ) --hmm?
