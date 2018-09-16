@@ -1,4 +1,4 @@
-kMainMenuNewsURL = "http://kyleabent.com/"
+--kMainMenuNewsURL = "http://kyleabent.com/"
 kMaxEntitiesInRadius = 999
 kMaxEntityRadius = 0 
 
