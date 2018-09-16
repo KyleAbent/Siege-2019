@@ -67,50 +67,6 @@ OldGetDestinationGate = Shine.Hook.ReplaceLocalFunction( PhaseGate.Update, "GetD
 Shine.Hook.SetupClassHook( "Alien", "TriggerRedeemCountDown", "OnRedemedHook", "PassivePre" )
 Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "TriggerRebirthCountDown", "PassivePre" )
 
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "BecauseFuckSpammingCommanders", "Replace" )
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMed", "SeriouslyFuckIt", "Replace" )
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyAmmo", "InTheButt", "Replace" )
-
-
-function Plugin:BecauseFuckSpammingCommanders(player)
-          if not GetGamerules():GetGameStarted() then return end
-		   if not player or not player:GetIsAlive() then return end
-            local client = player:GetClient()
-            local controlling = client:GetControllingPlayer()
-           local Client = controlling:GetClient()
-
-     if player:GetResources() > 1 then
-        player:SetResources( player:GetResources () - 1 )
-        CreateEntity(  NutrientMist.kMapName, player:GetOrigin(), 2 ) 
-     end   
-end
-
-function Plugin:SeriouslyFuckIt(player)
-          if not GetGamerules():GetGameStarted() then return end
-		   if not player or not player:GetIsAlive() then return end
-            local client = player:GetClient()
-            local controlling = client:GetControllingPlayer()
-           local Client = controlling:GetClient()
-
-     if player:GetResources() > 1 then
-        player:SetResources( player:GetResources () - 1 )
-        CreateEntity(  MedPack.kMapName, player:GetOrigin(), 1 ) 
-     end   
-end
-
-function Plugin:InTheButt(player)
-          if not GetGamerules():GetGameStarted() then return end
-		   if not player or not player:GetIsAlive() then return end
-            local client = player:GetClient()
-            local controlling = client:GetControllingPlayer()
-           local Client = controlling:GetClient()
-
-     if player:GetResources() > 1 then
-        player:SetResources( player:GetResources () - 1 )
-        CreateEntity(  AmmoPack.kMapName, player:GetOrigin(), 1 ) 
-     end   
-end
-
   function Plugin:OnRedemedHook(player) 
             local herp = player:GetClient()
             local derp = herp:GetControllingPlayer()
@@ -290,8 +246,8 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePo
 
 local function AddFrontTimer(who,NowToFront)
       if not NowToFront then 
-        NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
-	  end
+     NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+	 end
     Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = NowToFront,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
@@ -300,7 +256,6 @@ local function AddSiegeTimer(who, NowToSiege)
      NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
 	 end
     Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
-    Shine.ScreenText.Add( 3, {X = 0.02, Y = 0.50,Text = "(Warning(Bug): Off by a couple seconds)",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 

@@ -13,6 +13,12 @@ function Skulk:GetBaseHealth()
     return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Skulk.kHealth * 1.10, Skulk.kHealth)  -- why onUpdate?? better as var?
 end
 
+local kRandDebuff = Vector(math.random(0,.7), math.random(0,.7), math.random(0,.7)  ) --if 1 isnt too much
+function Skulk:GetEngagementPointOverride()
+    return self:GetOrigin() + kRandDebuff
+end
+
+
 function Skulk:OnUpdateAnimationInput(modelMixin)
 
     Player.OnUpdateAnimationInput(self, modelMixin)

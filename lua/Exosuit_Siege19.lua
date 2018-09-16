@@ -58,11 +58,14 @@ local oninit = Exosuit.OnInitialized
                 exoPlayer = player:GiveDualWelder()
             elseif self.layout == "FlamerFlamer" then
                 exoPlayer = player:GiveDualFlamer()
-            elseif self.layout == "WelderFlamer" then
+            elseif self.layout == "RailGunWelder" then
                  exoPlayer = player:GiveWelderFlamer()
+            elseif self.layout == "RailgunFlamer" then
+                 exoPlayer = player:GiveRailGunFlamerExo()
+                          
             else
                 exoPlayer = player:GiveExo()
-            end  
+            end   
 
             if exoPlayer then
                            

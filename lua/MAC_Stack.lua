@@ -30,6 +30,8 @@ function MAC:GetCanBeUsed(player, useSuccessTable)
 end
 
 
+
+
 --Weld other macs and stack macs and dont have delay for not welding while damaged
 
 
@@ -371,5 +373,9 @@ function MAC:OnUpdate(deltaTime)
     end
     
 end
+
+
+
+
 
 Shared.LinkClassToMap("MAC", MAC.kMapName, networkVars)

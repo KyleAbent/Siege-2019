@@ -52,6 +52,8 @@ local kSiege_TechIds =
     'HydraBuff1',
     'Onocide',
     'DualWelderExosuit',
+    'RailgunWelderExoSuit',
+     'RailgunFlamerExoSuit',
     'DualFlamerExosuit',
     'WeldFlamerExosuit',
     'AcidRocket',
@@ -66,6 +68,9 @@ local kSiege_TechIds =
   //  'StructureBeacon',
   //  'CommTunnel',
   //  'OnoGrow',
+      'CragHiveTwo',
+	  'Rebirth',
+	  'Redemption',
 }
 
 for i = 1, #kSiege_TechIds do

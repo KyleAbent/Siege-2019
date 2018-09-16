@@ -1,3 +1,21 @@
+
+function GetNearestMixin(origin, mixinType, teamNumber, filterFunc)
+    assert(type(mixinType) == "string")
+    local nearest = nil
+    local nearestDistance = 0
+    for index, ent in ientitylist(Shared.GetEntitiesWithTag(mixinType)) do
+        if not filterFunc or filterFunc(ent) then
+            if teamNumber == nil or (teamNumber == ent:GetTeamNumber()) then
+                local distance = (ent:GetOrigin() - origin):GetLength()
+                if nearest == nil or distance < nearestDistance then
+                    nearest = ent
+                    nearestDistance = distance
+                end
+            end
+        end
+    end
+    return nearest
+end
 function GetIsRoomPowerUp(who)
  local location = GetLocationForPoint(who:GetOrigin())
   if not location then return false end
@@ -47,8 +65,12 @@ function GetCheckSentryLimit(techId, origin, normal, commander)
         
         for index, sentry in ientitylist(Shared.GetEntitiesWithClassname("Sentry")) do
         
-            if sentry:GetLocationName() == locationName  and not sentry.isacreditstructure then
+            if sentry:GetLocationName() == locationName  then
+              if sentry:GetIsACreditStructure()  then
+                numInRoom = numInRoom + 0.5 
+               else
                 numInRoom = numInRoom + 1
+                end
             end
             
         end

@@ -9,6 +9,8 @@ function AlienTeam:InitTechTree()
     self.techTree.SetComplete = orig_TechTree_SetComplete
     
  
+ self.techTree:AddPassive(kTechId.CragHiveTwo, kTechId.CragHive)
+
 //self.techTree:AddBuildNode(kTechId.EggBeacon, kTechId.CragHive)
 //self.techTree:AddBuildNode(kTechId.CommTunnel, kTechId.None)
 //self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
@@ -25,6 +27,9 @@ self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId
     self.techTree:AddResearchNode(kTechId.HydraBuff1,     kTechId.Spur, kTechId.BioMassFour) --idk req.
     self.techTree:AddResearchNode(kTechId.APresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
     self.techTree:AddResearchNode(kTechId.ATresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
+
+	 self.techTree:AddBuyNode(kTechId.Rebirth, kTechId.Shell, kTechId.None, kTechId.AllAliens)
+     self.techTree:AddBuyNode(kTechId.Redemption, kTechId.Shell, kTechId.None, kTechId.AllAliens)
     
     
    -- self.techTree:AddResearchNode(kTechId.StructureHealth1,     kTechId.Shell, kTechId.BioMassNine)
@@ -63,5 +68,38 @@ function AlienTeam:AddTeamResources(amount, isIncome)
     
 end
 */
+
+
+//overwrite to remove scale with player count.
+function AlienTeam:UpdateEggGeneration()
+
+    if not self.timeLastEggUpdate then
+        self.timeLastEggUpdate = Shared.GetTime()
+    end
+
+    if self.timeLastEggUpdate + kEggGenerationRate < Shared.GetTime() then
+
+        local hives = GetEntitiesForTeam("Hive", self:GetTeamNumber())
+        local builtHives = {}
+
+        -- allow only built hives to spawn eggs
+        for _, hive in ipairs(hives) do
+
+            if hive:GetIsBuilt() and hive:GetIsAlive() then
+                table.insert(builtHives, hive)
+            end
+
+        end
+
+        for _, hive in ipairs(builtHives) do
+            hive:UpdateSpawnEgg()
+        end
+
+        self.timeLastEggUpdate = Shared.GetTime()
+    end
+
+end
+
+
 
 

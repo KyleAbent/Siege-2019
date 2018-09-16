@@ -1,4 +1,10 @@
 
+function Onos:GetRebirthLength()
+return 6
+end
+function Onos:GetRedemptionCoolDown()
+return 27
+end
 
 function Onos:GetTierFourTechId()
     return kTechId.Onocide

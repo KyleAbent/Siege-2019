@@ -31,7 +31,7 @@ local networkVars = { }
 
 AddMixinNetworkVars(BaseModelMixin, networkVars)
 AddMixinNetworkVars(ModelMixin, networkVars)
-AddMixinNetworkVars(TeamMixin, networkVars)
+--AddMixinNetworkVars(TeamMixin, networkVars)
 
 function Bomb:OnCreate()
     
@@ -39,7 +39,7 @@ function Bomb:OnCreate()
     
     InitMixin(self, BaseModelMixin)
     InitMixin(self, ModelMixin)
-    InitMixin(self, TeamMixin)
+   -- InitMixin(self, TeamMixin)
     
     if Server then
         self:AddTimedCallback(Bomb.TimeUp, Bomb.kLifetime)

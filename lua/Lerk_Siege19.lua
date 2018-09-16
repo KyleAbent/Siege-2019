@@ -4,8 +4,15 @@ function Lerk:GetBaseHealth()
 end
 
 
+ 
+ local kRandDebuff = Vector(math.random(0,.3), math.random(0,.3), math.random(0,.3)  ) --if 1 isnt too much
+function Lerk:GetEngagementPointOverride()
+    return self:GetOrigin() + kRandDebuff
+end
 
-function Lerk:OnAdjustModelCoords(modelCoords)
+
+
+function Lerk:OnAdjustModelCoords(modelCoords) --adjust hitbox model too
     local scale = .8
     local coords = modelCoords
     coords.xAxis = coords.xAxis * scale
@@ -14,6 +21,21 @@ function Lerk:OnAdjustModelCoords(modelCoords)
       
     return coords
     
+end
+
+function Lerk:GetExtentsOverride()
+local kXZExtents = 0.4 * 0.8
+local kYExtents = 0.4 * 0.8
+local crouchshrink = 0
+     return Vector(kXZExtents, kYExtents, kXZExtents)
+end
+
+
+function Lerk:GetRebirthLength()
+return 4
+end
+function Lerk:GetRedemptionCoolDown()
+return 15
 end
 
 if Server then

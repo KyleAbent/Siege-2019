@@ -40,7 +40,12 @@ function Gorge:OnInitialized()
 end
 
 
-
+function Gorge:GetRebirthLength()
+return 3
+end
+function Gorge:GetRedemptionCoolDown()
+return 15
+end
 
 
 Gorge.kHealth = kGorgeHealth
@@ -48,6 +53,11 @@ function Gorge:GetBaseHealth()
   return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Gorge.kHealth * 1.10, Gorge.kHealth)  --Lerk.kHealth
 end
 
+
+local kRandDebuff = Vector(math.random(0,.7), math.random(0,.7), math.random(0,.7)  ) --if 1 isnt too much
+function Gorge:GetEngagementPointOverride()
+    return self:GetOrigin() + kRandDebuff
+end
 
 
 function Gorge:GetCanJump()

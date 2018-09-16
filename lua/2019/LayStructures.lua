@@ -74,9 +74,11 @@ function LayStructures:GetDropStructureId()
 end
 function LayStructures:SetTechId(techid)
      self.techId = techid
+	 	 --if techid == kTechId.PhaseGate then self.structuresLeft = 2 end // a pair
 end
 function LayStructures:SetMapName(mapname)
      self.mapname = mapname
+
 end
 function LayStructures:GetstructuresLeft()
     return self.structuresLeft
@@ -250,10 +252,11 @@ local function DropStructure(self, player)
                 end--teamnum 
                 end--structure
                 structure:SetOwner(player)
-                if HasMixin(structure, "Construct") then structure:SetIsACreditStructure(true) end
+                if HasMixin(structure, "Construct") then structure:SetIsACreditStructure(true) end --limit within range?
+			
               --  if structure:isa("ARC") then structure:DelayDeploy() end
              --    if structure:isa("Egg") then structure:SetOrigin( structure:GetOrigin() + Vector(0, 0.25, 0) ) end
-               -- if structure:isa("PhaseGate") then structure.channel = 2 end
+                if structure:isa("PhaseGate") then structure.channel = 2 end
               --  if HasMixin(structure, "Supply") then RemoveSupply(self, player, structure) end
              --    if structure:isa("PoopEgg") then structure:SetSandy() end
                 --  if structure:isa("Drifter") then structure.isPet = true  end
@@ -370,9 +373,9 @@ local function IsPathable(position)
     return not noBuild and walk
     
 end
-// Given a gorge player's position and view angles, return a position and orientation
-// for structure. Used to preview placement via a ghost structure and then to create it.
-// Also returns bool if it's a valid position or not.
+-- Given a gorge player's position and view angles, return a position and orientation
+-- for structure. Used to preview placement via a ghost structure and then to create it.
+-- Also returns bool if it's a valid position or not.
 function LayStructures:GetPositionForStructure(player)
 
     local isPositionValid = false
@@ -382,7 +385,7 @@ function LayStructures:GetPositionForStructure(player)
     
     local origin = player:GetEyePos() + player:GetViewAngles():GetCoords().zAxis * kPlacementDistance
     
-    // Trace short distance in front
+    -- Trace short distance in front
     local trace = Shared.TraceRay(player:GetEyePos(), origin, CollisionRep.Default, PhysicsMask.AllButPCsAndRagdolls, EntityFilterTwo(player, self))
     
     local displayOrigin = trace.endPoint
@@ -396,7 +399,8 @@ function LayStructures:GetPositionForStructure(player)
     end
 
     
-    // If it hits something, position on this surface (must be the world or another structure)
+    -- If it hits something, position on this surface (must be the world or another structure)
+	local isOnEntity = fale
     if trace.fraction < 1 then
         
         foundPositionInRange = true
@@ -406,9 +410,15 @@ function LayStructures:GetPositionForStructure(player)
        -- elseif HasMixin(trace.entity, "Avoca") and trace.entity:GetTeamNumber() == 1  then
        --     isonstructure = false --( trace.entity.GetCanStick and trace.entity:GetCanStick() )
        --     isPositionValid = isonstructure
+	    else
+		   if not GetSetupConcluded() then --lol lets see what players design.
+	           isPositionValid = true -- 2019 bad idea lol
+			   isOnEntity= true
+			end
+
         end
   
-             if not IsPathable(displayOrigin) then
+             if not isOnEntity and not IsPathable(displayOrigin) then --so if players build a base then its ok else pathing on ground eh
                     isPositionValid = false
                 end
                 
@@ -417,6 +427,8 @@ function LayStructures:GetPositionForStructure(player)
            if self:GetDropStructureId() == kTechId.Sentry then
                   isPositionValid = isPositionValid and GetCheckSentryLimit(techId, player:GetOrigin(), normal, commander)  
            end
+
+		   --same limit for backup battery?
           
         if GetPointBlocksAttachEntities(displayOrigin) then
             isPositionValid = false

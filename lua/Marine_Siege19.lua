@@ -33,6 +33,20 @@ function Marine:InitWeapons()
 end
 
 
+
+local kRandDebuff = Vector(math.random(0,.3), math.random(0,.3), math.random(0,.3)  ) --if 1 isnt too much
+function Marine:GetEngagementPointOverride()
+    return self:GetOrigin() + kRandDebuff
+end
+
+function Marine:GetCanBotPhase()
+    if Server then
+        return self:GetIsAlive() and Shared.GetTime() > self.timeOfLastPhase + (2*3) and not GetConcedeSequenceActive()
+    else
+        return self:GetIsAlive() and Shared.GetTime() > self.timeOfLastPhase + (2*3)
+    end
+    
+end
 function Marine:GetHasLayStructure()
         local weapon = self:GetWeaponInHUDSlot(5)
         local builder = false
@@ -98,18 +112,25 @@ end
 
 end -- client
 
-
+function Marine:GetWeaponsToStore()
+local toReturn = {}
+            local weapons = self:GetWeapons()
+            
+          if weapons then
+          
+            for i = 1, #weapons do            
+                weapons[i]:SetParent(nil)     
+                local weapon
+                table.insert(toReturn, weapons[i]:GetId())       
+            end
+            
+           end
+           
+           return toReturn
+end
 
 
 if Server then
-
-function Marine:GiveExo(spawnPoint)
-
-    local exo = self:Replace(Exo.kMapName, self:GetTeamNumber(), false, spawnPoint, { layout = "MinigunMinigun" })
-    return exo
-    
-end--function
-
 
 function Marine:GiveDualWelder(spawnPoint)
 
@@ -123,15 +144,38 @@ function Marine:GiveDualFlamer(spawnPoint)
     return exo
     
 end
+function Marine:GiveRailGunWelderExo(spawnPoint)
 
+    local exo = self:Replace(Exo.kMapName, self:GetTeamNumber(), false, spawnPoint, { layout = "RailGunWelder"  })
+    return exo
+    
+end
+function Marine:GiveRailGunFlamerExo(spawnPoint)
+
+    local exo = self:Replace(Exo.kMapName, self:GetTeamNumber(), false, spawnPoint, { layout = "RailgunFlamer"  })
+    return exo
+    
+end
 function Marine:GiveWelderFlamer(spawnPoint)
 
     local exo = self:Replace(Exo.kMapName, self:GetTeamNumber(), false, spawnPoint, { layout = "WelderFlamer"  })
     return exo
     
 end
-kIsExoTechId = { [kTechId.DualFlamerExosuit] = true, [kTechId.DualMinigunExosuit] = true,
-                 [kTechId.DualWelderExosuit] = true, [kTechId.DualRailgunExosuit] = true,  [kTechId.WeldFlamerExosuit] = true  }
+
+function Marine:GiveDualRailgunExo(spawnPoint)
+
+    local exo = self:Replace(Exo.kMapName, self:GetTeamNumber(), false, spawnPoint, { layout = "RailgunRailgun", storedWeaponsIds = self:GetWeaponsToStore() })
+    return exo
+    
+end
+
+
+kIsExoTechId = { [kTechId.DualFlamerExosuit] = true, [kTechId.DualMinigunExosuit] = true, [kTechId.DualWelderExosuit] = true, [kTechId.WeldFlamerExosuit] = true,
+                 [kTechId.DualRailgunExosuit] = true, [kTechId.RailgunWelderExoSuit] = true, [kTechId.RailgunFlamerExoSuit] = true, }
+                 
+                 
+                 
 local function BuyExo(self, techId)
 
     local maxAttempts = 100
@@ -164,10 +208,15 @@ local function BuyExo(self, techId)
                 exo = self:GiveDualExo(spawnPoint)
             elseif techId == kTechId.DualWelderExosuit then
                 exo = self:GiveDualWelder(spawnPoint)
-            elseif techId == kTechId.DualRailgunExosuit then
-                exo = self:GiveDualRailgunExo(spawnPoint)
             elseif techId == kTechId.WeldFlamerExosuit then
                 exo = self:GiveWelderFlamer(spawnPoint)
+            elseif techId == kTechId.DualRailgunExosuit then
+                exo = self:GiveDualRailgunExo(spawnPoint)
+            elseif techId == kTechId.RailgunWelderExoSuit then
+                exo = self:GiveRailGunWelderExo(spawnPoint)
+            elseif techId == kTechId.RailgunFlamerExoSuit then
+                exo = self:GiveRailGunFlamerExo(spawnPoint)
+                
             end
             
 

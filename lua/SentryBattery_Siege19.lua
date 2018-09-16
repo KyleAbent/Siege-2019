@@ -1,6 +1,6 @@
-/*
 
-6.20 status: Indestructible while power on , after built if power on, doesn't flicker with light power. Darn.
+
+--	7.31 simple fix lol
 
 PrecacheAsset("cinematics/vfx_materials/ghoststructure.surface_shader")
 local kGhoststructureMaterial = PrecacheAsset("cinematics/vfx_materials/ghoststructure.material")
@@ -15,9 +15,15 @@ function SentryBattery:OnCreate()
 
     orig(self)
     self.isIndestruct = false
+	if Server then 
+	self:AddTimedCallback(SentryBattery.PowerTimer, 8)
+	end
     
 end
-
+function SentryBattery:PowerTimer()
+   self.isIndestruct = GetIsRoomPowerUp(self)
+   return true
+end
 function SentryBattery:OnConstructionComplete(builder)
    if GetIsRoomPowerUp(self) then  self.isIndestruct = true end
 end
@@ -84,5 +90,5 @@ end //up render
 end -- client
 
 Shared.LinkClassToMap("SentryBattery", SentryBattery.kMapName, networkVars)
-*/
+
 

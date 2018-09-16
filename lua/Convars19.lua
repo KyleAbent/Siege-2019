@@ -1,3 +1,8 @@
+kMainMenuNewsURL = "http://kyleabent.com/"
+kMaxEntitiesInRadius = 999
+kMaxEntityRadius = 0 
+
+kNumberofGlows = 3 
 kAcidRocketDamage = 25
 kAcidRocketDamageType = kDamageType.Normal --hm?
 kAcidRocketFireDelay = 0.5
@@ -24,8 +29,8 @@ kExoStructureWeldRate = 65
 
 
 kAdvancedBeaconCoolDown = 30
-kAdvancedBeaconCost = 20
-kObsAdvBeaconPowerOff = 16
+kAdvancedBeaconCost = 15
+kObsAdvBeaconPowerOff = 16--12?
 
 
 

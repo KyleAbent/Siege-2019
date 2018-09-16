@@ -25,16 +25,11 @@ end
 local networkVars = 
 
 {
-   SiegeTimer = "float",
-   FrontTimer = "float",
+   SiegeTimer = "integer",
+   FrontTimer = "integer",
    frontOpened = "boolean",
    siegeOpened = "boolean",
-  // isSuddenDeath = "boolean",
-  // sdTimer = "time",
    siegeBeaconed = "boolean",
-   //isDisco = "boolean",
-   //doSD = "boolean",
-   --MSCPPC = "integer",
 }
 local function GetFrontTime()
 //Specific timing for each door? IE all configurable? For now one setting for all.
@@ -58,10 +53,10 @@ end
 function Timer:TimerValues()
    //if kSiegeTimer == nil then kSiegeTimer = GetFrontTime() end//960 end
   // if kFrontTimer == nil then kFrontTimer = GetSiegeTime() end//330 end
-  kSiegeTimer = GetSiegeTime() 
-  kFrontTimer = GetFrontTime()
-   self.SiegeTimer = kSiegeTimer
-   self.FrontTimer = kFrontTimer
+  --kSiegeTimer = GetSiegeTime() 
+  --kFrontTimer = GetFrontTime()
+   self.SiegeTimer = GetSiegeTime() 
+   self.FrontTimer = GetFrontTime()
    self.siegeOpened = false
    self.frontOpened = false
 
@@ -219,42 +214,18 @@ Print("Que?")
 end
 
 
-function Timer:OnUpdate(deltatime)
+function Timer:gamerulesUpdate(deltatime) --flawed here not in sync with gamerules time. I forgot where to disable onupdate for now other than name change.
 
-  if Server then
-  
- 
+  if Server then 
     local gamestarted = GetGamerules():GetGameStarted()
       if gamestarted then 
        if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
-       
             if self.FrontTimer ~= 0 then 
                 self:FrontDoorTimer()
-                /*
-                     What should go here? construct entities that are not built? ZzZzZZZzzZZzZ
-                     What would be nice on a timely basis for during setup? Player buffs? cat packs? enzyme? 
-                     
-                     Comm: Placing struct, researching
-                     Players:Running map, building
-                     
-                     Why not a fast forward button? 
-                */
-               // Print("Hmm ?? 1")
-                 /*
-                      if not self.timelastDisco or self.timelastDisco + math.random(16, 24) <= Shared.GetTime() then
-                         self:PerformDisco()
-                         Print("Hmm ?? 2")
-                         self.timelastDisco = Shared.GetTime()
-                      end
-                   */
-                   //Promote front
-                  //  if not self.timelastCystBuff or self.timelastCystBuff + math.random(16, 24) <= Shared.GetTime() then
-                    
-                   // end
              end
              if self.SiegeTimer ~= 0 then
-             self:CountSTimer() 
-               end 
+                self:CountSTimer() 
+             end 
         end
       end
   end

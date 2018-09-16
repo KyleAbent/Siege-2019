@@ -27,6 +27,7 @@ Script.Load("lua/2019/ExoWelder.lua")
 
 
 
+
 //Script.Load("lua/payload/payload_arc_wp.lua") //important to load wp before arc lol
 //Script.Load("lua/payload/AvocaArc.lua") // needs linked waypoint and rewrite for current next prev chain
 
