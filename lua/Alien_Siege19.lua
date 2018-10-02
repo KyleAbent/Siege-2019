@@ -54,10 +54,10 @@ function Alien:TriggerRebirthCountDown(player)
 
 end
 function Alien:GetRebirthLength()
-return 0
+return 9
 end
 function Alien:GetRedemptionCoolDown()
-return 0
+return 9
 end
 local function SingleHallucination(self, player)
   --Why a cloud ?

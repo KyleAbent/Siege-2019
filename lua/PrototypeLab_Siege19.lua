@@ -29,8 +29,8 @@ local table = {}
 
 table = origbuttons(self, techId)
 
- table[2] = kTechId.JetpackFuel1
- table[3] = kTechId.DropExosuit
+ --table[2] = kTechId.JetpackFuel1
+ table[2] = kTechId.DropExosuit
  return table
 
 end

@@ -9,6 +9,8 @@ thats what im guessing happened
 It seems rare but i cann try writing something to not error
 */
 
+/*
+
 function RolloutMixin:__initmixin()
   self.hasDonealready = false
 end
@@ -25,3 +27,5 @@ function RolloutMixin:OnOrderComplete(order) --ok but what if another robo is cl
         end
    end
 end
+
+*/

@@ -30,10 +30,12 @@ function Fade:GetRedemptionCoolDown()
 return 20
 end
 
+
+
 if Server then
 
 function Fade:GetTierFourTechId()
-    return kTechId.AcidRocket
+    --return kTechId.AcidRocket fix me does dmg entity line 422, rocket line 2014 testme
 end
 
 /*

@@ -36,5 +36,10 @@ function Skulk:OnUpdateAnimationInput(modelMixin)
     modelMixin:SetAnimationInput("attack_speed", attackSpeed)
     
 end
-
+function Skulk:GetRebirthLength()
+return 4
+end
+function Skulk:GetRedemptionCoolDown()
+return 9
+end
 Shared.LinkClassToMap("Skulk", Skulk.kMapName, networkVars, true)

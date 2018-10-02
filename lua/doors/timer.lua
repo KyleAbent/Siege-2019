@@ -16,8 +16,8 @@ Timer.kMapName = "timer"
 
 if Server then
 
-//Timer.kSiegeDoorSound = PrecacheAsset("sound/siegeroom.fev/door/siege")
-//Timer.kFrontDoorSound = PrecacheAsset("sound/siegeroom.fev/door/frontdoor")
+Timer.kSiegeDoorSound = PrecacheAsset("sound/siegeroom.fev/door/siege")
+Timer.kFrontDoorSound = PrecacheAsset("sound/siegeroom.fev/door/frontdoor")
 
 end
 
@@ -133,11 +133,11 @@ function Timer:OpenSiegeDoors()
               
               if GetGameStarted() then
                   GetGamerules():DisplaySiege()
-              /*
+              
                 for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
               StartSoundEffectForPlayer(Timer.kSiegeDoorSound, player)
               end
-              */
+              
               
               end  
               
@@ -164,11 +164,11 @@ function Timer:OpenFrontDoors()
               end 
                if GetGameStarted() then 
                 GetGamerules():DisplayFront()
-              /*
+              
               for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
               StartSoundEffectForPlayer(Timer.kFrontDoorSound, player)
               end
-              */
+              
 
                end
                

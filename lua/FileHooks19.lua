@@ -21,6 +21,11 @@ ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/BuildUtility_Siege19.lua",
 
 ModLoader.SetupFileHook( "lua/Embryo.lua", "lua/Embryo_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/Weapons/Alien/Metabolize.lua", "lua/Weapons/Alien/Metabolize_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/Weapons/Alien/Blink.lua", "lua/Weapons/Alien/Blink_Siege19.lua", "post" )
+
+
 ModLoader.SetupFileHook( "lua/Alien_Upgrade.lua", "lua/Alien_Upgrade_Siege19.lua", "post" ) 
 
 ModLoader.SetupFileHook( "lua/ResourceTower_Server.lua", "lua/ResourceTower_Server_Siege19.lua", "post" ) --hmm?
@@ -51,6 +56,8 @@ ModLoader.SetupFileHook( "lua/PhaseGate.lua", "lua/PhaseGate_Siege19.lua", "post
 ModLoader.SetupFileHook( "lua/InfantryPortal.lua", "lua/InfantryPortal_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Armory.lua", "lua/Armory_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/Voting.lua", "lua/Voting_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Exosuit.lua", "lua/Exosuit_Siege19.lua", "post" )
 
@@ -103,6 +110,7 @@ ModLoader.SetupFileHook( "lua/PrototypeLab.lua", "lua/PrototypeLab_Siege19.lua",
 ModLoader.SetupFileHook( "lua/Crag.lua", "lua/Crag_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Balance.lua", "lua/Balance_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/BalanceHealth_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Fade.lua", "lua/Fade_Siege19.lua", "post" )

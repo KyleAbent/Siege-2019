@@ -1,9 +1,13 @@
-
+kJetpackWeightLiftForce = 0.13 --How much weight the jetpack lifts
+kMinWeightJetpackFuelFactor = 0 --Min factor that gets applied on fuel usage of jetpack
 
 
 kPlayingTeamInitialTeamRes = 120
 kExtractorArmor1Cost = 50
 kExtractorArmor1ResearchTime = 20
+
+kBlinkEnergyCost = 29 -- 32
+kStartBlinkEnergyCost = 11 --14
 /*Aliens Static HP Increased 5%
 Aiens Static Armor Increased 2%
 */
