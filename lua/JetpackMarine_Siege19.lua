@@ -1,5 +1,5 @@
 --'Avoca' , KKyle etc
-JetpackMarine.kJetpackFuelReplenishDelay = .3 
+JetpackMarine.kJetpackFuelReplenishDelay = 1.2 
 --JetpackMarine.kJetpackGravity = -11
 --JetpackMarine.kJetpackTakeOffTime = .12
 local kFlyAcceleration = 37
