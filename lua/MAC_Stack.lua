@@ -193,7 +193,7 @@ local function GetAutomaticOrder(self)
             primaryTarget = Shared.GetEntity(currentOrder:GetParam())
         end
 
-        if primaryTarget and (HasMixin(primaryTarget, "Weldable") and primaryTarget:GetWeldPercentage() < 1) and not primaryTarget:isa("MAC") then
+        if primaryTarget and (HasMixin(primaryTarget, "Weldable") and primaryTarget:GetWeldPercentage() < 1) then
             
             target = primaryTarget
             orderType = kTechId.AutoWeld

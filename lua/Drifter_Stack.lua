@@ -1,11 +1,6 @@
 --All this just to make drifters stack, rediculous.
 
 
---Balance it by having it receive arc damage then watch it be called into a seperate mod creating some guy who saw the code
-function Drifter:GetReceivesStructuralDamage()
-    return true
-end
-
 
 local kDetectInterval = 0.5
 local kDetectRange = 1.5

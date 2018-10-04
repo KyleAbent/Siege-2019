@@ -29,8 +29,8 @@ kExoStructureWeldRate = 65
 
 
 kAdvancedBeaconCoolDown = 30
-kAdvancedBeaconCost = 15
-kObsAdvBeaconPowerOff = 16--12?
+kAdvancedBeaconCost = 14
+kObsAdvBeaconPowerOff = 15--12?
 
 
 

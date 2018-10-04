@@ -1,3 +1,8 @@
+
+ModLoader.SetupFileHook( "lua/Balance.lua", "lua/Balance_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/BalanceHealth_Siege19.lua", "post" )
+
 ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/director/Spectator_Avoca.lua", "post" )
 ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hive.lua", "lua/Hive_Siege19.lua", "post" )
@@ -16,6 +21,8 @@ ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" ) --hmm?
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Egg.lua", "lua/Egg_Siege19.lua", "post" ) 
+
+
 
 ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/BuildUtility_Siege19.lua", "pre" ) 
 
@@ -65,7 +72,7 @@ ModLoader.SetupFileHook( "lua/Skulk.lua", "lua/Skulk_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Lerk.lua", "lua/Lerk_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Gorge.lua", "lua/Gorge_Siege19.lua", "post" )
 
-ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/SentryBattery_Siege19.lua", "post" )
+--ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/2019/BackupBattery.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Weapons/Marine/ExoWeaponHolder.lua", "lua/Weapons/Marine/ExoWeaponHolder_Siege19.lua", "post" )
 
@@ -109,12 +116,24 @@ ModLoader.SetupFileHook( "lua/PrototypeLab.lua", "lua/PrototypeLab_Siege19.lua",
 
 ModLoader.SetupFileHook( "lua/Crag.lua", "lua/Crag_Siege19.lua", "post" )
 
-ModLoader.SetupFileHook( "lua/Balance.lua", "lua/Balance_Siege19.lua", "post" )
-ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "post" )
-ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/BalanceHealth_Siege19.lua", "post" )
+
 
 ModLoader.SetupFileHook( "lua/Fade.lua", "lua/Fade_Siege19.lua", "post" )
 
 
 ModLoader.SetupFileHook( "lua/Extractor.lua", "lua/Extractor_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Harvester.lua", "lua/Harvester_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/Sentry.lua", "lua/Sentry_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/SentryBattery_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/MarineCommander.lua", "lua/MarineCommander_Siege19.lua", "post" ) 
+
+
+
+
+
+
+
+
+
+

@@ -71,6 +71,8 @@ local kSiege_TechIds =
       'CragHiveTwo',
 	  'Rebirth',
 	  'Redemption',
+	  'BackupBattery',
+	  
 }
 
 for i = 1, #kSiege_TechIds do

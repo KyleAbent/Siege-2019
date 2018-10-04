@@ -4,7 +4,7 @@ Script.Load("lua/2019/Shared.lua")
 local function GetHasSentryBatteryInRadius(self)
       local backupbattery = GetEntitiesWithinRange("SentryBattery", self:GetOrigin(), kBatteryPowerRange)
           for index, battery in ipairs(backupbattery) do
-            if GetIsUnitActive(battery) then return true end
+            if GetIsUnitActive(battery) then return battery.canBackup end
            end      
  
    return false

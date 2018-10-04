@@ -215,7 +215,8 @@ function Alien:TriggerRebirth()
                 
             else
 
-               self:TeleportToHive()
+              -- self:TeleportToHive()
+                 self:Kill()--NotifyUser
 
             end    
             

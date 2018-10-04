@@ -1,3 +1,4 @@
+kSwipeDamageType = kDamageType.Normal
 kJetpackWeightLiftForce = 0.13 --How much weight the jetpack lifts
 kMinWeightJetpackFuelFactor = 0 --Min factor that gets applied on fuel usage of jetpack
 
@@ -29,15 +30,15 @@ kTunnelEntranceMaturationTime 135 to 45*/
 
 
 kHarvesterMaturationTime = 30
-kWhipMaturationTime = 30
-kCragMaturationTime = 30
-kShiftMaturationTime = 30
-kHiveMaturationTime = 60
-kShadeMaturationTime = 30
-kVeilMaturationTime = 30
-kSpurMaturationTime = 30
+kWhipMaturationTime = 30 --120
+kCragMaturationTime = 30 --30
+kShiftMaturationTime = 30 --30
+kHiveMaturationTime = 60 --60
+kShadeMaturationTime = 30 --30
+kVeilMaturationTime = 30 --60
+kSpurMaturationTime = 30 --
 kShellMaturationTime  = 30
-kCystMaturationTime  = 30
+kCystMaturationTime  = 30 --
 kHydraMaturationTime  = 30
 kEggMaturationTime  = 30
 kTunnelEntranceMaturationTime = 45

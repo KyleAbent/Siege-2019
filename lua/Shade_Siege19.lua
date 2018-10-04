@@ -1,4 +1,4 @@
-Script.Load("lua/2019/AvocaMixin.lua")
+
 --Script.Load("lua/InfestationMixin.lua")
 Script.Load("lua/2019/DigestCommMixin.lua")
 
@@ -7,7 +7,7 @@ local networkVars = {
 
 }
 
-AddMixinNetworkVars(AvocaMixin, networkVars)
+
 --AddMixinNetworkVars(InfestationMixin, networkVars)
 AddMixinNetworkVars(DigestCommMixin, networkVars)
 

@@ -1,5 +1,17 @@
+kSentriesPerBattery = 9
 kEggsPerHatch = 5
 
+
+kArmorySupply = 4--5
+kARCSupply = 14--15
+kRoboticsFactorySupply = 4--5
+
+
+kDrifterSupply = 7--10
+kWhipSupply = 4--5
+kCragSupply = 4--5
+kShadeSupply = 4--5
+kShiftSupply = 4--5
 
 
 
@@ -8,7 +20,7 @@ kJetpackUseFuelRate = .17
 kJetpackReplenishFuelRate = .19
 
 
-kNumWebsPerGorge = 4
+kNumWebsPerGorge = 6
 
 --kJetpackingAccel = 2
 

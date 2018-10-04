@@ -1,4 +1,28 @@
+--copied
+function GetRoomHasNoBackupBattery(techId, origin, normal, commander)
 
+    local location = GetLocationForPoint(origin)
+    local locationName = location and location:GetName() or nil
+    local validRoom = false
+    
+    if locationName then
+    
+        validRoom = true
+    
+        for index, sentryBattery in ientitylist(Shared.GetEntitiesWithClassname("BackupBattery")) do
+            
+            if sentryBattery:GetLocationName() == locationName then
+                validRoom = false
+                break
+            end
+            
+        end
+    
+    end
+    
+    return validRoom
+
+end
 function GetNearestMixin(origin, mixinType, teamNumber, filterFunc)
     assert(type(mixinType) == "string")
     local nearest = nil
@@ -52,33 +76,6 @@ function GetIsOriginInHiveRoom(point)
      
      return false
      
-end
-function GetCheckSentryLimit(techId, origin, normal, commander)
-    local location = GetLocationForPoint(origin)
-    local locationName = location and location:GetName() or nil
-    local numInRoom = 0
-    local validRoom = false
-    
-    if locationName then
-    
-        validRoom = true
-        
-        for index, sentry in ientitylist(Shared.GetEntitiesWithClassname("Sentry")) do
-        
-            if sentry:GetLocationName() == locationName  then
-              if sentry:GetIsACreditStructure()  then
-                numInRoom = numInRoom + 0.5 
-               else
-                numInRoom = numInRoom + 1
-                end
-            end
-            
-        end
-        
-    end
-    
-    return validRoom and numInRoom < 4
-    
 end
 
 

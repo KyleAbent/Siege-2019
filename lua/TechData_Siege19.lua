@@ -14,6 +14,8 @@ Script.Load("lua/2019/ExoFlamer.lua")
 Script.Load("lua/2019/ExoWelder.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 
+
+
 if Server then
 
 function GetCheckCommandStationLimit(techId, origin, normal, commander)
@@ -35,14 +37,9 @@ SetCachedTechData(kTechId.CommandStation, kTechDataAttachOptional, true)
 
 SetCachedTechData(kTechId.CommandStation, kTechDataBuildRequiresMethod, GetCheckCommandStationLimit)
 
-SetCachedTechData(kTechId.SentryBattery,kVisualRange, kBatteryPowerRange)
-SetCachedTechData(kTechId.SentryBattery,kTechDataDisplayName, "Backup Battery")
-SetCachedTechData(kTechId.SentryBattery, kTechDataHint, "Powers structures in radius!")
-SetCachedTechData(kTechId.SentryBattery, kTechDataTooltipInfo, "Powers structures in radius!")
 
-SetCachedTechData(kTechId.Sentry, kTechDataBuildMethodFailedMessage, "4 per room")
-SetCachedTechData(kTechId.Sentry, kStructureBuildNearClass, false)
-SetCachedTechData(kTechId.Sentry, kStructureAttachRange, 999)
+
+
 
 
 
@@ -108,99 +105,9 @@ end
 local kSiege_TechData =
 {        
 
-/*
-  { [kTechDataId] = kTechId.CommTunnel,  
---[kTechDataSupply] = kCommTunnelSupply, 
-[kTechDataBuildRequiresMethod] = CheckCommTunnelReq,
-[kTechDataBuildMethodFailedMessage] = "2max/near fully infested cyst only",
-[kTechDataGhostModelClass] = "AlienGhostModel", 
-[kTechDataModel] = TunnelEntrance.kModelName, 
-[kTechDataMapName] = CommTunnel.kMapName, 
-[kTechDataMaxHealth] = kTunnelEntranceHealth, 
-[kTechDataMaxArmor] = kTunnelEntranceArmor, 
- [kTechDataPointValue] = kTunnelEntrancePointValue, 
-[kTechDataCollideWithWorldOnly] = true,
- [kTechDataDisplayName] = "Commander Tunnel", 
-[kTechDataCostKey] = 4, 
-[kTechDataRequiresInfestation] = false,
-[kTechDataTooltipInfo] =  "GORGE_TUNNEL_TOOLTIP"}, 
+  
+  
 
-   { [kTechDataId] = kTechId.OnoGrow,        
-  [kTechDataCategory] = kTechId.Onos,   
-     [kTechDataMapName] = OnoGrow.kMapName,  
-[kTechDataCostKey] = kStabResearchCost,
- [kTechDataResearchTimeKey] = kStabResearchTime, 
- --   [kTechDataDamageType] = kStabDamageType,  
-     [kTechDataDisplayName] = "OnoGrow",
-[kTechDataTooltipInfo] = "wip"},
-
-
-
-   { [kTechDataId] = kTechId.AdvancedBeacon,   
-   [kTechDataBuildTime] = 0.1,   
-   [kTechDataCooldown] = kAdvancedBeaconCoolDown,
-    [kTechDataDisplayName] = "Advanced Beacon",   
-   [kTechDataHotkey] = Move.B, 
-    [kTechDataCostKey] = kAdvancedBeaconCost, 
-[kTechDataTooltipInfo] = "Revives Dead Players as well."},
-								
-								
-								
-				        { [kTechDataId] = kTechId.EggBeacon, 
-        [kTechDataCooldown] = kEggBeaconCoolDown, 
-         [kTechDataTooltipInfo] = "Eggs Spawn approximately at the placed Egg Beacon. Be careful as infestation is required.", 
-        [kTechDataGhostModelClass] = "AlienGhostModel",   
-           [kTechDataBuildRequiresMethod] = GetCheckEggBeacon,
-            [kTechDataMapName] = EggBeacon.kMapName,        
-                 [kTechDataDisplayName] = "Egg Beacon",
-           [kTechDataCostKey] = kEggBeaconCost,   
-            [kTechDataRequiresInfestation] = true, 
-          [kTechDataHotkey] = Move.C,   
-         [kTechDataBuildTime] = 8, 
-        [kTechDataModel] = EggBeacon.kModelName,   
-           [kTechDataBuildMethodFailedMessage] = "1 at a time",
-         [kVisualRange] = 8,
-[kTechDataMaxHealth] = kEggBeaconHealth, [kTechDataMaxArmor] = kEggBeaconArmor},
-
-
-        { [kTechDataId] = kTechId.StructureBeacon, 
-        [kTechDataCooldown] = kStructureBeaconCoolDown, 
-         [kTechDataTooltipInfo] = "Structures move approximately at the placed Egg Beacon", 
-        [kTechDataGhostModelClass] = "AlienGhostModel",   
-            [kTechDataMapName] = StructureBeacon.kMapName,        
-                 [kTechDataDisplayName] = "Structure Beacon",  [kTechDataCostKey] = kStructureBeaconCost,   
-            [kTechDataRequiresInfestation] = true, [kTechDataHotkey] = Move.C,   
-         [kTechDataBuildTime] = 8, 
-        [kTechDataModel] = StructureBeacon.kModelName,   
-         [kVisualRange] = 8,
-[kTechDataMaxHealth] = kStructureBeaconHealth, [kTechDataMaxArmor] = kStructureBeaconArmor},
-
-
-				
-
-           { [kTechDataId] = kTechId.BackupLight, 
-           [kTechDataHint] = "Powered by thought!", 
-           [kTechDataGhostModelClass] = "MarineGhostModel",  
-           [kTechDataRequiresPower] = true,      
-           [kTechDataMapName] = BackupLight.kMapName,   
-         [kTechDataDisplayName] = "Backup Light", 
-        [kTechDataSpecifyOrientation] = true,
-        [kTechDataCostKey] = 5,     
-        [kTechDataBuildMethodFailedMessage] = "1 per room",
-        [kStructureBuildNearClass] = "SentryBattery",
-        [kStructureAttachId] = kTechId.SentryBattery,
-        [kTechDataBuildRequiresMethod] = GetCheckLightLimit,
-        [kStructureAttachRange] = 5,
-       [kTechDataModel] = BackupLight.kModelName,   
-         [kTechDataBuildTime] = 6, 
-         [kTechDataMaxHealth] = 1000,  --this could go in balancehealth etc
-        [kTechDataMaxArmor] = 100,  
-      [kTechDataPointValue] = 2, 
-    [kTechDataHotkey] = Move.O, 
-    [kTechDataNotOnInfestation] = false, 
-[kTechDataTooltipInfo] = "This bad boy right here has the potential to blind anyone standing in its way.. or just.. you know.. help brighten the mood wherever it's placed.",
- [kTechDataObstacleRadius] = 0.25},
-  */
           { [kTechDataId] = kTechId.DigestComm,   
             [kTechDataDisplayName] = "Digest",
  [kTechDataCostKey] = 0,   
@@ -211,7 +118,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.WhipBuff1,   
             [kTechDataDisplayName] = "WhipBuff1",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -230,9 +137,9 @@ local kSiege_TechData =
  
            { [kTechDataId] = kTechId.UnlockAdvancedBeacon,   
             [kTechDataDisplayName] = "UnlockAdvancedBeacon",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
-  [kTechDataResearchTimeKey] = 30,
+  [kTechDataResearchTimeKey] = 15,
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] = "This is so you don't accidentally trigger AdvancedBeacon thinking it's a research."},
 
@@ -331,7 +238,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.APresBuff1,   
             [kTechDataDisplayName] = "APresBuff1",
- [kTechDataCostKey] = 20,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -339,7 +246,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.ATresBuff1,   
             [kTechDataDisplayName] = "ATresBuff1",
- [kTechDataCostKey] = 20,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -347,7 +254,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.APresBuff1,   
             [kTechDataDisplayName] = "APresBuff1",
- [kTechDataCostKey] = 30,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 20,
  [kTechDataHotkey] = Move.R, 
@@ -356,7 +263,7 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.MTresBuff1,   
             [kTechDataDisplayName] = "MTresBuff1",
- [kTechDataCostKey] = 20,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
@@ -364,37 +271,13 @@ local kSiege_TechData =
 
           { [kTechDataId] = kTechId.MPresBuff1,   
             [kTechDataDisplayName] = "MPresBuff1",
- [kTechDataCostKey] = 20,   
+ [kTechDataCostKey] = 10,   
  [kTechIDShowEnables] = false,     
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] = "5% increase of marine pres gain amount"},
 
-    /*
-        { [kTechDataId] = kTechId.MacSpawnOn,    
-          [kTechDataCooldown] = 5,    
-          [kTechDataDisplayName] = "Automatically spawn up to 8 macs for you",       
-         [kTechDataCostKey] = 0, 
-         [kTechDataTooltipInfo] = "8 is currently the max amount to automatically spawn this way. Turning this on will automatically spawn up to this many for you"},
-         
-          { [kTechDataId] = kTechId.MacSpawnOff,    
-          [kTechDataCooldown] = 5,    
-          [kTechDataDisplayName] = "Disables automatic small mac spawning",       
-         [kTechDataCostKey] = 0, 
-         [kTechDataTooltipInfo] = "For those who prefer micro-micro management"},
-         
-         { [kTechDataId] = kTechId.ArcSpawnOn,    
-          [kTechDataCooldown] = 5,    
-          [kTechDataDisplayName] = "Automatically spawn up to 12 arcs for you",       
-         [kTechDataCostKey] = 0, 
-         [kTechDataTooltipInfo] = "12 is currently the max amount of commander arcs. Turning this on will automatically spawn up to this many for you"},
-         
-          { [kTechDataId] = kTechId.ArcSpawnOff,    
-          [kTechDataCooldown] = 5,    
-          [kTechDataDisplayName] = "Disables automatic arc spawning",       
-         [kTechDataCostKey] = 0, 
-          [kTechDataTooltipInfo] = "For those who prefer micro-micro management"},
-          */
+    
           
         { [kTechDataId] = kTechId.ExtractorArmor1,   
           [kTechDataCostKey] = kExtractorArmor1Cost,  
@@ -408,11 +291,11 @@ local kSiege_TechData =
            [kTechDataDisplayName] = "CragHeals1",  
            [kTechDataTooltipInfo] = "Increase: HealPercent, Min Heal, Max Heal by 10%."},   
 
-          { [kTechDataId] = kTechId.JetpackFuel1,   
-          [kTechDataCostKey] = 50,  
-          [kTechDataResearchTimeKey] = 60,   
-           [kTechDataDisplayName] = "JetpackFuel1",  
-           [kTechDataTooltipInfo] = "Decrease jetpack fuel replenish delay by 10%."},    
+          { [kTechDataId] = kTechId.BackupBattery,   
+          [kTechDataCostKey] = 5,  
+          [kTechDataResearchTimeKey] = 10,   
+           [kTechDataDisplayName] = "BackupBattery",  
+           [kTechDataTooltipInfo] = "Indesct. while powerpoint alive. Extends power to struct. in radius while powerpoint offline"},    
            
            
            

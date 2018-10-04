@@ -5,15 +5,14 @@
 Script.Load("lua/doors/Doors.lua")
 Script.Load("lua/doors/BreakableDoor.lua")
 Script.Load("lua/doors/timer.lua")
-Script.Load("lua/director/director_camera.lua")
+--Script.Load("lua/director/director_camera.lua")
 Script.Load("lua/2019/Functions19.lua")
 Script.Load("lua/AntiExploit.lua")
 Script.Load("lua/WeldPoint.lua")
 Script.Load("lua/Convars19.lua")
 Script.Load("lua/2019/LayStructures.lua")
-Script.Load("lua/2019/ARC_Credits.lua")
-Script.Load("lua/2019/BackupPowerBattery.lua")
 
+--If .....
 Script.Load("lua/2019/ExtraEntitiesMod/LogicBreakable.lua")
 Script.Load("lua/2019/ExtraEntitiesMod/LogicMixin.lua")
 Script.Load("lua/2019/ExtraEntitiesMod/PushTrigger.lua")
