@@ -1,3 +1,6 @@
+function Armory:GetMinRangeAC()
+return ArmoryAutoCCMR 
+end
 
 local originit = Armory.OnInitialized
 function Armory:OnInitialized()
@@ -48,3 +51,18 @@ table = origbuttons(self, techId)
 
 end
 
+
+function Armory:OnPowerOn()
+	 GetImaginator().activeArmorys = GetImaginator().activeArmorys + 1;  
+end
+
+function Armory:OnPowerOff()
+	 GetImaginator().activeArmorys = GetImaginator().activeArmorys - 1;  
+end
+
+ function Armory:PreOnKill(attacker, doer, point, direction)
+      
+	  if self:GetIsPowered() then
+	    GetImaginator().activeArmorys  = GetImaginator().activeArmorys- 1;  
+	  end
+end

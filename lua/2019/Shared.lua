@@ -11,7 +11,9 @@ Script.Load("lua/AntiExploit.lua")
 Script.Load("lua/WeldPoint.lua")
 Script.Load("lua/Convars19.lua")
 Script.Load("lua/2019/LayStructures.lua")
-
+Script.Load("lua/2019/Conductor.lua")
+Script.Load("lua/2019/Balancer.lua")
+Script.Load("lua/2019/Imaginator.lua")
 --If .....
 Script.Load("lua/2019/ExtraEntitiesMod/LogicBreakable.lua")
 Script.Load("lua/2019/ExtraEntitiesMod/LogicMixin.lua")

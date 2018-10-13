@@ -77,3 +77,9 @@ end
 end --server
 
 
+local orig_Hive_OnConstructionComplete = Hive.OnConstructionComplete
+function Hive:OnConstructionComplete()
+self.bioMassLevel = 3
+UpdateTypeOfHive(self)
+end
+

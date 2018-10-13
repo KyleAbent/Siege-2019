@@ -329,7 +329,9 @@ function Plugin:SetGameState( Gamerules, State, OldState )
               GetTimer():OnPreGame()
           end
           
-    
+    if State == kGameState.NotStarted and not State == kGameState.Countdown then
+       Shared.ConsoleCommand("sh_forceroundstart") 
+    end
 end
 
 
@@ -587,4 +589,14 @@ BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 
 
 
+end
+
+
+function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
+    
+    --if playercount <=12
+    if not GetGameStarted()  and (newteam == 1 or newteam == 2) then 
+       Shared.ConsoleCommand("sh_forceroundstart") 
+    end
+    
 end

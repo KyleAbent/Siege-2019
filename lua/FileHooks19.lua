@@ -4,11 +4,13 @@ ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "
 ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/BalanceHealth_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/director/Spectator_Avoca.lua", "post" )
-ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege.lua", "post" )
+ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hive.lua", "lua/Hive_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Marine.lua", "lua/Marine_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/JetpackMarine.lua", "lua/JetpackMarine_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Onos.lua", "lua/Onos_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/CommandStructure.lua", "lua/CommandStructure_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/DamageTypes.lua", "lua/DamageTypes_Siege19.lua", "post" )
 
@@ -64,6 +66,10 @@ ModLoader.SetupFileHook( "lua/InfantryPortal.lua", "lua/InfantryPortal_Siege19.l
 
 ModLoader.SetupFileHook( "lua/Armory.lua", "lua/Armory_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/ArmsLab.lua", "lua/ArmsLab_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/CommandStation.lua", "lua/CommandStation_Siege19.lua", "post" )
+
 ModLoader.SetupFileHook( "lua/Voting.lua", "lua/Voting_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Exosuit.lua", "lua/Exosuit_Siege19.lua", "post" )
@@ -99,6 +105,9 @@ ModLoader.SetupFileHook( "lua/ARC.lua", "lua/ARC_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/AlienTeam.lua", "lua/AlienTeam_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/MarineTeam_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/PlayingTeam.lua", "lua/PlayingTeam_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/Cyst.lua", "lua/Cyst_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege19.lua", "post" )

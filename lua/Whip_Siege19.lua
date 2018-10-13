@@ -6,7 +6,7 @@ Script.Load("lua/2019/DigestCommMixin.lua")
 
 local networkVars = { 
 
-
+  lastCyst = "time",
 }
 
 AddMixinNetworkVars(DigestCommMixin, networkVars)
@@ -29,6 +29,7 @@ local origcreate = Whip.OnCreate
 function Whip:OnCreate()
    origcreate(self)
     InitMixin(self, DigestCommMixin)
+    self.lastCyst = 0
  end
  
  
@@ -60,6 +61,34 @@ function Whip:GetCanFireAtTargetActual(target, targetPoint)
     return true
     
 end
+
+
+function Whip:OnConstructionComplete()
+	 GetImaginator().activeWhips = GetImaginator().activeWhips + 1;  
+end
+
+
+ function Whip:PreOnKill(attacker, doer, point, direction)
+      
+	  if self:GetIsBuilt() then
+	    GetImaginator().activeWhips  = GetImaginator().activeWhips- 1;  
+	  end
+end
+
+
+if Server then
+
+
+function Whip:OnUpdate(deltaTime)
+       if  GetIsTimeUp(self.lastCyst, 6)  then
+              doChain(self)
+              self.lastCyst = Shared.GetTime()
+       end
+
+end
+
+end
+
 
 
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)

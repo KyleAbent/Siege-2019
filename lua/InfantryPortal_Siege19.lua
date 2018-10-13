@@ -10,3 +10,7 @@ table = origbuttons(self, techId)
  return table
 
 end
+
+function InfantryPortal:GetMinRangeAC()
+return IPAutoCCMR  
+end
