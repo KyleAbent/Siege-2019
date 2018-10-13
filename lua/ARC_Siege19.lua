@@ -42,47 +42,34 @@ end
 if Server then
 
 
-function ARC:Instruct()
-   self:SpecificRules()
+function ARC:Instruct(where)
+   self:SpecificRules(where)
    return true
 end
-local function GetSiegeLocation()
---local locations = {}
 
-local hive = nil
-
- for _, hivey in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do
-    hive = hivey
- end
- local siegeloc = nil
- if hive ~= nil then
-  siegeloc = GetNearest(hive:GetOrigin(), "Location", nil, function(ent) return string.find(ent.name, "siege") or string.find(ent.name, "Siege") end)
- end
- 
-if siegeloc then return siegeloc end
- return nil
-end
-local function MoveToHives(self) --Closest hive from origin
---Print("Siegearc MoveToHives")
-local siegelocation = GetSiegeLocation()
-if not siegelocation then return true end
-local siegepower = GetPowerPointForLocation(siegelocation.name)
-local hiveclosest = GetNearest(siegepower:GetOrigin(), "Hive", 2)
-local origin = 0
-
---if hiveclosest then
---origin = siegepower:GetOrigin()
---origin = origin + hiveclosest:GetOrigin()
---origin = origin + siegelocation:GetOrigin()
---origin = origin / 3
---end
-if origin == 0 then origin = FindArcHiveSpawn(siegepower:GetOrigin())  end
-local where = origin
+local function MoveToHives(self, where) --Closest hive from origin
+Print("Siegearc MoveToHives")  
+/*
+local where = nil
+   if not GetIsInSiege(self) then
+     local siegelocation = GetSiegeLocation()
+     if not siegelocation then return true end
+     local siegepower = GetPowerPointForLocation(siegelocation.name)
+           where = FindFreeSpace(siegepower:GetOrigin())
+   else Print("MoveToHives inSiege")   --in siege 
+    -- local hiveclosest = GetNearest(self:GetOrigin(), "Hive", 2)
+     --   if hiveclosest then
+           local origin  = FindArcHiveSpawn(self:GetOrigin()) 
+           if origin then
+            where = origin
+           end
+       -- end
+   end
+*/
                if where then
-        self:GiveOrder(kTechId.Move, nil, where, nil, true, true)
+                    self:GiveOrder(kTechId.Move, nil, FindFreeSpace(where), nil, true, true)
                     return
-                end  
-   return not self.mode == ARC.kMode.Moving  and not GetIsInSiege(self)  
+                end   
 end
 local function MoveToRandomChair(who) --Closest hive from origin
  local commandstation = GetEntitiesForTeam( "CommandStation", 1 )
@@ -146,14 +133,14 @@ function ARC:GiveScan()
    if not self:GetInAttackMode() then return end --or  self.targetPosition == nil then return end
    
    --I hate loops
-     for _, entity in ipairs( GetEntitiesWithMixinWithinRange("Construct", self:GetOrigin(), 18 )) do
+     for _, entity in ipairs( GetEntitiesWithMixinWithinRange("Construct", self:GetOrigin(), ARC.kFireRange )) do
          if entity:GetTeamNumber() == 2 then
           local where = entity:GetOrigin()
-            if not hasScan(self, where ) then  
+          --  if not hasScan(self, where ) then  
              CreateEntity(Scan.kMapName, where, 1) 
-              end
+            --  end
               break
-         end
+          end
      end 
      
 
@@ -168,7 +155,7 @@ function ARC:GiveScan()
     
 
 end
-function ARC:SpecificRules()
+function ARC:SpecificRules(where)
 local moving = self.mode == ARC.kMode.Moving    
 local isSiegeOpen =  GetSiegeDoorOpen() 
         
@@ -199,8 +186,8 @@ local shouldundeploy = attacking and not inradius and not moving
        else 
             if not isSiegeOpen then
              MoveToRandomChair(self)
-            else
-             MoveToHives(self)
+            elseif where ~= nil then
+             MoveToHives(self,where)
             end
        end
        

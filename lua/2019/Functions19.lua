@@ -1,3 +1,18 @@
+function GetASiegeLocation()
+ local siegeloc = nil
+
+ for _, loc in ientitylist(Shared.GetEntitiesWithClassname("Location")) do
+    if string.find(loc.name, "siege") or string.find(loc.name, "Siege") then
+      siegeloc = loc
+    end
+ end
+ 
+    if siegeloc then 
+    return siegeloc
+    end
+    
+    return nil
+end
 function doChain(entity) --I can't believe this works lol
   local where = entity:GetOrigin()
    if GetIsPointOnInfestation(where) then return end
@@ -583,7 +598,7 @@ end
 
 
       function FindArcHiveSpawn(where)    
-        for index = 1, 8 do
+        for index = 1, 24 do
            local extents = LookupTechData(kTechId.Skulk, kTechDataMaxExtents, nil)
            local capsuleHeight, capsuleRadius = GetTraceCapsuleFromExtents(extents)  
            local spawnPoint = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, where, .5, 48, EntityFilterAll())
@@ -595,12 +610,12 @@ end
            end
                 -- Print("FindArcHiveSpawn inradius is %s", inradius)
            local sameLocation = spawnPoint ~= nil and GetWhereIsInSiege(spawnPoint)
-         --  Print("FindArcHiveSpawn sameLocation is %s", sameLocation)
+          -- Print("FindArcHiveSpawn sameLocation is %s", sameLocation)
 
            if spawnPoint ~= nil and sameLocation and inradius then
            return spawnPoint
            end
        end
---           Print("No valid spot found for FindArcHiveSpawn")
+          -- Print("No valid spot found for FindArcHiveSpawn")
            return nil --FindFreeSpace(where, .5, 48)
 end

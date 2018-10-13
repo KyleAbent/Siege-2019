@@ -16,6 +16,8 @@ ModLoader.SetupFileHook( "lua/DamageTypes.lua", "lua/DamageTypes_Siege19.lua", "
 
 ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightHandler_Siege19.lua", "post" ) --hmm?
 
+ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/PowerPoint_Siege19.lua", "post" ) --hmm?
+
 ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" ) --hmm?

@@ -16,12 +16,13 @@ local networkVars =
    phaseCannonTime = "float",
  alienenabled = "private boolean",
 marineenabled = "private boolean",
+arcSiegeOrig = "vector",
    
 }
 
 function Conductor:TimerValues()
   
-  
+   self.arcSiegeOrig = self:GetOrigin()
    
 end
 function Conductor:OnReset() 
@@ -180,6 +181,7 @@ end
 function Conductor:OnCreate()  
    self.marineenabled = true
    self.alienenabled = true
+   self.arcSiegeOrig = self:GetOrigin()
    if Server then
    self.phaseCannonTime = 30
    end
@@ -194,6 +196,23 @@ function Conductor:OnUpdate(deltatime)
              
 if Server then
   
+         if GetSiegeDoorOpen() then
+          local inradius = #GetEntitiesWithinRange("Hive", self.arcSiegeOrig, ARC.kFireRange) >= 1
+            if not inradius then
+               Print("Conductor arc spot to place not in hive radius")
+               local siegelocation = GetASiegeLocation()
+               local siegepower = GetPowerPointForLocation(siegelocation.name)
+               local hiveclosest = GetNearest(siegepower:GetOrigin(), "Hive", 2)
+                    if hiveclosest then
+                      local mid = (siegepower:GetOrigin() + hiveclosest:GetOrigin())/2
+                      local origin  = FindArcHiveSpawn(mid) 
+                       if origin then
+                       self.arcSiegeOrig = origin
+                       Print("Found arc spot within hive radius")
+                       end
+                    end
+            end
+         end
          
              if not self.timeLastAutomations or self.timeLastAutomations + 8 <= Shared.GetTime() then
                    self:Automations()
@@ -326,8 +345,12 @@ end
 
 function Conductor:ManageArcs()
 
+ local where = nil
+     if self.arcSiegeOrig ~= self:GetOrigin() then
+       where = self.arcSiegeOrig
+     end
    for index, arc in ipairs(GetEntitiesForTeam("ARC", 1)) do
-     arc:Instruct()
+     arc:Instruct(where)
    end
    
    
