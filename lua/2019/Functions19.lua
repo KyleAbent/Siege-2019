@@ -22,7 +22,8 @@ function doChain(entity) --I can't believe this works lol
    local splitPoints = GetCystPoints(entity:GetOrigin(), true, 2)
    
     for i = 1, #splitPoints do
-         CreateEntity(Cyst.kMapName, FindFreeSpace(splitPoints[i], 1, 7), 2)
+         local csyt = CreateEntity(Cyst.kMapName, FindFreeSpace(splitPoints[i], 1, 7), 2)
+         if not GetSetupConcluded() then csyt:SetConstructionComplete() end
     end
 end
 function GetIsPointWithinChairRadius(point)     

@@ -1,3 +1,6 @@
+kFrontDoorTime = 300
+kSiegeDoorTime = 900
+
 ArmoryAutoCCMR =  16
 PGAutoCCMR = 54
 ObsAutoCCMR = kScanRadius

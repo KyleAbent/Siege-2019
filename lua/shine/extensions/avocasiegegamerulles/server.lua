@@ -262,17 +262,17 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePo
 
 local function AddFrontTimer(who,NowToFront)
       if not NowToFront then 
-        NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+        NowToFront = kFrontDoorTime - (Shared.GetTime() - GetGamerules():GetGameStartTime())
 	  end
     Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = NowToFront,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 local function AddSiegeTimer(who, NowToSiege)
     if not NowToSiege then 
-     NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+     NowToSiege = kSiegeDoorTime - (Shared.GetTime() - GetGamerules():GetGameStartTime())
 	 end
     Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
-    Shine.ScreenText.Add( 3, {X = 0.02, Y = 0.50,Text = "(Warning(Bug): Off by a couple seconds)",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
+   -- Shine.ScreenText.Add( 3, {X = 0.02, Y = 0.50,Text = "(Warning(Bug): Off by a couple seconds)",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 

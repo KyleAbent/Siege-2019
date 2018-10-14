@@ -414,6 +414,7 @@ local function OrganizedIPCheck(who, self)
          if labs < 2 and TresCheck(1, armscost) then
                local origin = FindFreeSpace(who:GetOrigin(), 1, kInfantryPortalAttachRange)
                local armslab = CreateEntity(ArmsLab.kMapName, origin,  1)
+                 if not GetSetupConcluded() then armslab:SetConstructionComplete() end
                armslab:GetTeam():SetTeamResources(armslab:GetTeam():GetTeamResources() - armscost)
                return --one at a time
          end
@@ -434,6 +435,7 @@ local function OrganizedIPCheck(who, self)
                 local origin = FindFreeSpace(where, 4, kInfantryPortalAttachRange)
                    if origin ~= where then
                    local ip = CreateEntity(InfantryPortal.kMapName, origin,  1)
+                     if not GetSetupConcluded() then ip:SetConstructionComplete() end
                    ip:GetTeam():SetTeamResources(ip:GetTeam():GetTeamResources() - cost)
                    end
               end
@@ -541,12 +543,14 @@ function Imaginator:ActualFormulaMarine()
                           
                       if range >=  minrange  then
                             entity = CreateEntityForTeam(tospawn, randomspawn, 1)
+                             if not GetSetupConcluded() then entity:SetConstructionComplete() end
                           --  if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end
                                --BuildNotificationMessage(randomspawn, self, tospawn)
                                success = true
                             end --
                       else -- it tonly takes 1!
                        entity = CreateEntityForTeam(tospawn, randomspawn, 1)
+                         if not GetSetupConcluded() then entity:SetConstructionComplete() end
                         --  if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end
                           success = true
                         end  
@@ -665,6 +669,7 @@ if not gamestarted then return end
                  randomspawn = FindFreeSpace( hive:GetOrigin(), 4, 24, true)
             if randomspawn then
                    local entity = CreateEntityForTeam(tospawn, randomspawn, 2)
+                     if not GetSetupConcluded() then entity:SetConstructionComplete() end
                     if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end
             end
   end
@@ -795,6 +800,7 @@ function Imaginator:ActualAlienFormula(cystonly)
                            if range >=  minrange then
                              --Print("ActualAlienFormula range range >=  minrange")
                              entity = CreateEntityForTeam(tospawn, randomspawn, 2)
+                               if not GetSetupConcluded() then entity:SetConstructionComplete() end
                                   doChain(entity)
                              -- cost = GetAlienCostScalar(self, cost)
                            --  if gamestarted then
@@ -804,6 +810,7 @@ function Imaginator:ActualAlienFormula(cystonly)
                           success = true
                      else -- it tonly takes 1!
                           entity = CreateEntityForTeam(tospawn, randomspawn, 2)
+                            if not GetSetupConcluded() then entity:SetConstructionComplete() end
                         -- if entity:isa("Cyst") then CystChain(entity:GetOrigin()) end
                       --      if not entity:isa("Cyst") then FakeCyst(entity:GetOrigin()) end
                        --   if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end

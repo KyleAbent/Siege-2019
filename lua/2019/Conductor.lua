@@ -301,6 +301,7 @@ local function WhoIsQualified(who, self)
 end
 local function Touch(who, where, what, number)
  local tower = CreateEntityForTeam(what, where, number, nil)
+   if not GetSetupConcluded() then tower:SetConstructionComplete() end
          if tower then
             who:SetAttached(tower)
             if number == 1 then
