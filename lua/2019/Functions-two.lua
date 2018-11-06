@@ -91,7 +91,7 @@ end
         for index = 1, 24 do
            local extents = LookupTechData(kTechId.Skulk, kTechDataMaxExtents, nil)
            local capsuleHeight, capsuleRadius = GetTraceCapsuleFromExtents(extents)  
-           local spawnPoint = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, where, .5, 48, EntityFilterAll())
+           local spawnPoint = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, where, 9, 48, EntityFilterAll())
            local inradius = false
 
            if spawnPoint ~= nil then

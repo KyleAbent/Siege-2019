@@ -2,7 +2,7 @@ local origkill = LiveMixin.Kill
 function LiveMixin:Kill(attacker, doer, point, direction)
   if self:GetIsAlive() and self:GetCanDie() then
           ---Rebirth
-         if self:isa("Alien") then
+         if self:isa("Alien") and not self:isa("Hallucination") then
           if GetHasRebirthUpgrade(self) and self:GetEligableForRebirth() then
                 if Server then 
                     if attacker and attacker:isa("Player")  then 

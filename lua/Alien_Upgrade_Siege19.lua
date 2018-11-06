@@ -1,3 +1,4 @@
+
 local function HasUpgrade(callingEntity, techId)
 
     if not callingEntity then
@@ -15,9 +16,21 @@ local function HasUpgrade(callingEntity, techId)
 end
 
 function GetHasRedemptionUpgrade(callingEntity)
-    return HasUpgrade(callingEntity, kTechId.Redemption)
+   local rand = math.random(1,100)
+   local bool = false
+     if rand <= 20 then
+     bool = true
+     end
+     
+    return bool
 end
 function GetHasRebirthUpgrade(callingEntity)
-    return HasUpgrade(callingEntity, kTechId.Rebirth) 
+   local rand = math.random(1,100)
+   local bool = false
+     if rand <= 20 then
+     bool = true
+     end
+     
+    return bool
 end
 

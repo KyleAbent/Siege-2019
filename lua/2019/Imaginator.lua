@@ -126,12 +126,24 @@ function Imaginator:UpdateHivesManually()
                end
      return true
 end
+
+local function GetDelay()
+
+  if not GetSetupConcluded() then 
+      return 8
+   end
+  if not GetSiegeDoorOpen() then 
+      return 16
+  end
+    return 24
+end
+
 function Imaginator:OnUpdate(deltatime)
    
    if Server then
    
         
-            if not  self.timeLastImaginations or self.timeLastImaginations + 8 <= Shared.GetTime() then
+            if not  self.timeLastImaginations or self.timeLastImaginations + GetDelay() <= Shared.GetTime() then
             self.timeLastImaginations = Shared.GetTime()
         self:Imaginations()
          end
@@ -246,10 +258,11 @@ local canafford = {}
 local gamestarted = false
 --Horrible for performance, right? Not precaching ++ local variables ++ table && for loops !!! 
 
-         local  CCs = #GetEntitiesForTeam( "CommandStation", 1 )  
-
-  
-           if CCs < 3   then 
+         local  CCs = 0
+    for index, cc in ipairs(GetEntitiesForTeam("CommandStation", 1)) do
+       CCs = CCs + 1
+    end
+           if CCs < 3  and CCs >= 1 then 
              return kTechId.CommandStation
              end
            
@@ -501,8 +514,10 @@ local function ManageRoboticFactories()
 
 end
 function Imaginator:ActualFormulaMarine()
-     GetConductor():ManageMacs()  
-     GetConductor():ManageArcs()
+  local con = GetConductor()
+     con:ManageMacs()  
+     con:ManageArcs()
+     con:ManageScans()
      local randomspawn = nil
      local tospawn = GetMarineSpawnList(self) --cost, blah.
      
@@ -550,7 +565,7 @@ function Imaginator:ActualFormulaMarine()
                             end --
                       else -- it tonly takes 1!
                        entity = CreateEntityForTeam(tospawn, randomspawn, 1)
-                         if not GetSetupConcluded() then entity:SetConstructionComplete() end
+                        if not GetSetupConcluded() then entity:SetConstructionComplete() end
                         --  if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end
                           success = true
                         end  
@@ -669,7 +684,7 @@ if not gamestarted then return end
                  randomspawn = FindFreeSpace( hive:GetOrigin(), 4, 24, true)
             if randomspawn then
                    local entity = CreateEntityForTeam(tospawn, randomspawn, 2)
-                     if not GetSetupConcluded() then entity:SetConstructionComplete() end
+                    if not GetSetupConcluded() then entity:SetConstructionComplete() end
                     if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end
             end
   end
@@ -736,7 +751,7 @@ function Imaginator:hiveSpawn()  --gonna be bad for domesiege, and trainsiege, a
         local team2Commander = GetGamerules().team2:GetCommander()
       if not team2Commander then 
        local  hivecount = #GetEntitiesForTeam( "Hive", 2 )
-      if  hivecount < 3 and TresCheck(2,40) then
+      if  hivecount < 3 and hivecount >= 1 and TresCheck(2,40) then
           for _, techpoint in ientitylist(Shared.GetEntitiesWithClassname("TechPoint")) do
              if techpoint:GetAttached() == nil then 
                local hive =  techpoint:SpawnCommandStructure(2) 
@@ -764,10 +779,12 @@ local function getAlienConsBuildOrig()
 end
 function Imaginator:ActualAlienFormula(cystonly)
   self:hiveSpawn()
-  GetConductor():ManageDrifters() 
-  GetConductor():ManageCrags() 
-  GetConductor():ManageShifts()
-  GetConductor():ManageWhips() --gonna affect Phase Cannon ....... horrible perf?
+  local con = GetConductor()
+con:ManageDrifters() 
+con:ManageCrags() 
+con:ManageShifts()
+con:ManageWhips()
+
   local randomspawn = nil
   local powerpoint  = getAlienConsBuildOrig() 
   local tospawn = GetAlienSpawnList(self) --, cost, gamestarted = GetAlienSpawnList(self, cystonly)
@@ -810,7 +827,7 @@ function Imaginator:ActualAlienFormula(cystonly)
                           success = true
                      else -- it tonly takes 1!
                           entity = CreateEntityForTeam(tospawn, randomspawn, 2)
-                            if not GetSetupConcluded() then entity:SetConstructionComplete() end
+                           if not GetSetupConcluded() then entity:SetConstructionComplete() end
                         -- if entity:isa("Cyst") then CystChain(entity:GetOrigin()) end
                       --      if not entity:isa("Cyst") then FakeCyst(entity:GetOrigin()) end
                        --   if gamestarted then entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - cost) end

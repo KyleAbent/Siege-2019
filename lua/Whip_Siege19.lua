@@ -78,11 +78,23 @@ end
 
 if Server then
 
+function Whip:UpdateRootState()
+
+
+        self:Root()
+
+end
 
 function Whip:OnUpdate(deltaTime)
-       if  GetIsTimeUp(self.lastCyst, 6)  then
+       if self.moving and GetIsTimeUp(self.lastCyst, 6)  then
               doChain(self)
               self.lastCyst = Shared.GetTime()
+       end
+       
+       if self.moving then
+         if self:GetIsInCombat() then
+            self:ClearOrders()
+         end
        end
 
 end

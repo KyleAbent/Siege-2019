@@ -38,3 +38,16 @@ function GetCheckSentryLimit(techId, origin, normal, commander)
     
 end
 */
+if Server then
+
+local origs = Sentry.OnUpdate
+
+
+function Sentry:OnUpdate(deltaTime)
+    
+        origs(self,deltaTime)
+        self.attachedToBattery = true
+
+end
+
+end

@@ -7,7 +7,7 @@ Script.Load("lua/RecycleMixin.lua")
 local networkVars = 
 
 {
-
+  level = "integer",
 
 }
 AddMixinNetworkVars(ResearchMixin, networkVars)
@@ -20,8 +20,13 @@ function ARC:OnCreate()
     InitMixin(self, RecycleMixin)
    --   InitMixin(self, LevelsMixin)
     origcreate(self)
+    self.level = 0
 end
-
+  function ARC:GetUnitNameOverride(viewer)
+    local unitName = GetDisplayName(self)   
+    unitName = string.format(Locale.ResolveString("%s (Lvl %s"), self:GetClassName(), self.level)
+    return unitName
+end 
     /*
     
     function ARC:GetMaxLevel()
@@ -48,7 +53,7 @@ function ARC:Instruct(where)
 end
 
 local function MoveToHives(self, where) --Closest hive from origin
-Print("Siegearc MoveToHives")  
+--Print("Siegearc MoveToHives")  
 /*
 local where = nil
    if not GetIsInSiege(self) then
@@ -118,49 +123,13 @@ end
 function ARC:SetDeployed()
 GiveDeploy(self) 
 end
-local function hasScan(who, where)
-          if not where then where = who:GetOrigin() end 
-          for _, scan in ipairs(GetEntitiesForTeamWithinRange("Scan", 1, where, kScanRadius)) do
-               if scan then
-                  return true
-             end
-          end
-          
-          return false
-end
-function ARC:GiveScan()
-  
-   if not self:GetInAttackMode() then return end --or  self.targetPosition == nil then return end
-   
-   --I hate loops
-     for _, entity in ipairs( GetEntitiesWithMixinWithinRange("Construct", self:GetOrigin(), ARC.kFireRange )) do
-         if entity:GetTeamNumber() == 2 then
-          local where = entity:GetOrigin()
-          --  if not hasScan(self, where ) then  
-             CreateEntity(Scan.kMapName, where, 1) 
-            --  end
-              break
-          end
-     end 
-     
 
-      
-    for _, shade in ipairs(GetEntitiesWithinRange("Shade", self:GetOrigin(), 20)) do
-       if shade:GetIsBuilt() then
-           shade.shouldInk = true  --better than shade onup scan check
-           break -- one at a time?
-       --  self.vortexCheck = true
-         end
-    end
-    
-
-end
 function ARC:SpecificRules(where)
 local moving = self.mode == ARC.kMode.Moving    
 local isSiegeOpen =  GetSiegeDoorOpen() 
         
 local attacking = self.deployMode == ARC.kDeployMode.Deployed
-            if attacking then self:GiveScan() end
+
 local inradius =  not isSiegeOpen and ( GetIsPointWithinChairRadius(self:GetOrigin()) or CheckForAndActAccordingly(self) ) or 
                       isSiegeOpen and (  GetIsInSiege(self) and GetIsPointWithinHiveRadius(self:GetOrigin()) )
 local shouldstop = false
@@ -168,6 +137,10 @@ local shouldmove = not shouldstop and not moving and not inradius
 local shouldstop = moving and shouldstop
 local shouldattack = inradius and not attacking 
 local shouldundeploy = attacking and not inradius and not moving
+
+if isSiegeOpen then
+  self.level = Clamp(self.level + .01, .01, 30)
+end
   
   if moving then
     

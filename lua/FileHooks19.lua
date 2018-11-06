@@ -32,6 +32,8 @@ ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/BuildUtility_Siege19.lua",
 
 ModLoader.SetupFileHook( "lua/Embryo.lua", "lua/Embryo_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/Weapons/Marine/Welder.lua", "lua/Weapons/Marine/Welder_Siege19.lua", "post" )
+
 ModLoader.SetupFileHook( "lua/Weapons/Alien/Metabolize.lua", "lua/Weapons/Alien/Metabolize_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Weapons/Alien/Blink.lua", "lua/Weapons/Alien/Blink_Siege19.lua", "post" )
@@ -45,6 +47,8 @@ ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverM
 ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
+
+ModLoader.SetupFileHook( "lua/WeldableMixin.lua", "lua/WeldableMixin_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/RolloutMixin_Siege19.lua", "post" ) --hmm?
 

@@ -98,10 +98,7 @@ end
 function Alien:RedemAlienToHive()
      if self:GetEligableForRedemption() then
         self:TeleportToHive()
-          local client = self:GetClient()
-          if client.GetIsVirtual and client:GetIsVirtual() then return end
-          client = client:GetControllingPlayer()
-         if client and self.OnRedeem then self:OnRedeem(client) end
+        --self:OnRedeem(client) 
         self.lastredeemorrebirthtime = Shared:GetTime()
      end
         return false
@@ -202,8 +199,6 @@ function Alien:TriggerRebirth()
                 --Eliminate velocity so that we don't slide or jump as an egg
                 newPlayer:SetVelocity(Vector(0, 0, 0))                
                 newPlayer:DropToFloor()
-                
-               newPlayer:TriggerRebirthCountDown(newPlayer:GetClient():GetControllingPlayer())
                newPlayer:SetGestationData(upgradeManager:GetUpgrades(), newLifeFormTechId, 10, 10) //Skulk to X 
                newPlayer.gestationTime = self:GetRebirthLength()
                newPlayer.lastredeemorrebirthtime = Shared.GetTime()

@@ -40,6 +40,17 @@ function Hive:UpdateSpawnEgg()
 
 end
 
+
+function Hive:ModifyDamageTaken(damageTable, attacker, doer, damageType)
+
+    if attacker:isa("ARC") then
+       
+       damageTable.damage = damageTable.damage * ( attacker.level / 100 ) + damageTable.damage
+        
+    end
+end
+
+
 function Hive:HatchEggs() --overwrite get rid of scaleplayer
     local amountEggsForHatch = kEggsPerHatch
     local eggCount = 0

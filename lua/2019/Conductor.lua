@@ -204,8 +204,22 @@ if Server then
                local siegepower = GetPowerPointForLocation(siegelocation.name)
                local hiveclosest = GetNearest(siegepower:GetOrigin(), "Hive", 2)
                     if hiveclosest then
-                      local mid = (siegepower:GetOrigin() + hiveclosest:GetOrigin())/2
-                      local origin  = FindArcHiveSpawn(mid) 
+                    Print("Found hiveclosest")
+                      local origin  =FindArcHiveSpawn(siegepower:GetOrigin())  
+                       if origin then
+                       self.arcSiegeOrig = origin
+                       Print("Found arc spot within hive radius")
+                       end
+                    end
+            end
+            if not inradius then
+               Print("Conductor arc spot to place not in hive radius")
+               local siegelocation = GetASiegeLocation()
+               local siegepower = GetPowerPointForLocation(siegelocation.name)
+               local hiveclosest = GetNearest(siegepower:GetOrigin(), "Hive", 2)
+                    if hiveclosest then
+                    Print("Found hiveclosest")
+                      local origin  =FindArcHiveSpawn( ( (  siegepower:GetOrigin() + hiveclosest:GetOrigin() ) / 2) )  
                        if origin then
                        self.arcSiegeOrig = origin
                        Print("Found arc spot within hive radius")
@@ -387,27 +401,11 @@ end
 
 local function ManagePlayerWeld(who, where)
 
-     local eligable = {}
-        for _, entity in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
-           if  entity:GetTeamNumber() == 1 and entity:GetIsAlive() and entity:GetCanBeWelded(who) then
-           table.insert(eligable, entity )
-           end
-       end
-  
-     if #eligable == 0 then 
-           for _, entity in ientitylist(Shared.GetEntitiesWithClassname("ARC")) do
-               if entity:GetIsAlive() and entity:GetCanBeWelded(who) then
-               table.insert(eligable, entity )
-              end
-          end
-     end
-     
-      if #eligable == 0 then return end 
-      
-     local whoTo = table.random(eligable)
-     local where = whoTo:GetOrigin()
-     who:SetOrigin(FindFreeSpace(where))
-     who:GiveOrder(kTechId.Weld, whoTo:GetId(), where, nil, false, false)  
+ local player =  GetNearest(who:GetOrigin(), "Marine", 1, function(ent) return ent:GetIsAlive() end) 
+ 
+  if player then
+    who:GiveOrder(   kTechId.FollowAndWeld, player:GetId(), player:GetOrigin(), nil, false, false)
+  end
 
 end
 
@@ -429,9 +427,10 @@ function Conductor:ManageMacs()
                   --if mac:GetIsAvoca() then
                     --if front door open then managepower
                    -- ManagePower(mac, mac:GetOrigin())
-                      ManageConstruct(mac, mac:GetOrigin())
+                     -- ManageConstruct(mac, mac:GetOrigin())
+                      --break
                   -- else
-                    --ManagePlayerWeld(mac, mac:GetOrigin())
+                    ManagePlayerWeld(mac, mac:GetOrigin())
                 --  end
                end
              end
@@ -520,6 +519,7 @@ function Conductor:ManageDrifters()
              local drifter = Drifters[i]
               if not drifter:GetHasOrder() then
               GiveDrifterOrder(drifter, drifter:GetOrigin())
+              break
               end
           end
         end
@@ -546,7 +546,13 @@ function Conductor:ManageShifts()
        end  
 end
 
-
+function Conductor:ManageScans()
+if not GetSiegeDoorOpen() then return end
+  local hive = GetRandomHive()
+  if hive then
+   CreateEntity(Scan.kMapName, hive:GetOrigin(), 1) 
+   end
+end
 
 function Conductor:ManageCrags()
 
@@ -585,7 +591,7 @@ function Conductor:ManageWhips()
        
        for i = 1, random do --maybe time delay ah
            local hive = GetRandomHive()
-           local nearestof = GetNearest(hive:GetOrigin(), "Whip", 2, function(ent) return ent:GetIsBuilt() and ( ent.GetIsInCombat and not ent:GetIsInCombat() and not ent:GetIsACreditStructure() and not ent.moving )  end)
+           local nearestof = GetNearest(hive:GetOrigin(), "Whip", 2, function(ent) return ent:GetIsBuilt() and ( ent.GetIsInCombat and not ent:GetIsInCombat() and not ent.moving )  end)
             if nearestof then
                -- if not moving
                local power = GetNearest(nearestof:GetOrigin(), "PowerPoint", 1,  function(ent) return ent:GetIsBuilt() and not ent:GetIsDisabled()  end ) 

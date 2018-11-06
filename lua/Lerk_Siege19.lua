@@ -1,13 +1,17 @@
-Lerk.kHealth = kLerkHealth
-function Lerk:GetBaseHealth()
-    return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Lerk.kHealth * 1.10, Lerk.kHealth)  --Lerk.kHealth
-end
 
 
  
  local kRandDebuff = Vector(math.random(0,.3), math.random(0,.3), math.random(0,.3)  ) --if 1 isnt too much
 function Lerk:GetEngagementPointOverride()
     return self:GetOrigin() + kRandDebuff
+end
+
+
+/*
+
+Lerk.kHealth = kLerkHealth
+function Lerk:GetBaseHealth()
+    return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Lerk.kHealth * 1.10, Lerk.kHealth)  --Lerk.kHealth
 end
 
 
@@ -29,7 +33,7 @@ local kYExtents = 0.4 * 0.8
 local crouchshrink = 0
      return Vector(kXZExtents, kYExtents, kXZExtents)
 end
-
+*/
 
 function Lerk:GetRebirthLength()
 return 4
