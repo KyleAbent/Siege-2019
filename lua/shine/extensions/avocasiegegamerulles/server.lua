@@ -1,234 +1,8 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua") -- to load timer hook opensiege onopensiege otherwise wont hook
-//Script.Load("lua/Additions/Imaginator.lua")
-local Shine = Shine
-local Plugin = Plugin
-
-local function NewGetDestinationGate(self)
-
-    // Find next phase gate to teleport to
-    local phaseGates = {}    
-    for index, phaseGate in ipairs( GetEntitiesForTeam("PhaseGate", self:GetTeamNumber()) ) do
-        if GetIsUnitActive(phaseGate) and phaseGate.channel == self.channel then
-            table.insert(phaseGates, phaseGate)
-        end
-    end    
-    
-    if table.count(phaseGates) < 2 then
-        return nil
-    end
-    
-    // Find our index and add 1
-    local index = table.find(phaseGates, self)
-    if (index ~= nil) then
-    
-        local nextIndex = ConditionalValue(index == table.count(phaseGates), 1, index + 1)
-        ASSERT(nextIndex >= 1)
-        ASSERT(nextIndex <= table.count(phaseGates))
-        return phaseGates[nextIndex]
-        
-    end
-    
-    return nil
-    
-end
-
-OldGetDestinationGate = Shine.Hook.ReplaceLocalFunction( PhaseGate.Update, "GetDestinationGate", NewGetDestinationGate )
 
 
-Shine.Hook.SetupClassHook( "Alien", "TriggerRedeemCountDown", "OnRedemedHook", "PassivePre" )
-Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "TriggerRebirthCountDown", "PassivePre" )
-
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "BecauseFuckSpammingCommanders", "Replace" )
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMed", "SeriouslyFuckIt", "Replace" )
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyAmmo", "InTheButt", "Replace" )
-
-
-function Plugin:BecauseFuckSpammingCommanders(player)
-          if not GetGamerules():GetGameStarted() then return end
-		   if not player or not player:GetIsAlive() then return end
-            local client = player:GetClient()
-            local controlling = client:GetControllingPlayer()
-           local Client = controlling:GetClient()
-
-     if player:GetResources() > 1 then
-        player:SetResources( player:GetResources () - 1 )
-        CreateEntity(  NutrientMist.kMapName, player:GetOrigin(), 2 ) 
-     end   
-end
-
-function Plugin:SeriouslyFuckIt(player)
-          if not GetGamerules():GetGameStarted() then return end
-		   if not player or not player:GetIsAlive() then return end
-            local client = player:GetClient()
-            local controlling = client:GetControllingPlayer()
-           local Client = controlling:GetClient()
-
-     if player:GetResources() > 1 then
-        player:SetResources( player:GetResources () - 1 )
-        CreateEntity(  MedPack.kMapName, player:GetOrigin(), 1 ) 
-     end   
-end
-
-function Plugin:InTheButt(player)
-          if not GetGamerules():GetGameStarted() then return end
-		   if not player or not player:GetIsAlive() then return end
-            local client = player:GetClient()
-            local controlling = client:GetControllingPlayer()
-           local Client = controlling:GetClient()
-
-     if player:GetResources() > 1 then
-        player:SetResources( player:GetResources () - 1 )
-        CreateEntity(  AmmoPack.kMapName, player:GetOrigin(), 1 ) 
-     end   
-end
-
-  function Plugin:OnRedemedHook(player) 
-            local herp = player:GetClient()
-            local derp = herp:GetControllingPlayer()
-            Shine.ScreenText.Add( 50, {X = 0.20, Y = 0.90,Text = "Redemption Cooldown: %s",Duration = derp:GetRedemptionCoolDown() or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, player ) 
- end
-
- function Plugin:TriggerRebirthCountDown(player)
-            local herp = player:GetClient()
-            local derp = herp:GetControllingPlayer()
-            Shine.ScreenText.Add( 50, {X = 0.20, Y = 0.90,Text = "Rebirth Cooldown: %s",Duration = ( derp:GetRedemptionCoolDown() * 1.3 ) or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, player ) 
-end
-
-
-local OldUpdGestation
-
-local function NewHpdateGestation(self)
-    // Cannot spawn unless alive.
-    if self:GetIsAlive() and self.gestationClass ~= nil then
-    
-        if not self.gestateEffectsTriggered then
-        
-            self:TriggerEffects("player_start_gestate")
-            self.gestateEffectsTriggered = true
-            
-        end
-        
-        // Take into account catalyst effects
-        local kUpdateGestationTime = 0.1
-        local amount = GetAlienCatalystTimeAmount(kUpdateGestationTime, self)
-        self.evolveTime = self.evolveTime + kUpdateGestationTime + amount
-        
-        self.evolvePercentage = Clamp((self.evolveTime / self.gestationTime) * 100, 0, 100)
-        
-        if self.evolveTime >= self.gestationTime then
-        
-            // Replace player with new player
-            local newPlayer = self:Replace(self.gestationClass)
-            newPlayer:SetCameraDistance(0)
-
-            local capsuleHeight, capsuleRadius = self:GetTraceCapsule()
-            local newAlienExtents = LookupTechData(newPlayer:GetTechId(), kTechDataMaxExtents)
-
-            -- Add a bit to the extents when looking for a clear space to spawn.
-            local spawnBufferExtents = Vector(0.1, 0.1, 0.1)
-            
-            --validate the spawn point before using it
-            if self.validSpawnPoint and GetHasRoomForCapsule(newAlienExtents + spawnBufferExtents, self.validSpawnPoint + Vector(0, newAlienExtents.y + Embryo.kEvolveSpawnOffset, 0), CollisionRep.Default, PhysicsMask.AllButPCsAndRagdolls, nil, EntityFilterTwo(self, newPlayer)) then
-                newPlayer:SetOrigin(self.validSpawnPoint)
-            else
-                for index = 1, 100 do
-
-                    local spawnPoint = GetRandomSpawnForCapsule(newAlienExtents.y, capsuleRadius, self:GetModelOrigin(), 0.5, 5, EntityFilterOne(self))
-
-                    if spawnPoint then
-
-                        newPlayer:SetOrigin(spawnPoint)
-                        break
-
-                    end
-
-                end
-
-            end
-
-            newPlayer:DropToFloor()
-            
-            self:TriggerEffects("player_end_gestate")
-            
-            // Now give new player all the upgrades they purchased
-            local upgradesGiven = 0
-            
-            for index, upgradeId in ipairs(self.evolvingUpgrades) do
-
-                if newPlayer:GiveUpgrade(upgradeId) then
-                    upgradesGiven = upgradesGiven + 1
-                end
-                
-            end
-            
-            local healthScalar = self.storedHealthScalar or 1
-            local armorScalar = self.storedArmorScalar or 1
-
-            newPlayer:SetHealth(healthScalar * LookupTechData(self.gestationTypeTechId, kTechDataMaxHealth))
-            newPlayer:SetArmor(armorScalar * LookupTechData(self.gestationTypeTechId, kTechDataMaxArmor))
-           if  newPlayer.OnGestationComplete then newPlayer:OnGestationComplete() end
-            newPlayer:SetHatched()
-            newPlayer:TriggerEffects("egg_death")
-           
-            
-           if  GetHasRebirthUpgrade(newPlayer) then
-               if self.triggeredrebirth then
-                  newPlayer:SetHealth(newPlayer:GetHealth() * 0.7)
-                  newPlayer:SetArmor(newPlayer:GetArmor() * 0.7)
-               end
-          newPlayer:TriggerRebirthCountDown(newPlayer:GetClient():GetControllingPlayer())
-          newPlayer.lastredeemorrebirthtime = Shared.GetTime()
-           end
-          
-
-
-        if GetHasRedemptionUpgrade(newPlayer) then
-          newPlayer:TriggerRedeemCountDown(newPlayer:GetClient():GetControllingPlayer())
-          newPlayer.lastredeemorrebirthtime = Shared.GetTime()
-         end
-            
-            if self.resOnGestationComplete then
-                newPlayer:AddResources(self.resOnGestationComplete)
-            end
-            
-            local newUpgrades = newPlayer:GetUpgrades()
-            if #newUpgrades > 0 then            
-                newPlayer.lastUpgradeList = newPlayer:GetUpgrades()
-            end
-
-            // Notify team
-
-            local team = self:GetTeam()
-
-            if team and team.OnEvolved then
-
-                team:OnEvolved(newPlayer:GetTechId())
-
-                for _, upgradeId in ipairs(self.evolvingUpgrades) do
-
-                    if team.OnEvolved then
-                        team:OnEvolved(upgradeId)
-                    end
-                    
-                end
-
-            end
-            
-            -- Return false so that we don't get called again if the server time step
-            -- was larger than the callback interval
-            return false
-            
-        end
-        
-    end
-    
-    return true
-
-end
-
-OldUpdGestation = Shine.Hook.ReplaceLocalFunction( Embryo.OnInitialized, "UpdateGestation", NewHpdateGestation )
-
+--replace with gamerules hook?
 
 Plugin.Version = "1.0"
 
@@ -262,17 +36,17 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePo
 
 local function AddFrontTimer(who,NowToFront)
       if not NowToFront then 
-        NowToFront = kFrontDoorTime - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+        NowToFront = GetTimer():GetFrontLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
 	  end
     Shine.ScreenText.Add( 1, {X = 0.02, Y = 0.40,Text = "Front: %s",Duration = NowToFront,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 local function AddSiegeTimer(who, NowToSiege)
     if not NowToSiege then 
-     NowToSiege = kSiegeDoorTime - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+     NowToSiege = GetTimer():GetSiegeLength() - (Shared.GetTime() - GetGamerules():GetGameStartTime())
 	 end
     Shine.ScreenText.Add( 2, {X = 0.02, Y = 0.45,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
-   -- Shine.ScreenText.Add( 3, {X = 0.02, Y = 0.50,Text = "(Warning(Bug): Off by a couple seconds)",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
+    Shine.ScreenText.Add( 3, {X = 0.02, Y = 0.50,Text = "(Warning(Bug): Off by a couple seconds)",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 1,FadeIn = 0,}, who )
 end
 
 
@@ -329,9 +103,7 @@ function Plugin:SetGameState( Gamerules, State, OldState )
               GetTimer():OnPreGame()
           end
           
-    if State == kGameState.NotStarted and not State == kGameState.Countdown then
-       Shared.ConsoleCommand("sh_forceroundstart") 
-    end
+    
 end
 
 
@@ -589,14 +361,4 @@ BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 
 
 
-end
-
-
-function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
-    
-    --if playercount <=12
-    if not GetGameStarted()  and (newteam == 1 or newteam == 2) then 
-       Shared.ConsoleCommand("sh_forceroundstart") 
-    end
-    
 end

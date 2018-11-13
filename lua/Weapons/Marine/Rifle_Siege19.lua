@@ -1,4 +1,5 @@
 
+/*
 function Rifle:GetClipSize()
     
            local player = self:GetParent()
@@ -9,3 +10,4 @@ function Rifle:GetClipSize()
         end
    
 end
+*/

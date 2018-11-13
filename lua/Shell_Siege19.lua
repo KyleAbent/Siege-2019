@@ -4,7 +4,7 @@ Script.Load("lua/ResearchMixin.lua")
 function Shell:GetTechButtons(techId)
 local table = {}
 
- table[1] = kTechId.AlienHealth1
+ --table[1] = kTechId.AlienHealth1
  
  return table
 

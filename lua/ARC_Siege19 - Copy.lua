@@ -1,28 +1,30 @@
 //Print("ARC19")Print("ARC19")Print("ARC19")Print("ARC19")Print("ARC19")Print("ARC19")Print("ARC19")Print("ARC19") 
 Script.Load("lua/ResearchMixin.lua")
 Script.Load("lua/RecycleMixin.lua")
---Script.Load("lua/2019/LevelsMixin.lua")
+Script.Load("lua/2019/LevelsMixin.lua")
 
-
-local networkVars = 
-
+local networkVars =
 {
-
-
 }
+
 AddMixinNetworkVars(ResearchMixin, networkVars)
 AddMixinNetworkVars(RecycleMixin, networkVars)
---AddMixinNetworkVars(LevelsMixin, networkVars)
-
+AddMixinNetworkVars(LevelsMixin, networkVars)
 local origcreate = ARC.OnCreate
 function ARC:OnCreate()
+    origcreate(self)
     InitMixin(self, ResearchMixin)
     InitMixin(self, RecycleMixin)
-   --   InitMixin(self, LevelsMixin)
-    origcreate(self)
 end
 
-    /*
+
+
+    local originit = ARC.OnInitialized
+    function ARC:OnInitialized()
+        originit(self)
+        InitMixin(self, LevelsMixin)
+    end
+    
     
     function ARC:GetMaxLevel()
     return 10
@@ -34,23 +36,29 @@ end
      end
 
     function ARC:GetAddXPAmount()
-    return 0.25--0.25
+    return 0.05--0.25
     end
-    */
-
-
+    
 if Server then
-   /*
+
+     function ARC:OnDamageDone(doer, target)
+        if self:GetIsAlive() and doer == self then
+               self:AddXP(self:GetAddXPAmount())
+        end
+        
+    end
+    
+/*
     local origTag= ARC.OnTag
  function ARC:OnTag(tagName) 
      if tagName == "fire_start" then
         self:AddXP(self:GetAddXPAmount())
      end
     origTag(self, tagName)
-end 
+end   
 */
-
-
+    
+    
 local origrules = ARC.AcquireTarget
 function ARC:AcquireTarget() 
 
@@ -65,12 +73,6 @@ end
 
 end
 
-
-
 Shared.LinkClassToMap("ARC", ARC.kMapName, networkVars)
-    
-
-
-    
     
     

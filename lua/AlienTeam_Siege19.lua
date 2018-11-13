@@ -16,17 +16,17 @@ function AlienTeam:InitTechTree()
 //self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
 self.techTree:AddPassive(kTechId.PrimalScream,              kTechId.None, kTechId.None, kTechId.AllAliens)
 self.techTree:AddPassive(kTechId.Onocide,              kTechId.None, kTechId.None, kTechId.AllAliens)
-self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId.AllAliens) -- though linking 
+--self.techTree:AddPassive(kTechId.AcidRocket, kTechId.Stab, kTechId.None, kTechId.AllAliens) -- though linking 
 
- self.techTree:AddResearchNode(kTechId.CragHeals1, kTechId.Shell, kTechId.None)
-    self.techTree:AddResearchNode(kTechId.WhipBuff1, kTechId.Whip, kTechId.Spur)
+ --self.techTree:AddResearchNode(kTechId.CragHeals1, kTechId.Shell, kTechId.None)
+  --  self.techTree:AddResearchNode(kTechId.WhipBuff1, kTechId.Whip, kTechId.Spur)
     self.techTree:AddUpgradeNode(kTechId.DigestComm, kTechId.None, kTechId.None)
-    self.techTree:AddResearchNode(kTechId.AlienHealth1,     kTechId.Shell, kTechId.BioMassNine) --Requirements WIP
-    self.techTree:AddResearchNode(kTechId.SkulkRage,     kTechId.Spur, kTechId.BioMassSix) -- Six?? IDK!
-    self.techTree:AddResearchNode(kTechId.GorgeBombBuff,     kTechId.Spur, kTechId.BioMassThree) 
-    self.techTree:AddResearchNode(kTechId.HydraBuff1,     kTechId.Spur, kTechId.BioMassFour) --idk req.
-    self.techTree:AddResearchNode(kTechId.APresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
-    self.techTree:AddResearchNode(kTechId.ATresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
+  --  self.techTree:AddResearchNode(kTechId.AlienHealth1,     kTechId.Shell, kTechId.BioMassNine) --Requirements WIP
+  --  self.techTree:AddResearchNode(kTechId.SkulkRage,     kTechId.Spur, kTechId.BioMassSix) -- Six?? IDK!
+  --  self.techTree:AddResearchNode(kTechId.GorgeBombBuff,     kTechId.Spur, kTechId.BioMassThree) 
+   -- self.techTree:AddResearchNode(kTechId.HydraBuff1,     kTechId.Spur, kTechId.BioMassFour) --idk req.
+  --  self.techTree:AddResearchNode(kTechId.APresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
+  --  self.techTree:AddResearchNode(kTechId.ATresBuff1,     kTechId.Harvester, kTechId.None) --I'm proud of this!
 
 	 self.techTree:AddBuyNode(kTechId.Rebirth, kTechId.Shell, kTechId.None, kTechId.AllAliens)
      self.techTree:AddBuyNode(kTechId.Redemption, kTechId.Shell, kTechId.None, kTechId.AllAliens)

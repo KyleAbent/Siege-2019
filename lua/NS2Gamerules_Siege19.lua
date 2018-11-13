@@ -1,11 +1,3 @@
-local origC = NS2Gamerules.OnCreate
-
-function NS2Gamerules:OnCreate()
-   origC(self)
-   Server.CreateEntity(Imaginator.kMapName)
-   Server.CreateEntity(Conductor.kMapName)
-end
-
 function NS2Gamerules:DisplayFront()
 
 end

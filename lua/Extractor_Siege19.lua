@@ -1,3 +1,5 @@
+/*
+
 local origbuttons = Extractor.GetTechButtons
 function Extractor:GetTechButtons(techId)
 local table = {}
@@ -10,6 +12,8 @@ table = origbuttons(self, techId)
  return table
 
 end
+
+*/
 
 /*
 Script.Load("lua/ResearchMixin.lua")

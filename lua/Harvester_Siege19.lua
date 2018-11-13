@@ -1,3 +1,5 @@
+/*
+
 local origbuttons = Harvester.GetTechButtons
 function Harvester:GetTechButtons(techId)
 local table = {}
@@ -10,3 +12,5 @@ table = origbuttons(self, techId)
  return table
 
 end
+
+*/

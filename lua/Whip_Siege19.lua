@@ -6,11 +6,11 @@ Script.Load("lua/2019/DigestCommMixin.lua")
 
 local networkVars = { 
 
-  lastCyst = "time",
+
 }
 
 AddMixinNetworkVars(DigestCommMixin, networkVars)
-
+/*
 
 local originit = Whip.OnInitialized
 function Whip:OnInitialized()
@@ -24,12 +24,12 @@ originit(self)
     Whip.kBombSpeed = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 20 * 1.05, 20) 
 
 end
+*/
 
 local origcreate = Whip.OnCreate
 function Whip:OnCreate()
    origcreate(self)
     InitMixin(self, DigestCommMixin)
-    self.lastCyst = 0
  end
  
  
@@ -39,7 +39,7 @@ local table = {}
 
 table = origbuttons(self, techId)
 
-  table[3] = kTechId.WhipBuff1
+ -- table[3] = kTechId.WhipBuff1
  table[8] = kTechId.DigestComm
  return table
 
@@ -61,46 +61,6 @@ function Whip:GetCanFireAtTargetActual(target, targetPoint)
     return true
     
 end
-
-
-function Whip:OnConstructionComplete()
-	 GetImaginator().activeWhips = GetImaginator().activeWhips + 1;  
-end
-
-
- function Whip:PreOnKill(attacker, doer, point, direction)
-      
-	  if self:GetIsBuilt() then
-	    GetImaginator().activeWhips  = GetImaginator().activeWhips- 1;  
-	  end
-end
-
-
-if Server then
-
-function Whip:UpdateRootState()
-
-
-        self:Root()
-
-end
-
-function Whip:OnUpdate(deltaTime)
-       if self.moving and GetIsTimeUp(self.lastCyst, 6)  then
-              doChain(self)
-              self.lastCyst = Shared.GetTime()
-       end
-       
-       if self.moving then
-         if self:GetIsInCombat() then
-            self:ClearOrders()
-         end
-       end
-
-end
-
-end
-
 
 
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)

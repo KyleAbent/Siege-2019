@@ -4,11 +4,7 @@ Script.Load("lua/2019/DigestCommMixin.lua")
 local networkVars = {}
 AddMixinNetworkVars(DigestCommMixin, networkVars)
 
-
-function Crag:GetMinRangeAC()
-return CragAutoCCMR       
-end
-
+/*
 local origcreate = Crag.OnCreate
 function Crag:OnCreate()
    origcreate(self)
@@ -19,6 +15,8 @@ function Crag:OnCreate()
    end
        InitMixin(self, DigestCommMixin)
  end
+ */
+
  
 
 local origbuttons = Crag.GetTechButtons
@@ -27,7 +25,7 @@ local table = {}
 
 table = origbuttons(self, techId)
 
- table[5] = kTechId.CragHeals1
+ --table[5] = kTechId.CragHeals1
   table[8] = kTechId.DigestComm
 
  
@@ -35,43 +33,8 @@ table = origbuttons(self, techId)
 
 end
 
-
-local function ManageHealWave(self)
-      for _, entity in ipairs(GetEntitiesWithinRange("Live", self:GetOrigin(), Crag.kHealRadius)) do
-                 if not self:GetIsOnFire() and GetIsUnitActive(self) and entity:GetIsInCombat() and entity:GetHealthScalar() <= .9  then
-                         self:TriggerHealWave()
-                         if self.moving then 
-                            self:ClearOrders()
-                        end
-                end
-      end
-end
-
-
-
-function Crag:InstructSpecificRules()
-ManageHealWave(self)
-end
-
- function Crag:OnConstructionComplete()
-	 GetImaginator().activeCrags = GetImaginator().activeCrags + 1;  
-end
-
-
- function Crag:PreOnKill(attacker, doer, point, direction)
-      
-	  if self:GetIsBuilt() then
-	    GetImaginator().activeCrags  = GetImaginator().activeCrags- 1;  
-	  end
-end
-
+/*
 if Server then
-
-function Crag:OnOrderComplete(currentOrder)
-    if currentOrder == kTechId.Move then 
-   doChain(self)
-    end
-end
 
 function Crag:OnResearchComplete(researchId)
   
@@ -85,4 +48,7 @@ end
 
 
 
+
 end
+
+*/

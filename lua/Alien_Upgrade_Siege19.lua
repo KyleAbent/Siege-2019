@@ -1,4 +1,3 @@
-
 local function HasUpgrade(callingEntity, techId)
 
     if not callingEntity then

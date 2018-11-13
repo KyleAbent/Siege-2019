@@ -19,9 +19,13 @@ function Fade:GetMaxSpeed(possible)
   return speed
 end
 
+/*
+
 function Fade:GetBaseHealth()
     return ConditionalValue( GetHasTech(self, kTechId.AlienHealth1), Fade.kHealth * 1.10, Fade.kHealth) 
 end
+
+*/
 
 function Fade:GetRebirthLength()
 return 4

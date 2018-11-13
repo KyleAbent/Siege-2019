@@ -1,3 +1,5 @@
+/*
+
 local originit = Marine.OnInitialized
 function Marine:OnInitialized()
 
@@ -18,6 +20,8 @@ originit(self)
 
 end
 
+*/
+
 local orig = Marine.InitWeapons
 function Marine:InitWeapons()
       orig(self)
@@ -25,7 +29,7 @@ function Marine:InitWeapons()
     // if not self:isa("JetpackMarine") and Server then 
     //  self:GiveJetpack()
    
-       self:GiveItem(Welder.kMapName)
+      -- self:GiveItem(Welder.kMapName)
         self:SetActiveWeapon(Rifle.kMapName)
 
     //end
@@ -293,7 +297,7 @@ function Marine:AttemptToBuy(techIds)
 
 end
 
-
+/*
 function Marine:AddResources(amount)
 
     if  GetHasTech(self, kTechId.MPresBuff1)   then
@@ -307,6 +311,7 @@ function Marine:AddResources(amount)
     end
     
 end
+*/
 
 
 end --Server

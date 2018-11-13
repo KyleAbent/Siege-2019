@@ -1,39 +1,34 @@
-local origInit = ConstructMixin.__initmixin
-function ConstructMixin:__initmixin()
+/*
+local orig = ConstructMixin.__initmixin
+function ConstructMixin:__initmixin() --Simple? -- Avoca -- Requires more in this formula. I love while more than onupdate or timedcallback or timer.
+   orig (self)
+   if self:isa("PowerPoint") or ( Server and GetGameRules() == nil or not GetGameRules():GetMapLoaded() ) then return end
+    if GetGameStarted() and  not GetSetupConcluded() then //and powered if marine or unpowered if alien
+           while(not GetSetupConcluded() and self.underConstruction == false and (self.timeLastConstruct == nil or self.timeLastConstruct > 4) and self.buildFraction < 0.9) do
+              self.timeLastConstruct = Shared.GetTime() //if is powered and marine then not ghost//
+              self:Construct(0.25, false) 
+              Print("HM")
+          end --while
+    end --setup
+end
+*/
 
-origInit(self)
-self.level = 0
-self.MaxLevel = 19
-self.GainXP = 1
+
+function ConstructMixin:SetIsACreditStructure(boolean)
+    
+self.isacreditstructure = boolean
+      --Print("AvocaMixin SetIsACreditStructure %s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
+end
+function ConstructMixin:GetCanStick()
+     local canstick = not GetSetupConcluded()
+     --Print("Canstick = %s", canstick)
+     return canstick and self:GetIsACreditStructure() 
 end
 
 function ConstructMixin:GetIsACreditStructure()
-return false
-end
-
-function ConstructMixin:GetAddXPAmount()
-return 0.025
-end
-function ConstructMixin:GetMaxLevel()
-return self.MaxLevel
-end
-function ConstructMixin:AddXP(amount)
-
-    local xpReward = 0
-        xpReward = math.min(amount, self.MaxLevel - self.level)
-        self.level = self.level + xpReward
-        
-        self:AdjustMaxArmor( self:GetMaxArmor() * (self.level/100) + self:GetMaxArmor() ) 
-   
-    return xpReward
     
-end
-function ConstructMixin:GetLevel()
-        return Round(self.level, 2)
-end
-  function ConstructMixin:GetUnitNameOverride(viewer)
-    local unitName = GetDisplayName(self)   
-    unitName = string.format(Locale.ResolveString("%s (Lvl %s more armor)"), self:GetClassName(), self:GetLevel())
-    return unitName
-end 
+       -- Print("AvocaMixin GetIsACreditStructure %s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
+return self.isacreditstructure 
+ 
 
+end

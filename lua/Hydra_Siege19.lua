@@ -1,3 +1,4 @@
+/*
 
 local originit = Hydra.OnInitialized
 function Hydra:OnInitialized()
@@ -25,5 +26,7 @@ function Hydra:GetCanFireAtTargetActual(target, targetPoint)
     return true
     
 end
+
+*/
 
 

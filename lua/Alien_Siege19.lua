@@ -220,6 +220,8 @@ function Alien:TriggerRebirth()
     
 end
 
+/*
+
 function Alien:KarmaBuy(techId)
         local cost = LookupTechData(techId, kTechDataCostKey, 0)
          self:AddResources(cost)
@@ -233,6 +235,9 @@ function Alien:KarmaBuy(techId)
         self:ProcessBuyAction(upgradetable, true)
         self:AddResources(cost)
 end
+
+*/
+
 function Alien:GetTierFourTechId()
     return kTechId.None
 end
@@ -255,6 +260,9 @@ end
     
     end
 
+/*
+
+
 function Alien:AddResources(amount)  --or not call player.addresources? hm. idk if the if gethastech on every res gain is lagging.
 
     if  GetHasTech(self, kTechId.APresBuff1)   then
@@ -266,6 +274,8 @@ function Alien:AddResources(amount)  --or not call player.addresources? hm. idk 
     end
     
 end
+
+*/
 
 
 function Alien:RedemptionTimer()

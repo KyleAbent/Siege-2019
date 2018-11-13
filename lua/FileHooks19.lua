@@ -4,19 +4,15 @@ ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "
 ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/BalanceHealth_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/director/Spectator_Avoca.lua", "post" )
-ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hive.lua", "lua/Hive_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Marine.lua", "lua/Marine_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/JetpackMarine.lua", "lua/JetpackMarine_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Onos.lua", "lua/Onos_Siege19.lua", "post" )
 
-ModLoader.SetupFileHook( "lua/CommandStructure.lua", "lua/CommandStructure_Siege19.lua", "post" )
-
 ModLoader.SetupFileHook( "lua/DamageTypes.lua", "lua/DamageTypes_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightHandler_Siege19.lua", "post" ) --hmm?
-
-ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/PowerPoint_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) --hmm?
 
@@ -32,8 +28,6 @@ ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/BuildUtility_Siege19.lua",
 
 ModLoader.SetupFileHook( "lua/Embryo.lua", "lua/Embryo_Siege19.lua", "post" )
 
-ModLoader.SetupFileHook( "lua/Weapons/Marine/Welder.lua", "lua/Weapons/Marine/Welder_Siege19.lua", "post" )
-
 ModLoader.SetupFileHook( "lua/Weapons/Alien/Metabolize.lua", "lua/Weapons/Alien/Metabolize_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Weapons/Alien/Blink.lua", "lua/Weapons/Alien/Blink_Siege19.lua", "post" )
@@ -47,8 +41,6 @@ ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverM
 ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
-
-ModLoader.SetupFileHook( "lua/WeldableMixin.lua", "lua/WeldableMixin_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/RolloutMixin_Siege19.lua", "post" ) --hmm?
 
@@ -71,10 +63,6 @@ ModLoader.SetupFileHook( "lua/PhaseGate.lua", "lua/PhaseGate_Siege19.lua", "post
 ModLoader.SetupFileHook( "lua/InfantryPortal.lua", "lua/InfantryPortal_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Armory.lua", "lua/Armory_Siege19.lua", "post" )
-
-ModLoader.SetupFileHook( "lua/ArmsLab.lua", "lua/ArmsLab_Siege19.lua", "post" )
-
-ModLoader.SetupFileHook( "lua/CommandStation.lua", "lua/CommandStation_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Voting.lua", "lua/Voting_Siege19.lua", "post" )
 
@@ -111,9 +99,6 @@ ModLoader.SetupFileHook( "lua/ARC.lua", "lua/ARC_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/AlienTeam.lua", "lua/AlienTeam_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/MarineTeam_Siege19.lua", "post" )
-ModLoader.SetupFileHook( "lua/PlayingTeam.lua", "lua/PlayingTeam_Siege19.lua", "post" )
-
-ModLoader.SetupFileHook( "lua/Cyst.lua", "lua/Cyst_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege19.lua", "post" )

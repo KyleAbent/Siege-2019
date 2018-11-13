@@ -115,7 +115,7 @@ local kSiege_TechData =
   [kTechDataResearchTimeKey] = kRecycleTime,
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] =  "Sometimes a commander may not want a specific entity, eh."},
-
+/*
           { [kTechDataId] = kTechId.WhipBuff1,   
             [kTechDataDisplayName] = "WhipBuff1",
  [kTechDataCostKey] = 10,   
@@ -123,6 +123,8 @@ local kSiege_TechData =
   [kTechDataResearchTimeKey] = 30,
  [kTechDataHotkey] = Move.R, 
 [kTechDataTooltipInfo] = "5% increase of movespeed, max speed, range, bombard range, bomb speed"},
+
+*/
 
   
                   --Thanks dragon ns2c
@@ -235,7 +237,7 @@ local kSiege_TechData =
 
 
 
-
+/*
           { [kTechDataId] = kTechId.APresBuff1,   
             [kTechDataDisplayName] = "APresBuff1",
  [kTechDataCostKey] = 10,   
@@ -290,7 +292,7 @@ local kSiege_TechData =
           [kTechDataResearchTimeKey] = 60,   
            [kTechDataDisplayName] = "CragHeals1",  
            [kTechDataTooltipInfo] = "Increase: HealPercent, Min Heal, Max Heal by 10%."},   
-
+*/
           { [kTechDataId] = kTechId.BackupBattery,   
           [kTechDataCostKey] = 5,  
           [kTechDataResearchTimeKey] = 10,   
@@ -299,7 +301,7 @@ local kSiege_TechData =
            
            
            
-        
+        /*
          { [kTechDataId] = kTechId.AlienHealth1,   
           [kTechDataCostKey] = 50,  
           [kTechDataResearchTimeKey] = 60,   
@@ -331,10 +333,10 @@ local kSiege_TechData =
           [kTechDataResearchTimeKey] = 60,   
            [kTechDataDisplayName] = "Armory Buff 1. ",  
            [kTechDataTooltipInfo] = "Increase HealAmount, Interval, Range by 10%. (Global)"}, 
-           
+           */
          
           --Convars WIP
-    
+    /*
        { [kTechDataId] = kTechId.SkulkRage,  
          [kTechDataCostKey] = 30,  
         [kTechDataDisplayName] = "SkulkRage", 
@@ -365,7 +367,7 @@ local kSiege_TechData =
      [kTechDataDisplayName] = "AcidRocket",
  [kTechDataTooltipInfo] = "Ranged Projectile dealing damage only to armor and structures"},
  
-  
+  */
    
               /*
         { [kTechDataId] = kTechId.FadeHealth,   

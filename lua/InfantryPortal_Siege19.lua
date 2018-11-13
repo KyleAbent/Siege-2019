@@ -1,3 +1,4 @@
+/*
 local origbuttons = InfantryPortal.GetTechButtons
 function InfantryPortal:GetTechButtons(techId)
 local table = {}
@@ -10,7 +11,4 @@ table = origbuttons(self, techId)
  return table
 
 end
-
-function InfantryPortal:GetMinRangeAC()
-return IPAutoCCMR  
-end
+*/

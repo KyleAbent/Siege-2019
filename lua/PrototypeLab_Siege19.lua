@@ -1,7 +1,3 @@
-function PrototypeLab:GetMinRangeAC()
-return ProtoAutoCCMR      
-end
-
 local oldfunc = PrototypeLab.GetItemList
 function PrototypeLab:GetItemList(forPlayer)
         local  otherbuttons = { kTechId.Jetpack, kTechId.DualMinigunExosuit, kTechId.DualRailgunExosuit, 

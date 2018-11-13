@@ -473,21 +473,4 @@ end
     return (self.powered or self.powerSurge or GetHasSentryBatteryInRadius(self) ) and override 
 end
 
-
-function Observatory:OnPowerOn()
-	 GetImaginator().activeObs = GetImaginator().activeObs + 1;  
-end
-
-function Observatory:OnPowerOff()
-	 GetImaginator().activeObs = GetImaginator().activeObs - 1;  
-end
-
- function Observatory:PreOnKill(attacker, doer, point, direction)
-      
-	  if self:GetIsPowered() then
-	    GetImaginator().activeObs  = GetImaginator().activeObs- 1;  
-	  end
-end
-
-
 Shared.LinkClassToMap("Observatory", Observatory.kMapName, networkVars)

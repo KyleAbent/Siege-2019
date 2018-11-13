@@ -1,4 +1,4 @@
-
+/*
 
 local orig = ResourceTower.CollectResources
 function ResourceTower:CollectResources()
@@ -22,3 +22,5 @@ function ResourceTower:CollectResources()
   end
 
 end
+
+*/
