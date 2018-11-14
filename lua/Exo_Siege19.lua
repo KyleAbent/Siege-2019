@@ -14,12 +14,25 @@ local kDualWelderAnimationGraph = PrecacheAsset("models/marine/exosuit/exosuit_r
 
 local kHoloMarineMaterialname = PrecacheAsset("cinematics/vfx_materials/marine_ip_spawn.material")
 
+--Kyle! Avoca. :D
+local function SmashNearbyCysts(self)
+
+    assert(Server)
 
 
+    local nearbyCysts = GetEntitiesWithinRange("Cyst", self:GetOrigin(), 1.5)
+    for e = 1, #nearbyCysts do
+        nearbyCysts[e]:Kill(self, self, self:GetOrigin(), Vector(0, -1, 0))
+    end
+    return true
+    
+end
 local origcreate = Exo.OnCreate
 function Exo:OnCreate()
     origcreate(self)
-
+    if Server then
+        self:AddTimedCallback(SmashNearbyCysts, 0.1)
+    end
 end
 
 local oninit = Exo.OnInitialized

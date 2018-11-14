@@ -11,7 +11,7 @@ local networkVars = {
 
 AddMixinNetworkVars(DigestCommMixin, networkVars)
 
-
+/*
 local originit = Whip.OnInitialized
 function Whip:OnInitialized()
 
@@ -24,6 +24,7 @@ originit(self)
     Whip.kBombSpeed = ConditionalValue( GetHasTech(self, kTechId.WhipBuff1), 20 * 1.05, 20) 
 
 end
+*/
 
 local origcreate = Whip.OnCreate
 function Whip:OnCreate()
@@ -39,18 +40,20 @@ local table = {}
 
 table = origbuttons(self, techId)
 
-  table[3] = kTechId.WhipBuff1
+  --table[3] = kTechId.WhipBuff1
  table[8] = kTechId.DigestComm
  return table
 
 end
 
+/*
 local originit = Whip.OnInitialized
 function Whip:OnInitialized()
 originit(self)
-
 end
+*/
 
+/*
 
 function Whip:GetCanFireAtTargetActual(target, targetPoint)    
 
@@ -61,6 +64,8 @@ function Whip:GetCanFireAtTargetActual(target, targetPoint)
     return true
     
 end
+
+*/
 
 
 function Whip:OnConstructionComplete()
@@ -76,16 +81,11 @@ end
 end
 
 
-if Server then
-
-function Whip:UpdateRootState()
-
-
-        self:Root()
-
-end
-
+local origupdate = Whip.OnUpdate
 function Whip:OnUpdate(deltaTime)
+origupdate(self, deltaTime)
+ if Server then
+   
        if self.moving and GetIsTimeUp(self.lastCyst, 6)  then
               doChain(self)
               self.lastCyst = Shared.GetTime()
@@ -93,11 +93,33 @@ function Whip:OnUpdate(deltaTime)
        
        if self.moving then
          if self:GetIsInCombat() then
-            self:ClearOrders()
+            self:CompletedCurrentOrder()
+            self.moving = false
+            --self:GiveOrder(kTechId.Stop, nil, nil, 4, nil, false, false) 
+            self:Root()
          end
        end
+  end
+end
+
+if Server then
+--Override
+function Whip:UpdateRootState()
+
+    local moveOrdered = self:GetCurrentOrder() and self:GetCurrentOrder():GetType() == kTechId.Move
+
+    if self.rooted and moveOrdered then
+        self:Unroot()
+    end
+
+
+    if not self.rooted and not (moveOrdered or self:GetIsTeleporting()) then
+        self:Root()
+    end
 
 end
+
+
 
 end
 

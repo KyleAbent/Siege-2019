@@ -181,7 +181,7 @@ end
 function Conductor:OnCreate()  
    self.marineenabled = true
    self.alienenabled = true
-   self.arcSiegeOrig = self:GetOrigin()
+   self.arcSiegeOrig = nil
    if Server then
    self.phaseCannonTime = 30
    end
@@ -197,7 +197,7 @@ function Conductor:OnUpdate(deltatime)
 if Server then
   
          if GetSiegeDoorOpen() then
-          local inradius = #GetEntitiesWithinRange("Hive", self.arcSiegeOrig, ARC.kFireRange) >= 1
+          local inradius = #GetEntitiesWithinRange("Hive", self.arcSiegeOrig, ARC.kFireRange - 3) >= 1
             if not inradius then
                Print("Conductor arc spot to place not in hive radius")
                local siegelocation = GetASiegeLocation()
@@ -361,7 +361,7 @@ end
 function Conductor:ManageArcs()
 
  local where = nil
-     if self.arcSiegeOrig ~= self:GetOrigin() then
+     if self.arcSiegeOrig ~= nil then
        where = self.arcSiegeOrig
      end
    for index, arc in ipairs(GetEntitiesForTeam("ARC", 1)) do
@@ -590,7 +590,7 @@ function Conductor:ManageWhips()
 
        
        for i = 1, random do --maybe time delay ah
-           local hive = GetRandomHive()
+           local hive = GetRandomHive()--if hive then or return chair if no hive lol
            local nearestof = GetNearest(hive:GetOrigin(), "Whip", 2, function(ent) return ent:GetIsBuilt() and ( ent.GetIsInCombat and not ent:GetIsInCombat() and not ent.moving )  end)
             if nearestof then
                -- if not moving

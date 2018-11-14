@@ -46,8 +46,19 @@ function Conductor:FirePhaseCannons(powerpoint)
               --phase four egg spawn?
              -- end
               
-            
-
+          
+          if GetSiegeDoorOpen() then
+          local random = math.random(1,100)  
+          if random <= 10 then
+           --chance it?
+               for index, bot in ipairs(GetEntitiesForTeam("Player", 2)) do
+                local client = bot:GetClient()
+                if client and client:GetIsVirtual() then
+                if bot:GetIsAlive() and (bot.GetIsInCombat and not bot:GetIsInCombat()) then bot:SetOrigin(FindFreeSpace(origin)) end
+               end
+              end
+           end  
+          end
           
        /*
        
